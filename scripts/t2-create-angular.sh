@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # INPUTS > TICKET, TEMPLATE
-
+# so you can run this from anywhere
 cd $T2_HOME
 
 # SUB ROUTINES - HELPERS PATHS
@@ -10,7 +10,10 @@ EXIT_IF_NO_TICKET_PROVIDED="$T2_HOME/scripts/helpers/exit-if-no-ticket-provided.
 EXIT_IF_PROJECT_ALREADY_EXIST="$T2_HOME/scripts/helpers/exit-if-project-already-exists.sh"
 APPLY_TEMPLATE_IF_PROVIDED="$T2_HOME/scripts/helpers/apply-template-if-provided.sh"
 
+# for example run
+# $ t2-create-angular.sh TICKET="456" TEMPLATE="angular" 
 source $PARSE_TICKET_TEMPLATE_ARGUMENTS # PARSES TICKET,TEMPLATE into variables
+
 
 PROJECT_DIR_PATH="$T2_HOME/projects/t2-$TICKET"
 source $EXIT_IF_NO_TICKET_PROVIDED #USES PROJECT PATH
@@ -24,7 +27,7 @@ TEMPLATE_DIR_PATH="$T2_HOME/templates/$TEMPLATE"
 git pull && /
 
 #  ANGULAR SPECIFIC SCRIPT
-
+# notice that the angular CLI wants us to provide a relative path (not absolute)$
 ng new hello --directory "./projects/t2-$TICKET" --style scss --routing false --strict true --skip-git true && /
 npm i --save ag-grid-angular ag-grid-community ag-grid-enterprise --prefix $PROJECT_DIR_PATH && /
 
