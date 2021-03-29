@@ -19,3 +19,7 @@ $ chmod +x SCRIPT_NAME
 ===
 change the codesandbox and stackblitz links to refer to your github
 
+run the projects:
+(make sure youre using zsh shell):
+t2-create-react.sh TICKET="11111" TEMPLATE="react"
+
