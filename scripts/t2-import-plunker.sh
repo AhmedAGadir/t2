@@ -20,16 +20,14 @@ mkdir import
 cp -r "/Users/ahmedgadir/Downloads/Project/" "$PROJECT_LOCATION/import"
 
 # sudo mount -o remount,rw "$PROJECT_DIR_PATH/src"
-
 # chmod - r 777 *
-
 # chmod -R 777 src
 
 ls -l 
 
 chmod -R 755 *
 
-ls -l
+# ls -l
 
 cd import
 
@@ -39,12 +37,10 @@ cd ..
 
 rm import
 
-
 #  didnt work
 # cp -rf "$PROJECT_LOCATION/import/" "$PROJECT_DIR_PATH/src"
 # mv -v $PROJECT_LOCATION/import/* $PROJECT_LOCATION/src
 # mv -f $PROJECT_LOCATION/import/* $PROJECT_LOCATION/src
-
 
 # works
 rsync -a $PROJECT_LOCATION/import/ $PROJECT_LOCATION/src
