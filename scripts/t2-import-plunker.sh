@@ -9,7 +9,7 @@ T2_CREATE_ANGULAR="$T2_HOME/scripts/t2-create-angular.sh"
 
 source $T2_CREATE_ANGULAR TICKET="4321" TEMPLATE="angular"
 
-PROJECT_LOCATION="$T2_HOME/projects/t2-1234"
+PROJECT_LOCATION="$T2_HOME/projects/t2-4321"
 
 cd $PROJECT_LOCATION
 
