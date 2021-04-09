@@ -7,9 +7,9 @@
 
 T2_CREATE_ANGULAR="$T2_HOME/scripts/t2-create-angular.sh"
 
-source $T2_CREATE_ANGULAR TICKET="4321" TEMPLATE="angular"
+source $T2_CREATE_ANGULAR TICKET="543" TEMPLATE="angular"
 
-PROJECT_LOCATION="$T2_HOME/projects/t2-4321"
+PROJECT_LOCATION="$T2_HOME/projects/t2-543"
 
 cd $PROJECT_LOCATION
 
@@ -33,7 +33,7 @@ ls -l
 
 cd import
 
-rm index.html systemjs-angular-loader.js systemjs.config.js
+rm index.html systemjs-angular-loader.js systemjs.config.js main.ts
 
 cd ..
 
@@ -47,5 +47,9 @@ rm import
 
 
 # works
-# rsync -a $PROJECT_LOCATION/import/ $PROJECT_LOCATION/src
-# rm -rf $PROJECT_LOCATION/import/*
+rsync -a $PROJECT_LOCATION/import/ $PROJECT_LOCATION/src
+rm -rf $PROJECT_LOCATION/import/*
+
+git add . 
+git commit -m 'update'
+git push
