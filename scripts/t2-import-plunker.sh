@@ -7,7 +7,7 @@
 
 T2_CREATE_ANGULAR="$T2_HOME/scripts/t2-create-angular.sh"
 
-source $T2_CREATE_ANGULAR TICKET="1234" TEMPLATE="angular"
+source $T2_CREATE_ANGULAR TICKET="4321" TEMPLATE="angular"
 
 PROJECT_LOCATION="$T2_HOME/projects/t2-1234"
 
@@ -31,12 +31,13 @@ chmod -R 755 *
 
 ls -l
 
+
+#  didnt work
 # cp -rf "$PROJECT_LOCATION/import/" "$PROJECT_DIR_PATH/src"
-
 # mv -v $PROJECT_LOCATION/import/* $PROJECT_LOCATION/src
-
 # mv -f $PROJECT_LOCATION/import/* $PROJECT_LOCATION/src
 
-rsync -a $PROJECT_LOCATION/import/ $PROJECT_LOCATION/src
 
-rm -rf $PROJECT_LOCATION/import/*
+# works
+# rsync -a $PROJECT_LOCATION/import/ $PROJECT_LOCATION/src
+# rm -rf $PROJECT_LOCATION/import/*
