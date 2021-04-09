@@ -33,4 +33,7 @@ ls -l
 
 # cp -rf "$PROJECT_LOCATION/import/" "$PROJECT_DIR_PATH/src"
 
-mv "$PROJECT_LOCATION/import/*" "$PROJECT_DIR_PATH/src"
+# mv -v $PROJECT_LOCATION/import/* $PROJECT_LOCATION/src
+
+mv -f $PROJECT_LOCATION/import/* $PROJECT_LOCATION/src
+
