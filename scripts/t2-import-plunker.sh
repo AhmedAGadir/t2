@@ -35,5 +35,8 @@ ls -l
 
 # mv -v $PROJECT_LOCATION/import/* $PROJECT_LOCATION/src
 
-mv -f $PROJECT_LOCATION/import/* $PROJECT_LOCATION/src
+# mv -f $PROJECT_LOCATION/import/* $PROJECT_LOCATION/src
 
+rsync -a $PROJECT_LOCATION/import/ $PROJECT_LOCATION/src
+
+rm -rf $PROJECT_LOCATION/import/*
