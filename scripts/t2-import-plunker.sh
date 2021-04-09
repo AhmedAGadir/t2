@@ -7,9 +7,9 @@
 
 T2_CREATE_ANGULAR="$T2_HOME/scripts/t2-create-angular.sh"
 
-source $T2_CREATE_ANGULAR TICKET="3334" TEMPLATE="angular"
+source $T2_CREATE_ANGULAR TICKET="1234" TEMPLATE="angular"
 
-PROJECT_LOCATION="$T2_HOME/projects/t2-3334"
+PROJECT_LOCATION="$T2_HOME/projects/t2-1234"
 
 cd $PROJECT_LOCATION
 
@@ -21,6 +21,16 @@ cp -r "/Users/ahmedgadir/Downloads/Project/" "$PROJECT_LOCATION/import"
 
 # sudo mount -o remount,rw "$PROJECT_DIR_PATH/src"
 
-chmod 777 *
+# chmod - r 777 *
 
-cp -rf "$PROJECT_LOCATION/import/" "$PROJECT_DIR_PATH/src"
+# chmod -R 777 src
+
+ls -l 
+
+chmod -R 755 *
+
+ls -l
+
+# cp -rf "$PROJECT_LOCATION/import/" "$PROJECT_DIR_PATH/src"
+
+mv "$PROJECT_LOCATION/import/" "$PROJECT_DIR_PATH/src"
