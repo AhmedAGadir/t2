@@ -31,6 +31,12 @@ chmod -R 755 *
 
 ls -l
 
+cd import
+
+rm index.html systemjs-angular-loader.js systemjs.config.js
+
+cd ..
+
 
 #  didnt work
 # cp -rf "$PROJECT_LOCATION/import/" "$PROJECT_DIR_PATH/src"
@@ -39,5 +45,5 @@ ls -l
 
 
 # works
-# rsync -a $PROJECT_LOCATION/import/ $PROJECT_LOCATION/src
-# rm -rf $PROJECT_LOCATION/import/*
+rsync -a $PROJECT_LOCATION/import/ $PROJECT_LOCATION/src
+rm -rf $PROJECT_LOCATION/import/*
