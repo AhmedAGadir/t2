@@ -37,6 +37,8 @@ rm index.html systemjs-angular-loader.js systemjs.config.js
 
 cd ..
 
+rm import
+
 
 #  didnt work
 # cp -rf "$PROJECT_LOCATION/import/" "$PROJECT_DIR_PATH/src"
@@ -45,5 +47,5 @@ cd ..
 
 
 # works
-rsync -a $PROJECT_LOCATION/import/ $PROJECT_LOCATION/src
-rm -rf $PROJECT_LOCATION/import/*
+# rsync -a $PROJECT_LOCATION/import/ $PROJECT_LOCATION/src
+# rm -rf $PROJECT_LOCATION/import/*
