@@ -7,9 +7,11 @@
 
 T2_CREATE_ANGULAR="$T2_HOME/scripts/t2-create-angular.sh"
 
-source $T2_CREATE_ANGULAR TICKET="543" TEMPLATE="angular"
+read -p "Enter angular ticket number:" TICKET_NUMBER
 
-PROJECT_LOCATION="$T2_HOME/projects/t2-543"
+source $T2_CREATE_ANGULAR TICKET=$TICKET_NUMBER TEMPLATE="angular"
+
+PROJECT_LOCATION="$T2_HOME/projects/t2-$TICKET_NUMBER"
 
 cd $PROJECT_LOCATION
 
@@ -17,7 +19,7 @@ cd $PROJECT_LOCATION
 
 mkdir import
 
-cp -r "/Users/ahmedgadir/Downloads/Project/" "$PROJECT_LOCATION/import"
+cp -r "/Users/ahmedgadir/Downloads/project_angular/" "$PROJECT_LOCATION/import"
 
 # sudo mount -o remount,rw "$PROJECT_DIR_PATH/src"
 # chmod - r 777 *
