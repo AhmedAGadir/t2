@@ -1,73 +1,173 @@
-import { Component } from "@angular/core";
-import "ag-grid-enterprise";
-import "ag-grid-community/dist/styles/ag-grid.css";
-import "ag-grid-community/dist/styles/ag-theme-alpine.css";
-import { HttpClient } from "@angular/common/http";
+import { Component } from '@angular/core';
+import 'ag-grid-enterprise';
+import 'ag-grid-community/dist/styles/ag-grid.css';
+import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 
 @Component({
-  selector: "my-app",
-  template: `<ag-grid-angular
-    #agGrid
-    style="width: 90%; height: 500px;"
-    id="myGrid"
-    class="ag-theme-alpine"
-    [columnDefs]="columnDefs"
-    [defaultColDef]="defaultColDef"
-    [enableRangeSelection]="true"
-    [rowData]="rowData"
-    (gridReady)="onGridReady($event)"
-  ></ag-grid-angular>`
+  selector: 'my-app',
+  template: `<div class="example-wrapper">
+    <div style="margin-bottom: 5px;">
+      <input
+        type="text"
+        id="filter-text-box"
+        placeholder="Filter..."
+        (input)="onFilterTextBoxChanged()"
+      />
+    </div>
+    <ag-grid-angular
+      #agGrid
+      style="width: 100%; height: 100%;"
+      id="myGrid"
+      class="ag-theme-alpine"
+      [rowData]="rowData"
+      [columnDefs]="columnDefs"
+      [defaultColDef]="defaultColDef"
+      [autoGroupColumnDef]="autoGroupColumnDef"
+      [treeData]="true"
+      [animateRows]="true"
+      [groupDefaultExpanded]="groupDefaultExpanded"
+      [getDataPath]="getDataPath"
+      (gridReady)="onGridReady($event)"
+    ></ag-grid-angular>
+  </div> `,
 })
 export class AppComponent {
-  public gridApi: any;
-  public gridColumnApi: any;
-  public columnDefs: any;
-  public defaultColDef: any;
-  public rowData: any;
+  private gridApi;
+  private gridColumnApi;
 
-  constructor(private http: HttpClient) {
-    this.columnDefs = [
+  private rowData;
+  private columnDefs;
+  private defaultColDef;
+  private autoGroupColumnDef;
+  private groupDefaultExpanded;
+  private getDataPath;
+
+  constructor() {
+    this.rowData = [
       {
-        field: "athlete",
-        minWidth: 150
+        orgHierarchy: ['Erica Rogers'],
+        jobTitle: 'CEO',
+        employmentType: 'Permanent',
       },
       {
-        field: "age",
-        maxWidth: 90
+        orgHierarchy: ['Erica Rogers', 'Malcolm Barrett'],
+        jobTitle: 'Exec. Vice President',
+        employmentType: 'Permanent',
       },
       {
-        field: "country",
-        minWidth: 150
+        orgHierarchy: ['Erica Rogers', 'Malcolm Barrett', 'Esther Baker'],
+        jobTitle: 'Director of Operations',
+        employmentType: 'Permanent',
       },
       {
-        field: "year",
-        maxWidth: 90
+        orgHierarchy: [
+          'Erica Rogers',
+          'Malcolm Barrett',
+          'Esther Baker',
+          'Brittany Hanson',
+        ],
+        jobTitle: 'Fleet Coordinator',
+        employmentType: 'Permanent',
       },
       {
-        field: "date",
-        minWidth: 150
+        orgHierarchy: [
+          'Erica Rogers',
+          'Malcolm Barrett',
+          'Esther Baker',
+          'Brittany Hanson',
+          'Leah Flowers',
+        ],
+        jobTitle: 'Parts Technician',
+        employmentType: 'Contract',
       },
       {
-        field: "sport",
-        minWidth: 150
+        orgHierarchy: [
+          'Erica Rogers',
+          'Malcolm Barrett',
+          'Esther Baker',
+          'Brittany Hanson',
+          'Tammy Sutton',
+        ],
+        jobTitle: 'Service Technician',
+        employmentType: 'Contract',
       },
-      { field: "gold" },
-      { field: "silver" },
-      { field: "bronze" },
-      { field: "total" }
+      {
+        orgHierarchy: [
+          'Erica Rogers',
+          'Malcolm Barrett',
+          'Esther Baker',
+          'Derek Paul',
+        ],
+        jobTitle: 'Inventory Control',
+        employmentType: 'Permanent',
+      },
+      {
+        orgHierarchy: ['Erica Rogers', 'Malcolm Barrett', 'Francis Strickland'],
+        jobTitle: 'VP Sales',
+        employmentType: 'Permanent',
+      },
+      {
+        orgHierarchy: [
+          'Erica Rogers',
+          'Malcolm Barrett',
+          'Francis Strickland',
+          'Morris Hanson',
+        ],
+        jobTitle: 'Sales Manager',
+        employmentType: 'Permanent',
+      },
+      {
+        orgHierarchy: [
+          'Erica Rogers',
+          'Malcolm Barrett',
+          'Francis Strickland',
+          'Todd Tyler',
+        ],
+        jobTitle: 'Sales Executive',
+        employmentType: 'Contract',
+      },
+      {
+        orgHierarchy: [
+          'Erica Rogers',
+          'Malcolm Barrett',
+          'Francis Strickland',
+          'Bennie Wise',
+        ],
+        jobTitle: 'Sales Executive',
+        employmentType: 'Contract',
+      },
+      {
+        orgHierarchy: [
+          'Erica Rogers',
+          'Malcolm Barrett',
+          'Francis Strickland',
+          'Joel Cooper',
+        ],
+        jobTitle: 'Sales Executive',
+        employmentType: 'Permanent',
+      },
     ];
-    this.defaultColDef = {
-      flex: 1,
-      minWidth: 100
+    this.columnDefs = [{ field: 'jobTitle' }, { field: 'employmentType' }];
+    this.defaultColDef = { flex: 1 };
+    this.autoGroupColumnDef = {
+      headerName: 'Organisation Hierarchy',
+      minWidth: 300,
+      cellRendererParams: { suppressCount: true },
+    };
+    this.groupDefaultExpanded = -1;
+    this.getDataPath = function (data) {
+      return data.orgHierarchy;
     };
   }
 
-  onGridReady(params: { api: any; columnApi: any }) {
+  onFilterTextBoxChanged() {
+    this.gridApi.setQuickFilter(
+      document.getElementById('filter-text-box').value
+    );
+  }
+
+  onGridReady(params) {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
-
-    this.http.get("https://www.ag-grid.com/example-assets/olympic-winners.json").subscribe((data) => {
-      this.rowData = data;
-    });
   }
 }
