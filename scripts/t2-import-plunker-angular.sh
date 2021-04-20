@@ -24,6 +24,7 @@ rm import
 rsync -a $PROJECT_LOCATION/import/ $PROJECT_LOCATION/src
 rm -rf $PROJECT_LOCATION/import/*
 
+# update repo
 git add . 
 git commit -m 'update'
 git push
