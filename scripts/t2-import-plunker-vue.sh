@@ -1,18 +1,16 @@
 #!/usr/bin/env bash
 
-T2_CREATE_ANGULAR="$T2_HOME/scripts/t2-create-angular.sh"
-
 read -p "Enter angular ticket number:" TICKET_NUMBER
+read -p "Enter project name in downloads folder:" PROJECT_TO_IMPORT_NAME
 
-source $T2_CREATE_ANGULAR TICKET=$TICKET_NUMBER TEMPLATE="angular"
-
+PROJECT_TO_IMPORT_LOCATION = "/Users/ahmedgadir/Downloads/$PROJECT_TO_IMPORT_NAME"
 PROJECT_LOCATION="$T2_HOME/projects/t2-$TICKET_NUMBER"
 
 cd $PROJECT_LOCATION
 
 # import plunker (if exists) from downloads folder: /Downloads/project_angular/
 mkdir import
-cp -r "/Users/ahmedgadir/Downloads/project_angular/" "$PROJECT_LOCATION/import"
+cp -r "$PROJECT_TO_IMPORT_LOCATION/" "$PROJECT_LOCATION/import"
 # change permissions, make writeable
 chmod -R 755 *
 # remove files we dont need from the imported folder
