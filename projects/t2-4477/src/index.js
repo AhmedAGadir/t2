@@ -55,11 +55,11 @@ class GridExample extends Component {
     }
   };
 
-  cellEditingStarted = (params) => {
-    if (params.data.isNonEditable && this.gridApi) {
-      this.gridApi.stopEditing(true);
-    }
-  }
+  // cellEditingStarted = (params) => {
+  //   if (params.data.isNonEditable && this.gridApi) {
+  //     this.gridApi.stopEditing(true);
+  //   }
+  // }
 
   onCellValueChanged = () => {
     const rowdata = [];
@@ -102,7 +102,7 @@ class GridExample extends Component {
             defaultColDef={defaultColDef}
             pinnedBottomRowData={pinnedBottomRowData}
             onGridReady={this.onGridReady}
-            onCellEditingStarted={this.cellEditingStarted}
+            // onCellEditingStarted={this.cellEditingStarted}
             onCellValueChanged={this.onCellValueChanged}
           />
         </div>
