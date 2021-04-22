@@ -24,7 +24,7 @@ chmod -R 755 *
 rsync -a $PROJECT_LOCATION/import/ $PROJECT_LOCATION
 rm -rf $PROJECT_LOCATION/import/*
 
-npm i --save --prefix $PROJECT_DIR_PATH && /
+npm i --save --prefix $PROJECT_LOCATION && /
 
 # delete import folder
 rm -r import
