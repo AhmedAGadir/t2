@@ -14,15 +14,11 @@ APPLY_TEMPLATE_IF_PROVIDED="$T2_HOME/scripts/helpers/apply-template-if-provided.
 # $ t2-create-angular.sh TICKET="456" TEMPLATE="angular" 
 source $PARSE_TICKET_TEMPLATE_ARGUMENTS # PARSES TICKET,TEMPLATE into variables
 
-
 PROJECT_DIR_PATH="$T2_HOME/projects/t2-$TICKET"
 source $EXIT_IF_NO_TICKET_PROVIDED #USES PROJECT PATH
 source $EXIT_IF_PROJECT_ALREADY_EXIST #  PROJECT WITH THE TICKET NR ALREADY EXIST = EXIT
 
-
 TEMPLATE_DIR_PATH="$T2_HOME/templates/$TEMPLATE"
-
-
 
 git pull && /
 
@@ -32,6 +28,7 @@ ng new hello --directory "./projects/t2-$TICKET" --style scss --routing false --
 npm i --save ag-grid-angular ag-grid-community ag-grid-enterprise --prefix $PROJECT_DIR_PATH && /
 
 # ANGULAR SPECIFIC END
+
 source $APPLY_TEMPLATE_IF_PROVIDED
 
 git add . && /
@@ -41,3 +38,5 @@ git push && /
 echo "complete"
 echo "LINK TO CODESANDBOX: https://codesandbox.io/s/github/ahmedagadir/t2/tree/main/projects/t2-${TICKET}"
 echo "LINK TO STACKBLITZ: https://stackblitz.com/github/ahmedagadir/t2/tree/main/projects/t2-${TICKET}"
+
+code $PROJECT_DIR_PATH

@@ -34,5 +34,3 @@ git add .
 git commit -m 'imported project and overwrote template for T2-' + $TICKET_NUMBER
 git push
 
-
-code --prefix $PROJECT_DIR_PATH && /
