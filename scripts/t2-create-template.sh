@@ -1,16 +1,11 @@
 #!/usr/bin/env bash
 
-# INPUTS > TICKET, TEMPLATE
-# so you can run this from anywhere
 cd $T2_HOME
 
 # SUB ROUTINES - HELPERS PATHS
-# PARSE_TICKET_TEMPLATE_ARGUMENTS="$T2_HOME/scripts/helpers/parse-ticket-template-arguments.sh"
 EXIT_IF_NO_TICKET_PROVIDED="$T2_HOME/scripts/helpers/exit-if-no-ticket-provided.sh"
 EXIT_IF_PROJECT_ALREADY_EXIST="$T2_HOME/scripts/helpers/exit-if-project-already-exists.sh"
 APPLY_TEMPLATE_IF_PROVIDED="$T2_HOME/scripts/helpers/apply-template-if-provided.sh"
-
-# source $PARSE_TICKET_TEMPLATE_ARGUMENTS # PARSES TICKET,TEMPLATE into variables
 
 read -p "Enter JIRA ticket number:" TICKET
 read -p "Enter template framework e.g. angular, react, vue, vanilla:" TEMPLATE
@@ -23,12 +18,29 @@ TEMPLATE_DIR_PATH="$T2_HOME/templates/$TEMPLATE"
 
 git pull && /
 
-#  ANGULAR SPECIFIC SCRIPT
-# notice that the angular CLI wants us to provide a relative path (not absolute)$
-ng new hello --directory "./projects/t2-$TICKET" --style scss --routing false --strict true --skip-git true && /
-npm i --save ag-grid-angular ag-grid-community ag-grid-enterprise --prefix $PROJECT_DIR_PATH && /
 
-# ANGULAR SPECIFIC END
+if [ "$TEMPLATE" == "angular" ] 
+then
+    ng new my-ag-grid --directory "./projects/t2-$TICKET" --style scss --routing false --strict true --skip-git true && /
+    npm i --save ag-grid-angular ag-grid-community ag-grid-enterprise --prefix $PROJECT_DIR_PATH && /
+elif [ "$TEMPLATE" == "react" ]
+then
+    npx create-react-app $PROJECT_DIR_PATH && /
+    npm i --save ag-grid-react ag-grid-community ag-grid-enterprise --prefix $PROJECT_DIR_PATH && /
+elif [ "$TEMPLATE" == "vue" ]
+then
+    cd $T2_HOME/projects && /
+    vue create -d t2-$TICKET && /
+    npm i --save ag-grid-vue ag-grid-community ag-grid-enterprise vue-property-decorator@^8.0.0 && /
+    cd $T2_HOME &&/
+elif [ "$TEMPLATE" == "vanilla" ]
+then
+    echo 'this is a vanilla js project'
+    # cp -r $TEMPLATE_DIR_PATH/. $PROJECT_DIR_PATH
+    # npm i --prefix $PROJECT_DIR_PATH && /
+else 
+    echo "$TEMPLATE not recognised"
+fi
 
 source $APPLY_TEMPLATE_IF_PROVIDED
 
