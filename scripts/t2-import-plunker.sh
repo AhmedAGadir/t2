@@ -16,12 +16,15 @@ cp -r "$PROJECT_TO_IMPORT_LOCATION/" "$PROJECT_LOCATION/import"
 chmod -R 755 *
 
 # remove files we dont need from the imported folder
+# e.g.
 # rm import/index.html import/systemjs-angular-loader.js import/systemjs.config.js import/main.ts
 
 # overwrite template with imported files
 # rsync -a $PROJECT_LOCATION/import/ $PROJECT_LOCATION/src
 rsync -a $PROJECT_LOCATION/import/ $PROJECT_LOCATION
 rm -rf $PROJECT_LOCATION/import/*
+
+npm i --save --prefix $PROJECT_DIR_PATH && /
 
 # delete import folder
 rm -r import
@@ -30,3 +33,6 @@ rm -r import
 git add . 
 git commit -m 'imported project and overwrote template for T2-' + $TICKET_NUMBER
 git push
+
+
+code --prefix $PROJECT_DIR_PATH && /
