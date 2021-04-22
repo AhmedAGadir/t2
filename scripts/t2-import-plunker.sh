@@ -1,17 +1,17 @@
 #!/usr/bin/env bash
 
-read -p "Enter ticket number:" TICKET_NUMBER
+read -p "Enter JIRA ticket number:" TICKET_NUMBER
 read -p "Enter project name in downloads folder:" PROJECT_TO_IMPORT_NAME
 
-PROJECT_TO_IMPORT_LOCATION="/Users/ahmedgadir/Downloads/$PROJECT_TO_IMPORT_NAME"
-PROJECT_LOCATION="$T2_HOME/projects/t2-$TICKET_NUMBER"
+PROJECT_TO_IMPORT_PATH="/Users/ahmedgadir/Downloads/$PROJECT_TO_IMPORT_NAME"
+TEMPLATE_PROJECT_PATH="$T2_HOME/projects/t2-$TICKET_NUMBER"
 
-cd $PROJECT_LOCATION
+cd $TEMPLATE_PROJECT_PATH
 
 # create import folder
 mkdir import
 # import project from downloads folder
-cp -r "$PROJECT_TO_IMPORT_LOCATION/" "$PROJECT_LOCATION/import"
+cp -r "$PROJECT_TO_IMPORT_PATH/" "$TEMPLATE_PROJECT_PATH/import"
 # change permissions, make writeable
 chmod -R 755 *
 
@@ -20,11 +20,11 @@ chmod -R 755 *
 # rm import/index.html import/systemjs-angular-loader.js import/systemjs.config.js import/main.ts
 
 # overwrite template with imported files
-# rsync -a $PROJECT_LOCATION/import/ $PROJECT_LOCATION/src
-rsync -a $PROJECT_LOCATION/import/ $PROJECT_LOCATION
-rm -rf $PROJECT_LOCATION/import/*
+# rsync -a $TEMPLATE_PROJECT_PATH/import/ $TEMPLATE_PROJECT_PATH/src
+rsync -a $TEMPLATE_PROJECT_PATH/import/ $TEMPLATE_PROJECT_PATH
+rm -rf $TEMPLATE_PROJECT_PATH/import/*
 
-npm i --save --prefix $PROJECT_LOCATION && /
+npm i --save --prefix $TEMPLATE_PROJECT_PATH && /
 
 # delete import folder
 rm -r import
