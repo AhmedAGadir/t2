@@ -12,15 +12,20 @@ export const data = [
     { fundName: 'Asset 3', current: '', newValue: '', optimal: '', agreed: '' },
     { fundName: 'Asset 4', current: '', newValue: '', optimal: '0.56', agreed: '' },
     { fundName: 'Asset 5', current: '', newValue: '', optimal: '', agreed: '0.34' },
-    
+
 ]
 
 const valueFormatter = (params, isTooltip = false) => {
     const value = (params.value) ? params.value : '';
-    if(value){       
-        return isTooltip ? (`${value* 100}%`) : (`${parseFloat(value* 100).toFixed(2)}%`);
+    if (value) {
+        return isTooltip ? (`${value * 100}%`) : (`${parseFloat(value * 100).toFixed(2)}%`);
     }
     return value;
+}
+
+const isEditable = params => {
+    return params.node.rowPinned !== 'bottom'
+
 }
 
 export const columnDefs = [
@@ -40,7 +45,7 @@ export const columnDefs = [
         field: "current",
         cellClass: "cell-edit-text",
         autoHeight: true,
-        editable: true,
+        editable: isEditable,
         width: 50,
         valueFormatter: (params) => valueFormatter(params, false),
         tooltip: (params) => valueFormatter(params, true),
@@ -51,7 +56,7 @@ export const columnDefs = [
         field: "agreed",
         cellClass: "cell-edit-text",
         autoHeight: true,
-        editable: true,
+        editable: isEditable,
         width: 50,
         valueFormatter: (params) => valueFormatter(params, false),
         tooltip: (params) => valueFormatter(params, true),
@@ -62,7 +67,7 @@ export const columnDefs = [
         field: "newValue",
         cellClass: "cell-edit-text",
         autoHeight: true,
-        editable: true,
+        editable: isEditable,
         width: 50,
         valueFormatter: (params) => valueFormatter(params, false),
         tooltip: (params) => valueFormatter(params, true),

@@ -1,4 +1,12 @@
-# t2
+t2
+
+code runner links:
+
+CODESANDBOX: https://codesandbox.io/s/github/ahmedagadir/t2/tree/main/projects/t2-${TICKET}"
+STACKBLITZ: https://stackblitz.com/github/ahmedagadir/t2/tree/main/projects/t2-${TICKET}"
+
+
+steps:
 
 add the following to your .zshrc file
 (if you cant find your zsh file see https://superuser.com/questions/886132/where-is-the-zshrc-file-on-mac):
@@ -21,4 +29,6 @@ change the codesandbox and stackblitz links to refer to your github
 run the projects:
 (make sure youre using zsh shell):
 t2-create-react.sh TICKET="11111" TEMPLATE="react"
+
+
 
