@@ -24,6 +24,7 @@ chmod -R 755 *
 rsync -a $TEMPLATE_PROJECT_PATH/import/ $TEMPLATE_PROJECT_PATH
 rm -rf $TEMPLATE_PROJECT_PATH/import/*
 
+# install updated dependancies 
 npm i --save --prefix $TEMPLATE_PROJECT_PATH && /
 
 # delete import folder
