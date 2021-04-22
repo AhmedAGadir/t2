@@ -17,10 +17,13 @@ chmod -R 755 *
 cd import
 rm index.html systemjs-angular-loader.js systemjs.config.js main.ts
 cd ..
-rm import
+
 # overwrite template with imported files
 rsync -a $PROJECT_LOCATION/import/ $PROJECT_LOCATION/src
 rm -rf $PROJECT_LOCATION/import/*
+
+# delete import folder
+rm import
 
 # update repo
 git add . 
