@@ -9,6 +9,10 @@
 </template>
 
 <script>
+import "ag-grid-community/dist/styles/ag-grid.css";
+import "ag-grid-community/dist/styles/ag-theme-alpine.css";
+import { AgGridVue } from "ag-grid-vue";
+
 export default {
   name: "App",
   data() {
