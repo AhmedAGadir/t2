@@ -8,9 +8,17 @@ EXIT_IF_PROJECT_ALREADY_EXIST="$T2_HOME/scripts/helpers/exit-if-project-already-
 APPLY_TEMPLATE_IF_PROVIDED="$T2_HOME/scripts/helpers/apply-template-if-provided.sh"
 
 read -p "Enter JIRA ticket number:" TICKET
-read -p "Enter template framework e.g. angular, react, vue, vanilla:" TEMPLATE
+
+PS3="Select a framework: "
+
+select TEMPLATE in angular react vue vanilla 
+do
+    echo "Selected framework: $TEMPLATE"
+    break;
+done
 
 PROJECT_DIR_PATH="$T2_HOME/projects/t2-$TICKET"
+
 source $EXIT_IF_NO_TICKET_PROVIDED #USES PROJECT PATH
 source $EXIT_IF_PROJECT_ALREADY_EXIST #  PROJECT WITH THE TICKET NR ALREADY EXIST = EXIT
 
