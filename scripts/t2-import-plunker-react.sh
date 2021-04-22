@@ -3,7 +3,7 @@
 read -p "Enter react ticket number:" TICKET_NUMBER
 read -p "Enter project name in downloads folder:" PROJECT_TO_IMPORT_NAME
 
-PROJECT_TO_IMPORT_LOCATION = "/Users/ahmedgadir/Downloads/$PROJECT_TO_IMPORT_NAME"
+PROJECT_TO_IMPORT_LOCATION="/Users/ahmedgadir/Downloads/$PROJECT_TO_IMPORT_NAME"
 PROJECT_LOCATION="$T2_HOME/projects/t2-$TICKET_NUMBER"
 
 cd $PROJECT_LOCATION
