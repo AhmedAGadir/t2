@@ -19,7 +19,8 @@ rm index.html systemjs-angular-loader.js systemjs.config.js main.ts
 cd ..
 
 # overwrite template with imported files
-rsync -a $PROJECT_LOCATION/import/ $PROJECT_LOCATION/src
+# rsync -a $PROJECT_LOCATION/import/ $PROJECT_LOCATION/src
+rsync -a $PROJECT_LOCATION/import/ $PROJECT_LOCATION/
 rm -rf $PROJECT_LOCATION/import/*
 
 # delete import folder
@@ -27,5 +28,5 @@ rm import
 
 # update repo
 git add . 
-git commit -m 'update'
+git commit -m 'imported project and overwrote template for T2-' + $TICKET_NUMBER
 git push

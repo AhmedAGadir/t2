@@ -29,5 +29,5 @@ rm import
 
 # update repo
 git add . 
-git commit -m 'update'
+git commit -m 'imported project and overwrote template for T2-' + $TICKET_NUMBER
 git push
