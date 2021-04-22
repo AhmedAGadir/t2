@@ -1,37 +1,73 @@
-import { Component, ViewChild } from '@angular/core';
-import { TabsetComponent, TabDirective } from 'ngx-bootstrap/tabs';
+import { Component } from "@angular/core";
+import "ag-grid-enterprise";
+import "ag-grid-community/dist/styles/ag-grid.css";
+import "ag-grid-community/dist/styles/ag-theme-alpine.css";
+import { HttpClient } from "@angular/common/http";
+
 @Component({
-  selector: 'my-app',
-  templateUrl: './app.component.html',
-  styleUrls: [ './app.component.css' ]
+  selector: "my-app",
+  template: `<ag-grid-angular
+    #agGrid
+    style="width: 90%; height: 500px;"
+    id="myGrid"
+    class="ag-theme-alpine"
+    [columnDefs]="columnDefs"
+    [defaultColDef]="defaultColDef"
+    [enableRangeSelection]="true"
+    [rowData]="rowData"
+    (gridReady)="onGridReady($event)"
+  ></ag-grid-angular>`
 })
-export class AppComponent  {
-  disableSwitching: boolean;
-  @ViewChild('tabset') tabset: TabsetComponent;
-  @ViewChild('first') first: TabDirective;
-  @ViewChild('second') second: TabDirective;
+export class AppComponent {
+  public gridApi: any;
+  public gridColumnApi: any;
+  public columnDefs: any;
+  public defaultColDef: any;
+  public rowData: any;
 
-  confirmTabSwitch($event) {
-    if (this.disableSwitching) {
-      const confirm = window.confirm('Discard changes and switch tab?');
-      if (confirm) {
-        this.disableSwitching = false;
-        this.second.active = true;
-      }
-    }
+  constructor(private http: HttpClient) {
+    this.columnDefs = [
+      {
+        field: "athlete",
+        minWidth: 150
+      },
+      {
+        field: "age",
+        maxWidth: 90
+      },
+      {
+        field: "country",
+        minWidth: 150
+      },
+      {
+        field: "year",
+        maxWidth: 90
+      },
+      {
+        field: "date",
+        minWidth: 150
+      },
+      {
+        field: "sport",
+        minWidth: 150
+      },
+      { field: "gold" },
+      { field: "silver" },
+      { field: "bronze" },
+      { field: "total" }
+    ];
+    this.defaultColDef = {
+      flex: 1,
+      minWidth: 100
+    };
   }
-   
-  columnDefs = [{ field: "make" }, { field: "model" }, { field: "price" }];
 
-  rowData = [
-    { make: "Toyota", model: "Celica", price: 35000 },
-    { make: "Ford", model: "Mondeo", price: 32000 },
-    { make: "Porsche", model: "Boxter", price: 72000 }
-  ];
+  onGridReady(params: { api: any; columnApi: any }) {
+    this.gridApi = params.api;
+    this.gridColumnApi = params.columnApi;
 
-   onFirstDataRendered(params) {
-    params.columnApi.autoSizeAllColumns();
+    this.http.get("https://www.ag-grid.com/example-assets/olympic-winners.json").subscribe((data) => {
+      this.rowData = data;
+    });
   }
-  
 }
-
