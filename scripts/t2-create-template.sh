@@ -44,8 +44,8 @@ then
 elif [ "$TEMPLATE" == "vanilla" ]
 then
     echo 'this is a vanilla js project'
-    # cp -r $TEMPLATE_DIR_PATH/. $PROJECT_DIR_PATH
-    # npm i --prefix $PROJECT_DIR_PATH && /
+    cp -r $TEMPLATE_DIR_PATH/. $PROJECT_DIR_PATH
+    npm i --prefix $PROJECT_DIR_PATH && /
 else 
     echo "$TEMPLATE not recognised"
 fi
