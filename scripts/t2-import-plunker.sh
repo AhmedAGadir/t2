@@ -1,53 +1,31 @@
 #!/usr/bin/env bash
 
-# 1) create angular project
-# 2) create folder import
-# 3) fetch content of plunker and put in import folder
-# 4) override? copy from 
+read -p "Enter ticket number:" TICKET_NUMBER
+read -p "Enter project name in downloads folder:" PROJECT_TO_IMPORT_NAME
 
-T2_CREATE_ANGULAR="$T2_HOME/scripts/t2-create-angular.sh"
-
-read -p "Enter angular ticket number:" TICKET_NUMBER
-
-source $T2_CREATE_ANGULAR TICKET=$TICKET_NUMBER TEMPLATE="angular"
-
+PROJECT_TO_IMPORT_LOCATION="/Users/ahmedgadir/Downloads/$PROJECT_TO_IMPORT_NAME"
 PROJECT_LOCATION="$T2_HOME/projects/t2-$TICKET_NUMBER"
 
 cd $PROJECT_LOCATION
 
-# pwd
-
+# create import folder
 mkdir import
-
-cp -r "/Users/ahmedgadir/Downloads/project_angular/" "$PROJECT_LOCATION/import"
-
-# sudo mount -o remount,rw "$PROJECT_DIR_PATH/src"
-# chmod - r 777 *
-# chmod -R 777 src
-
-ls -l 
-
+# import project from downloads folder
+cp -r "$PROJECT_TO_IMPORT_LOCATION/" "$PROJECT_LOCATION/import"
+# change permissions, make writeable
 chmod -R 755 *
 
-# ls -l
+# remove files we dont need from the imported folder
+# rm import/index.html import/systemjs-angular-loader.js import/systemjs.config.js import/main.ts
 
-cd import
-
-rm index.html systemjs-angular-loader.js systemjs.config.js main.ts
-
-cd ..
-
-rm import
-
-#  didnt work
-# cp -rf "$PROJECT_LOCATION/import/" "$PROJECT_DIR_PATH/src"
-# mv -v $PROJECT_LOCATION/import/* $PROJECT_LOCATION/src
-# mv -f $PROJECT_LOCATION/import/* $PROJECT_LOCATION/src
-
-# works
+# overwrite template with imported files
 rsync -a $PROJECT_LOCATION/import/ $PROJECT_LOCATION/src
 rm -rf $PROJECT_LOCATION/import/*
 
+# delete import folder
+rm -r import
+
+# update repo
 git add . 
-git commit -m 'update'
+git commit -m 'imported project and overwrote template for T2-' + $TICKET_NUMBER
 git push
