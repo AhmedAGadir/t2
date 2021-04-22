@@ -25,7 +25,6 @@ const valueFormatter = (params, isTooltip = false) => {
 
 const isEditable = params => {
     return params.node.rowPinned !== 'bottom'
-
 }
 
 export const columnDefs = [
