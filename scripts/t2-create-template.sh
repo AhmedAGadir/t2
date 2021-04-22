@@ -27,28 +27,54 @@ TEMPLATE_DIR_PATH="$T2_HOME/templates/$TEMPLATE"
 git pull && /
 
 
-if [ "$TEMPLATE" == "angular" ] 
-then
-    ng new my-ag-grid --directory "./projects/t2-$TICKET" --style scss --routing false --strict true --skip-git true && /
-    npm i --save ag-grid-angular ag-grid-community ag-grid-enterprise --prefix $PROJECT_DIR_PATH && /
-elif [ "$TEMPLATE" == "react" ]
-then
-    npx create-react-app $PROJECT_DIR_PATH && /
-    npm i --save ag-grid-react ag-grid-community ag-grid-enterprise --prefix $PROJECT_DIR_PATH && /
-elif [ "$TEMPLATE" == "vue" ]
-then
-    cd $T2_HOME/projects && /
-    vue create -d t2-$TICKET && /
-    npm i --save ag-grid-vue ag-grid-community ag-grid-enterprise vue-property-decorator@^8.0.0 --prefix $PROJECT_DIR_PATH && /
-    cd $T2_HOME &&/
-elif [ "$TEMPLATE" == "vanilla" ]
-then
-    echo 'this is a vanilla js project'
-    cp -r $TEMPLATE_DIR_PATH/. $PROJECT_DIR_PATH
-    npm i --prefix $PROJECT_DIR_PATH && /
-else 
+# if [ "$TEMPLATE" == "angular" ] 
+# then
+#     ng new my-ag-grid --directory "./projects/t2-$TICKET" --style scss --routing false --strict true --skip-git true && /
+#     npm i --save ag-grid-angular ag-grid-community ag-grid-enterprise --prefix $PROJECT_DIR_PATH && /
+# elif [ "$TEMPLATE" == "react" ]
+# then
+#     npx create-react-app $PROJECT_DIR_PATH && /
+#     npm i --save ag-grid-react ag-grid-community ag-grid-enterprise --prefix $PROJECT_DIR_PATH && /
+# elif [ "$TEMPLATE" == "vue" ]
+# then
+#     cd $T2_HOME/projects && /
+#     vue create -d t2-$TICKET && /
+#     npm i --save ag-grid-vue ag-grid-community ag-grid-enterprise vue-property-decorator@^8.0.0 --prefix $PROJECT_DIR_PATH && /
+#     cd $T2_HOME &&/
+# elif [ "$TEMPLATE" == "vanilla" ]
+# then
+#     echo 'this is a vanilla js project'
+#     cp -r $TEMPLATE_DIR_PATH/. $PROJECT_DIR_PATH
+#     npm i --prefix $PROJECT_DIR_PATH && /
+# else 
+#     echo "$TEMPLATE not recognised"
+# fi
+
+case "$TEMPLATE" in  
+    [angular])
+        ng new my-ag-grid --directory "./projects/t2-$TICKET" --style scss --routing false --strict true --skip-git true && /
+        npm i --save ag-grid-angular ag-grid-community ag-grid-enterprise --prefix $PROJECT_DIR_PATH && /
+        ;;
+    [react])
+        npx create-react-app $PROJECT_DIR_PATH && /
+        npm i --save ag-grid-react ag-grid-community ag-grid-enterprise --prefix $PROJECT_DIR_PATH && /
+        ;;
+    [vue])
+        cd $T2_HOME/projects && /
+        vue create -d t2-$TICKET && /
+        npm i --save ag-grid-vue ag-grid-community ag-grid-enterprise vue-property-decorator@^8.0.0 --prefix $PROJECT_DIR_PATH && /
+        cd $T2_HOME &&/
+        ;;
+    [vanilla])
+        echo 'this is a vanilla js project'
+        cp -r $TEMPLATE_DIR_PATH/. $PROJECT_DIR_PATH
+        npm i --prefix $PROJECT_DIR_PATH && /
+        ;;
+    *) 
+    # default
     echo "$TEMPLATE not recognised"
-fi
+    ;;
+esac
 
 source $APPLY_TEMPLATE_IF_PROVIDED
 
