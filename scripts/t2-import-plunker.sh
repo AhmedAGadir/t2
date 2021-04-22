@@ -19,7 +19,8 @@ chmod -R 755 *
 # rm import/index.html import/systemjs-angular-loader.js import/systemjs.config.js import/main.ts
 
 # overwrite template with imported files
-rsync -a $PROJECT_LOCATION/import/ $PROJECT_LOCATION/src
+# rsync -a $PROJECT_LOCATION/import/ $PROJECT_LOCATION/src
+rsync -a $PROJECT_LOCATION/import/ $PROJECT_LOCATION
 rm -rf $PROJECT_LOCATION/import/*
 
 # delete import folder
