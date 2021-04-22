@@ -39,7 +39,7 @@ elif [ "$TEMPLATE" == "vue" ]
 then
     cd $T2_HOME/projects && /
     vue create -d t2-$TICKET && /
-    npm i --save ag-grid-vue ag-grid-community ag-grid-enterprise vue-property-decorator@^8.0.0 && /
+    npm i --save ag-grid-vue ag-grid-community ag-grid-enterprise vue-property-decorator@^8.0.0 --prefix $PROJECT_DIR_PATH && /
     cd $T2_HOME &&/
 elif [ "$TEMPLATE" == "vanilla" ]
 then
@@ -53,7 +53,7 @@ fi
 source $APPLY_TEMPLATE_IF_PROVIDED
 
 git add . && /
-git commit -m "t2-$TICKET  with $TEMPLATE template created" && /
+git commit -m "t2-$TICKET with $TEMPLATE template created" && /
 git push && /
 
 echo "complete"

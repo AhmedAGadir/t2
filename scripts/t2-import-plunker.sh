@@ -15,8 +15,7 @@ cp -r "$PROJECT_TO_IMPORT_PATH/" "$TEMPLATE_PROJECT_PATH/import"
 # change permissions, make writeable
 chmod -R 755 *
 
-# remove files we dont need from the imported folder
-# e.g.
+# remove files we dont need from the imported folder e.g.
 # rm import/index.html import/systemjs-angular-loader.js import/systemjs.config.js import/main.ts
 
 # overwrite template with imported files
