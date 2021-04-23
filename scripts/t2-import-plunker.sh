@@ -29,7 +29,14 @@ chmod -R 755 *
 # rm -rf $TEMPLATE_PROJECT_PATH/import/*
 
 
+read -p "Enter a space seperated list of files/folders you want to import:" IMPORT_LIST
 
+for IMPORT_ITEM in $IMPORT_LIST 
+    do 
+        rsync -a $TEMPLATE_PROJECT_PATH/import/$IMPORT_ITEM $TEMPLATE_PROJECT_PATH
+        rm -rf $TEMPLATE_PROJECT_PATH/import/$IMPORT_ITEM*
+
+done
 
 # =========================================
 # =========================================

@@ -48,7 +48,6 @@ case "$TEMPLATE" in
         ;;
     'empty')
         echo 'empty project being created'
-        echo 'mkdir ' + $PROJECT_DIR_PATH 
         mkdir $PROJECT_DIR_PATH
         ;;
     *) 
