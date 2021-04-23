@@ -46,7 +46,7 @@ case "$TEMPLATE" in
         cp -r $TEMPLATE_DIR_PATH/. $PROJECT_DIR_PATH
         npm i --prefix $PROJECT_DIR_PATH && /
         ;;
-    'blank')
+    'empty')
         echo 'empty project being created'
         echo 'mkdir ' + $PROJECT_DIR_PATH 
         mkdir $PROJECT_DIR_PATH
