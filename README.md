@@ -9,6 +9,9 @@ STACKBLITZ: https://stackblitz.com/github/ahmedagadir/t2/tree/main/projects/t2-$
 steps:
 
 add the following to your .zshrc file
+to open the file run: 
+$ code  ~/.zshrc
+
 (if you cant find your zsh file see https://superuser.com/questions/886132/where-is-the-zshrc-file-on-mac):
 
 add the following paths there (replace with your file paths):
