@@ -11,7 +11,7 @@ read -p "Enter JIRA ticket number:" TICKET
 
 PS3="Select a framework: "
 
-select TEMPLATE in angular react vue vanilla blank
+select TEMPLATE in angular react vue vanilla empty
 do
     echo "Selected framework: $TEMPLATE"
     break;
@@ -27,6 +27,10 @@ TEMPLATE_DIR_PATH="$T2_HOME/templates/$TEMPLATE"
 git pull && /
 
 case "$TEMPLATE" in  
+    'blank')
+        echo 'empty project being created'
+        mkdir $PROJECT_DIR_PATH;
+        ;;
     'angular')
         ng new my-ag-grid --directory "./projects/t2-$TICKET" --style scss --routing false --strict true --skip-git true && /
         npm i --save ag-grid-angular ag-grid-community ag-grid-enterprise --prefix $PROJECT_DIR_PATH && /
@@ -45,9 +49,6 @@ case "$TEMPLATE" in
         echo 'this is a vanilla js project'
         cp -r $TEMPLATE_DIR_PATH/. $PROJECT_DIR_PATH
         npm i --prefix $PROJECT_DIR_PATH && /
-        ;;
-    'blank')
-        echo 'empty project being created'
         ;;
     *) 
     echo "$TEMPLATE not recognised"
