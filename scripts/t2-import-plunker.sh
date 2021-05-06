@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# imports a project from your downloads folder and copies the files to a template project (Created from t2-create.sh)
+
 read -p "Enter JIRA ticket number:" TICKET_NUMBER
 read -p "Enter project name in downloads folder:" PROJECT_TO_IMPORT_NAME
 

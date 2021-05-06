@@ -1,11 +1,13 @@
+'use strict';
+
 import React, { Component } from 'react';
+import { render } from 'react-dom';
 import { AgGridReact } from 'ag-grid-react';
 import 'ag-grid-enterprise';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
-import './App.css';
 
-export default class App extends Component {
+class GridExample extends Component {
   constructor(props) {
     super(props);
 
@@ -52,26 +54,18 @@ export default class App extends Component {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
 
-    const httpRequest = new XMLHttpRequest();
     const updateData = (data) => {
       this.setState({ rowData: data });
     };
 
-    httpRequest.open(
-      'GET',
-      'https://www.ag-grid.com/example-assets/olympic-winners.json'
-    );
-    httpRequest.send();
-    httpRequest.onreadystatechange = () => {
-      if (httpRequest.readyState === 4 && httpRequest.status === 200) {
-        updateData(JSON.parse(httpRequest.responseText));
-      }
-    };
+    fetch('https://www.ag-grid.com/example-assets/olympic-winners.json')
+      .then((resp) => resp.json())
+      .then((data) => updateData(data));
   };
 
   render() {
     return (
-      <div style={{ width: '90%', height: '500px', margin: 'auto', marginTop: "100px" }}>
+      <div style={{ width: '100%', height: '100%' }}>
         <div
           id="myGrid"
           style={{
@@ -92,3 +86,5 @@ export default class App extends Component {
     );
   }
 }
+
+render(<GridExample></GridExample>, document.querySelector('#root'));
