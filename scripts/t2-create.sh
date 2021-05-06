@@ -11,7 +11,7 @@ read -p "Enter JIRA ticket number:" TICKET
 
 PS3="Select a framework: "
 
-select TEMPLATE in angular react vue vanilla empty
+select TEMPLATE in angular react vue vanilla
 do
     echo "Selected framework: $TEMPLATE"
     break;
@@ -45,10 +45,6 @@ case "$TEMPLATE" in
         echo 'this is a vanilla js project'
         cp -r $TEMPLATE_DIR_PATH/. $PROJECT_DIR_PATH
         npm i --prefix $PROJECT_DIR_PATH && /
-        ;;
-    'empty')
-        echo 'empty project being created'
-        mkdir $PROJECT_DIR_PATH
         ;;
     *) 
     echo "$TEMPLATE not recognised"
