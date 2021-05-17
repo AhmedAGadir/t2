@@ -22,8 +22,8 @@ code .
 
 
 
-# run this script to download an ag-grid project
-#  (e.g. range-selection) locally
+# # run this script to download an ag-grid project
+# # (e.g. range-selection) locally
 
 # # curl URL -X GET
 
