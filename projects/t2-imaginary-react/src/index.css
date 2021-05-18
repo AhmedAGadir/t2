@@ -1,8 +1,20 @@
-body {
-    padding: 1rem;
+html, body, #root {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    box-sizing: border-box;
+    -webkit-overflow-scrolling: touch;
+}
+
+html {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 0;
     overflow: auto;
 }
 
-#myGrid {
-    height: 100vh !important;
+body {
+    padding: 1rem;
+    overflow: auto;
 }
