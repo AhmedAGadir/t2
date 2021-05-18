@@ -1,62 +1,23 @@
 'use strict';
 
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import { render } from 'react-dom';
-import { AgGridReact } from 'ag-grid-react';
+import { AgGridReact, AgGridColumn } from 'ag-grid-react';
 import 'ag-grid-enterprise';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
-import './index.css'
 
-class GridExample extends Component {
-  constructor(props) {
-    super(props);
+const GridExample = () => {
+  const [gridApi, setGridApi] = useState(null);
+  const [gridColumnApi, setGridColumnApi] = useState(null);
+  const [rowData, setRowData] = useState(null);
 
-    this.state = {
-      columnDefs: [
-        {
-          field: 'athlete',
-          minWidth: 150,
-        },
-        {
-          field: 'age',
-          maxWidth: 90,
-        },
-        {
-          field: 'country',
-          minWidth: 150,
-        },
-        {
-          field: 'year',
-          maxWidth: 90,
-        },
-        {
-          field: 'date',
-          minWidth: 150,
-        },
-        {
-          field: 'sport',
-          minWidth: 150,
-        },
-        { field: 'gold' },
-        { field: 'silver' },
-        { field: 'bronze' },
-        { field: 'total' },
-      ],
-      defaultColDef: {
-        flex: 1,
-        minWidth: 100,
-      },
-      rowData: null,
-    };
-  }
-
-  onGridReady = (params) => {
-    this.gridApi = params.api;
-    this.gridColumnApi = params.columnApi;
+  const onGridReady = (params) => {
+    setGridApi(params.api);
+    setGridColumnApi(params.columnApi);
 
     const updateData = (data) => {
-      this.setState({ rowData: data });
+      setRowData(data);
     };
 
     fetch('https://www.ag-grid.com/example-assets/olympic-winners.json')
@@ -64,28 +25,39 @@ class GridExample extends Component {
       .then((data) => updateData(data));
   };
 
-  render() {
-    return (
-      <div style={{ width: '100%', height: '100%' }}>
-        <div
-          id="myGrid"
-          style={{
-            height: '100%',
-            width: '100%',
+  return (
+    <div style={{ width: '100%', height: '100%' }}>
+      <div
+        id="myGrid"
+        style={{
+          height: '100%',
+          width: '100%',
+        }}
+        className="ag-theme-alpine"
+      >
+        <AgGridReact
+          defaultColDef={{
+            flex: 1,
+            minWidth: 100,
           }}
-          className="ag-theme-alpine"
+          enableRangeSelection={true}
+          onGridReady={onGridReady}
+          rowData={rowData}
         >
-          <AgGridReact
-            columnDefs={this.state.columnDefs}
-            defaultColDef={this.state.defaultColDef}
-            enableRangeSelection={true}
-            onGridReady={this.onGridReady}
-            rowData={this.state.rowData}
-          />
-        </div>
+          <AgGridColumn field="athlete" minWidth={150} />
+          <AgGridColumn field="age" maxWidth={90} />
+          <AgGridColumn field="country" minWidth={150} />
+          <AgGridColumn field="year" maxWidth={90} />
+          <AgGridColumn field="date" minWidth={150} />
+          <AgGridColumn field="sport" minWidth={150} />
+          <AgGridColumn field="gold" />
+          <AgGridColumn field="silver" />
+          <AgGridColumn field="bronze" />
+          <AgGridColumn field="total" />
+        </AgGridReact>
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 render(<GridExample></GridExample>, document.querySelector('#root'));
