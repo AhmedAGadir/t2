@@ -12,19 +12,65 @@ cd $PROJECT_DIR_PATH
 
 chmod -R 755 *
 
-curl -o src/index.js https://www.ag-grid.com/examples/range-selection/range-selection/packages/react/index.jsx 
+
+
+
+PS3="Select an AG Grid template: "
+
+select DOCS_EXAMPLE in range-selection row-grouping
+do
+    echo "Selected AG Grid templalate: $DOCS_EXAMPLE"
+    break;
+done
+
+DOCS_URL=''
+
+case "$DOCS_EXAMPLE" in  
+    'range-selection')
+        DOCS_URL='https://www.ag-grid.com/examples/range-selection/range-selection/packages/reactFunctional/index.jsx'
+        ;;
+    'row-grouping')
+        DOCS_URL='https://www.ag-grid.com/examples/grouping/auto-column-group/packages/reactFunctional/index.jsx'
+        ;;
+    *) 
+    echo "$DOCS_EXAMPLE not recognised"
+    ;;
+esac
+
+
+curl -o src/index.js $DOCS_URL 
 
 rm -rf src/App.js src/App.css src/App.test.js src/logo.svg
 
 cp -r "$T2_HOME/templates/react/src/index.css" "$PROJECT_DIR_PATH/src"
 
 # modify template
-IMPORT_INDEX_CSS="import './index.css'"
+INJECT_CSS="import './index.css'"
 # if using mac install gsed ---> brew install gsed
 # if using windows use sed 
-gsed -i "8a $IMPORT_INDEX_CSS" "$PROJECT_DIR_PATH/src/index.js"
+gsed -i "8a $INJECT_CSS" "$PROJECT_DIR_PATH/src/index.js"
+
+
+git add . && /
+git commit -m "t2-$TICKET with $DOCS_EXAMPLE docs template created" && /
+git push && /
 
 code .
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

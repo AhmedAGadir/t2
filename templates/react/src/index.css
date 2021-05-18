@@ -1,3 +1,8 @@
+body {
+    padding: 1rem;
+    overflow: auto;
+}
+
 #myGrid {
     height: 100vh !important;
 }
