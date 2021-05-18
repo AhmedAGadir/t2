@@ -6,11 +6,23 @@ cd $T2_HOME
 
 read -p "Enter JIRA ticket number:" TICKET
 
-cd $T2_HOME/projects/t2-$TICKET
+PROJECT_DIR_PATH="$T2_HOME/projects/t2-$TICKET"
+
+cd $PROJECT_DIR_PATH
 
 chmod -R 755 *
 
-curl -o src/App.js https://www.ag-grid.com/examples/range-selection/range-selection/packages/react/index.jsx 
+curl -o src/index.js https://www.ag-grid.com/examples/range-selection/range-selection/packages/react/index.jsx 
+
+rm -rf src/App.js src/App.css src/App.test.js src/logo.svg
+
+cp -r "$T2_HOME/templates/react/src/index.css" "$PROJECT_DIR_PATH/src"
+
+# modify template
+IMPORT_INDEX_CSS="import './index.css'"
+# if using mac install gsed ---> brew install gsed
+# if using windows use sed 
+gsed -i "8a $IMPORT_INDEX_CSS" "$PROJECT_DIR_PATH/src/index.js"
 
 code .
 
