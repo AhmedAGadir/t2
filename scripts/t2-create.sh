@@ -16,7 +16,7 @@ PROJECT_DIR_PATH="$T2_HOME/projects/t2-$TICKET"
 
 # PROJECT WITH THE TICKET NR ALREADY EXIST = EXIT
 if test -d "$PROJECT_DIR_PATH"; then
-  echo "PROJECT WITH THE TICKET NR ALREADY EXIST"
+  echo "PROJECT WITH THE TICKET NAME ALREADY EXIST"
   exit 1
 fi
 
@@ -32,6 +32,7 @@ TEMPLATE_DIR_PATH="$T2_HOME/templates/$FRAMEWORK"
 
 # git pull && /
 
+# create project
 case "$FRAMEWORK" in  
     'angular')
         ng new my-ag-grid --directory "./projects/t2-$TICKET" --style scss --routing false --strict true --skip-git true && /
@@ -48,7 +49,7 @@ case "$FRAMEWORK" in
         cd $T2_HOME &&/
         ;;
     'vanilla')
-        echo 'this is a vanilla js project'
+        echo 'creating a vanilla js project'
         cp -r $TEMPLATE_DIR_PATH/. $PROJECT_DIR_PATH
         npm i --prefix $PROJECT_DIR_PATH && /
         ;;
@@ -57,6 +58,7 @@ case "$FRAMEWORK" in
     ;;
 esac
 
+# apply template
 echo "applying $FRAMEWORK template"
 'cp' -rf $TEMPLATE_DIR_PATH/* $PROJECT_DIR_PATH
 

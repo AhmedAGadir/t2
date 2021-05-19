@@ -1,9 +1,24 @@
 #!/usr/bin/env bash
 
-EXIT_IF_NOT_RUNNING_FROM_PROJECT="$T2_HOME/scripts/helpers/exit-if-not-running-from-project.sh"
+# ============================
+# variables to be defined before sourcing this file:
 
-source $EXIT_IF_NOT_RUNNING_FROM_PROJECT
+# FRAMEWORK
+# FILES_TO_REMOVE
+# ============================
 
+
+# 
+
+T2_PROJECTS_DIR_PATH="$T2_HOME/projects"
+
+if [[ $PWD != $T2_PROJECTS_DIR_PATH/** ]]
+then
+    echo 'you must run this script from within a subdirectory inside $T2_PROJECTS'
+    exit 1
+fi
+
+# change read-write permission
 chmod -R 755 *
 
 PS3="Select an AG Grid template: "
@@ -18,10 +33,10 @@ DOCS_URL=''
 
 case "$DOCS_EXAMPLE" in  
     'range-selection')
-        DOCS_URL='https://www.ag-grid.com/examples/range-selection/range-selection/packages/reactFunctional/index.jsx'
+        DOCS_URL="https://www.ag-grid.com/examples/range-selection/range-selection/packages/$FRAMEWORK/index.jsx"
         ;;
     'row-grouping')
-        DOCS_URL='https://www.ag-grid.com/examples/grouping/auto-column-group/packages/reactFunctional/index.jsx'
+        DOCS_URL="https://www.ag-grid.com/examples/grouping/auto-column-group/packages/$FRAMEWORK/index.jsx"
         ;;
     *) 
     echo "$DOCS_EXAMPLE not recognised"
@@ -32,7 +47,7 @@ curl -o src/index.js $DOCS_URL
 
 echo 'removing unwanted files...'
 
-rm -rf src/App.js src/App.css src/App.test.js src/logo.svg
+rm -rf "src/App.js src/App.css src/App.test.js src/logo.svg"
 
 
 echo 'injecting stylesheets...'
@@ -46,22 +61,6 @@ INJECT_CSS="import './index.css'"
 gsed -i "8a $INJECT_CSS" "$PWD/src/index.js"
 
 echo "[$FRAMEWORK]$DOCS_EXAMPLE docs example imported!"
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 # ==================================
