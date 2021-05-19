@@ -2,10 +2,7 @@
 
 cd $T2_HOME
 
-# SUB ROUTINES - HELPERS PATHS
-EXIT_IF_NO_TICKET_PROVIDED="$T2_HOME/scripts/helpers/exit-if-no-ticket-provided.sh"
-EXIT_IF_PROJECT_ALREADY_EXIST="$T2_HOME/scripts/helpers/exit-if-project-already-exists.sh"
-APPLY_TEMPLATE_IF_PROVIDED="$T2_HOME/scripts/helpers/apply-template-if-provided.sh"
+# APPLY_TEMPLATE_IF_PROVIDED="$T2_HOME/scripts/helpers/apply-template-if-provided.sh"
 
 read -p "Enter JIRA ticket number:" TICKET
 
@@ -19,8 +16,19 @@ done
 
 PROJECT_DIR_PATH="$T2_HOME/projects/t2-$TICKET"
 
-source $EXIT_IF_NO_TICKET_PROVIDED #USES PROJECT PATH
-source $EXIT_IF_PROJECT_ALREADY_EXIST #  PROJECT WITH THE TICKET NR ALREADY EXIST = EXIT
+# Checks if the TICKET EXISTS, IF NOT EXIT THE PROCESS
+if [ "$TICKET" ]; then
+  echo "CREATING $TICKET"
+else
+  echo "NO TICKET PROVIDED"
+  exit 1
+fi
+
+# PROJECT WITH THE TICKET NR ALREADY EXIST = EXIT
+if test -d "$PROJECT_DIR_PATH"; then
+  echo "PROJECT WITH THE TICKET NR ALREADY EXIST"
+  exit 1
+fi
 
 TEMPLATE_DIR_PATH="$T2_HOME/templates/$TEMPLATE"
 
@@ -51,7 +59,7 @@ case "$TEMPLATE" in
     ;;
 esac
 
-source $APPLY_TEMPLATE_IF_PROVIDED
+# source $APPLY_TEMPLATE_IF_PROVIDED
 
 git add . && /
 git commit -m "t2-$TICKET with $TEMPLATE template created" && /

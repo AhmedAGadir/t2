@@ -1,8 +1,11 @@
+#!/usr/bin/env bash
+
 # run this script after creating a template project
 # in order to copy desired files from selected ag-grid
 # plunker templates (e.g. range-selection) onto the template 
 
 cd $T2_HOME
+
 
 read -p "Enter JIRA ticket number:" TICKET
 
@@ -50,10 +53,6 @@ INJECT_CSS="import './index.css'"
 # if using windows use sed 
 gsed -i "8a $INJECT_CSS" "$PROJECT_DIR_PATH/src/index.js"
 
-echo "complete"
-echo "LINK TO CODESANDBOX: https://codesandbox.io/s/github/ahmedagadir/t2/tree/main/projects/t2-${TICKET}"
-echo "LINK TO STACKBLITZ: https://stackblitz.com/github/ahmedagadir/t2/tree/main/projects/t2-${TICKET}"
-
 git add . && /
 git commit -m "t2-$TICKET with $DOCS_EXAMPLE docs template created" && /
 git push && /
@@ -100,3 +99,4 @@ code .
 # curl -o systemjs.config.js https://www.ag-grid.com/example-runner/grid-react-boilerplate/systemjs.config.js
 
 # code
+
