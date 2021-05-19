@@ -4,19 +4,15 @@
 # in order to copy desired files from selected ag-grid
 # plunker templates (e.g. range-selection) onto the template 
 
-cd $T2_HOME
+T2_PROJECTS="$T2_HOME/projects"
 
-
-read -p "Enter JIRA ticket number:" TICKET
-
-PROJECT_DIR_PATH="$T2_HOME/projects/t2-$TICKET"
-
-cd $PROJECT_DIR_PATH
+if [[ $PWD != $T2_PROJECTS/** ]]
+then
+    echo 'you must run this script within a subdirectory inside $T2_PROJECTS'
+    exit 1
+fi
 
 chmod -R 755 *
-
-
-
 
 PS3="Select an AG Grid template: "
 
@@ -53,9 +49,9 @@ INJECT_CSS="import './index.css'"
 # if using windows use sed 
 gsed -i "8a $INJECT_CSS" "$PROJECT_DIR_PATH/src/index.js"
 
-git add . && /
-git commit -m "t2-$TICKET with $DOCS_EXAMPLE docs template created" && /
-git push && /
+# git add . && /
+# git commit -m "t2-$TICKET with $DOCS_EXAMPLE docs template created" && /
+# git push && /
 
 code .
 
