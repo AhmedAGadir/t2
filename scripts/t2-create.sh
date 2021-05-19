@@ -4,16 +4,6 @@ cd $T2_HOME
 
 read -p "Enter JIRA ticket number:" TICKET
 
-PS3="Select a framework: "
-
-select TEMPLATE in angular react vue vanilla
-do
-    echo "Selected framework: $TEMPLATE"
-    break;
-done
-
-PROJECT_DIR_PATH="$T2_HOME/projects/t2-$TICKET"
-
 # Checks if the TICKET EXISTS, IF NOT EXIT THE PROCESS
 if [ "$TICKET" ]; then
   echo "CREATING $TICKET"
@@ -22,17 +12,27 @@ else
   exit 1
 fi
 
+PROJECT_DIR_PATH="$T2_HOME/projects/t2-$TICKET"
+
 # PROJECT WITH THE TICKET NR ALREADY EXIST = EXIT
 if test -d "$PROJECT_DIR_PATH"; then
   echo "PROJECT WITH THE TICKET NR ALREADY EXIST"
   exit 1
 fi
 
-TEMPLATE_DIR_PATH="$T2_HOME/templates/$TEMPLATE"
+PS3="Select a framework: "
 
-git pull && /
+select FRAMEWORK in angular react vue vanilla
+do
+    echo "Selected framework: $FRAMEWORK"
+    break;
+done
 
-case "$TEMPLATE" in  
+TEMPLATE_DIR_PATH="$T2_HOME/templates/$FRAMEWORK"
+
+# git pull && /
+
+case "$FRAMEWORK" in  
     'angular')
         ng new my-ag-grid --directory "./projects/t2-$TICKET" --style scss --routing false --strict true --skip-git true && /
         npm i --save ag-grid-angular ag-grid-community ag-grid-enterprise --prefix $PROJECT_DIR_PATH && /
@@ -53,8 +53,11 @@ case "$TEMPLATE" in
         npm i --prefix $PROJECT_DIR_PATH && /
         ;;
     *) 
-    echo "$TEMPLATE not recognised"
+    echo "$FRAMEWORK not recognised"
     ;;
 esac
+
+echo "applying $FRAMEWORK template"
+'cp' -rf $TEMPLATE_DIR_PATH/* $PROJECT_DIR_PATH
 
 code $PROJECT_DIR_PATH

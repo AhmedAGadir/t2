@@ -1,16 +1,8 @@
 #!/usr/bin/env bash
 
-# run this script after creating a template project
-# in order to copy desired files from selected ag-grid
-# plunker templates (e.g. range-selection) onto the template 
+EXIT_IF_NOT_RUNNING_FROM_PROJECT="$T2_HOME/scripts/helpers/exit-if-not-running-from-project.sh"
 
-T2_PROJECTS="$T2_HOME/projects"
-
-if [[ $PWD != $T2_PROJECTS/** ]]
-then
-    echo 'you must run this script within a subdirectory inside $T2_PROJECTS'
-    exit 1
-fi
+source $EXIT_IF_NOT_RUNNING_FROM_PROJECT
 
 chmod -R 755 *
 
@@ -36,25 +28,24 @@ case "$DOCS_EXAMPLE" in
     ;;
 esac
 
-
 curl -o src/index.js $DOCS_URL 
+
+echo 'removing unwanted files...'
 
 rm -rf src/App.js src/App.css src/App.test.js src/logo.svg
 
-cp -r "$T2_HOME/templates/react/src/index.css" "$PROJECT_DIR_PATH/src"
+
+echo 'injecting stylesheets...'
+
+cp -r "$T2_HOME/templates/react/src/index.css" "$PWD/src"
 
 # modify template
 INJECT_CSS="import './index.css'"
 # if using mac install gsed ---> brew install gsed
 # if using windows use sed 
-gsed -i "8a $INJECT_CSS" "$PROJECT_DIR_PATH/src/index.js"
+gsed -i "8a $INJECT_CSS" "$PWD/src/index.js"
 
-# git add . && /
-# git commit -m "t2-$TICKET with $DOCS_EXAMPLE docs template created" && /
-# git push && /
-
-code .
-
+echo "[$FRAMEWORK]$DOCS_EXAMPLE docs example imported!"
 
 
 
