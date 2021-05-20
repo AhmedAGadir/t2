@@ -24,7 +24,7 @@ PS3="Select a framework: "
 
 select FRAMEWORK in angular react vue vanilla
 do
-    echo "Selected framework: $FRAMEWORK"
+    echo "creating a $FRAMEWORK AG Grid template project..."
     break;
 done
 
@@ -58,8 +58,17 @@ case "$FRAMEWORK" in
     ;;
 esac
 
+cd "projects/t2-$TICKET"
+
+# change read-write permission
+chmod -R 755 *
+
 # apply template
 echo "applying $FRAMEWORK template"
 'cp' -rf $TEMPLATE_DIR_PATH/* $PROJECT_DIR_PATH
+
+# create ag-grid.config file
+echo 'creating ag-grid.config.sh...'
+echo "export FRAMEWORK=\"$FRAMEWORK\"" >> ag-grid.config.sh
 
 code $PROJECT_DIR_PATH
