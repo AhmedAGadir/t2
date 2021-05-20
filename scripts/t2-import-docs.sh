@@ -18,12 +18,11 @@ fi
 
 source "./ag-grid.config.sh"
 
-if [ "$FRAMEWORK" == "react" ] 
-then
-    FRAMEWORK="reactFunctional"
-fi
-
-echo $FRAMEWORK
+# if [ "$FRAMEWORK" == "react" ] 
+# then
+#     FRAMEWORK="reactFunctional"
+# fi
+# echo $FRAMEWORK
 
 PS3="Select an AG Grid template: "
 
@@ -52,7 +51,6 @@ curl -o src/index.js $DOCS_URL
 echo 'removing unwanted files...'
 
 rm -rf src/App.js src/App.css src/App.test.js src/logo.svg
-
 
 echo 'injecting stylesheets...'
 
