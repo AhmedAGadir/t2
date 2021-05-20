@@ -24,7 +24,7 @@ PS3="Select a framework: "
 
 select FRAMEWORK in angular react vue vanilla
 do
-    echo "creating a $FRAMEWORK AG Grid template project..."
+    echo "Creating a new $FRAMEWORK AG Grid template project..."
     break;
 done
 

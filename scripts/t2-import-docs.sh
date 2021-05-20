@@ -51,7 +51,7 @@ curl -o src/index.js $DOCS_URL
 
 echo 'removing unwanted files...'
 
-rm -rf "src/App.js src/App.css src/App.test.js src/logo.svg"
+rm -rf src/App.js src/App.css src/App.test.js src/logo.svg
 
 
 echo 'injecting stylesheets...'
@@ -64,7 +64,7 @@ INJECT_CSS="import './index.css'"
 # if using windows use sed 
 gsed -i "8a $INJECT_CSS" "$PWD/src/index.js"
 
-echo "[$FRAMEWORK]$DOCS_EXAMPLE docs example imported!"
+echo "[$FRAMEWORK]$DOCS_EXAMPLE docs injected!"
 
 
 # ==================================
