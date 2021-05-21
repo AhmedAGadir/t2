@@ -4,22 +4,24 @@ cd $T2_HOME
 
 read -p "Enter JIRA ticket number:" TICKET
 
-# Checks if the TICKET EXISTS, IF NOT EXIT THE PROCESS
+# if no ticket -> exit process 
 if [ "$TICKET" ]; then
-  echo "CREATING $TICKET"
+  echo "Creating $TICKET"
 else
-  echo "NO TICKET PROVIDED"
+  echo "No ticket provided"
   exit 1
 fi
 
 PROJECT_DIR_PATH="$T2_HOME/projects/t2-$TICKET"
 
-# PROJECT WITH THE TICKET NR ALREADY EXIST = EXIT
+# if project already exists -> exit process
 if test -d "$PROJECT_DIR_PATH"; then
-  echo "PROJECT WITH THE TICKET NAME ALREADY EXIST"
+  echo "Project with ticket name already exists"
   exit 1
 fi
 
+
+# select a framework
 PS3="Select a framework: "
 
 select FRAMEWORK in angular react vue vanilla
@@ -58,6 +60,7 @@ case "$FRAMEWORK" in
     ;;
 esac
 
+# cd into project
 cd "projects/t2-$TICKET"
 
 # change read-write permission
@@ -67,7 +70,7 @@ chmod -R 755 *
 echo "applying $FRAMEWORK template"
 'cp' -rf $TEMPLATE_DIR_PATH/* $PROJECT_DIR_PATH
 
-# create ag-grid.config file
+# create ag-grid.config file (contains framework)
 echo 'creating ag-grid.config.sh...'
 echo "export FRAMEWORK=\"$FRAMEWORK\"" >> ag-grid.config.sh
 

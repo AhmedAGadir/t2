@@ -2,12 +2,14 @@
 
 T2_PROJECTS_DIR_PATH="$T2_HOME/projects"
 
+# if running script from outside of our projects folder -> exit
 if [[ $PWD != $T2_PROJECTS_DIR_PATH/** ]]
 then
     echo "You must run this script from within a subdirectory inside $T2_PROJECTS"
     exit 1
 fi
 
+# if ag-grid.config.sh file missing -> exit
 if [[ -f ag-grid.config.sh ]]
 then
     echo 'reading ag-grid.config.sh file...'
@@ -16,14 +18,11 @@ else
     exit 1
 fi
 
+# import FRAMEWORK variable
 source "./ag-grid.config.sh"
+echo "This is a [$FRAMEWORK] project"
 
-# if [ "$FRAMEWORK" == "react" ] 
-# then
-#     FRAMEWORK="reactFunctional"
-# fi
-# echo $FRAMEWORK
-
+# select a docs example to import
 PS3="Select an AG Grid template: "
 
 select DOCS_EXAMPLE in range-selection row-grouping
@@ -32,14 +31,15 @@ do
     break;
 done
 
+# fetch files and inject into project
 DOCS_URL=''
 
 case "$DOCS_EXAMPLE" in  
     'range-selection')
-        DOCS_URL="https://www.ag-grid.com/examples/range-selection/range-selection/packages/$FRAMEWORK/index.jsx"
+        DOCS_URL="https://www.ag-grid.com/examples/range-selection/range-selection/packages/reactFunctional/index.jsx"
         ;;
     'row-grouping')
-        DOCS_URL="https://www.ag-grid.com/examples/grouping/auto-column-group/packages/$FRAMEWORK/index.jsx"
+        DOCS_URL="https://www.ag-grid.com/examples/grouping/auto-column-group/packages/reactFunctional/index.jsx"
         ;;
     *) 
     echo "$DOCS_EXAMPLE not recognised"
@@ -48,20 +48,24 @@ esac
 
 curl -o src/index.js $DOCS_URL 
 
+# remove unwanted files
 echo 'removing unwanted files...'
 
 rm -rf src/App.js src/App.css src/App.test.js src/logo.svg
 
+
+# inject CSS
 echo 'injecting stylesheets...'
 
 cp -r "$T2_HOME/templates/react/src/index.css" "$PWD/src"
 
-# modify template
+# inject CSS import into project route
 INJECT_CSS="import './index.css'"
 # if using mac install gsed ---> brew install gsed
 # if using windows use sed 
 gsed -i "8a $INJECT_CSS" "$PWD/src/index.js"
 
+# finished
 echo "[$FRAMEWORK]$DOCS_EXAMPLE docs injected!"
 
 
