@@ -9,6 +9,16 @@ then
     exit 1
 fi
 
+# select a docs example to import
+PS3="Select an AG Grid template: "
+
+select DOCS_EXAMPLE in range-selection row-grouping
+do
+    echo "Selected AG Grid templalate: $DOCS_EXAMPLE"
+    break;
+done
+
+
 # if ag-grid.config.sh file missing -> exit
 if [[ -f ag-grid.config.sh ]]
 then
@@ -20,38 +30,60 @@ fi
 
 # import FRAMEWORK variable
 source "./ag-grid.config.sh"
-echo "This is a [$FRAMEWORK] project"
+echo "importing [$DOCS_EXAMPLE][$FRAMEWORK] example from the AG Grid docs..."
 
-# select a docs example to import
-PS3="Select an AG Grid template: "
+# fetch DOCS_EXAMPLE metadata from t2/docs-metadata directory
 
-select DOCS_EXAMPLE in range-selection row-grouping
-do
-    echo "Selected AG Grid templalate: $DOCS_EXAMPLE"
-    break;
+T2_DOCS_DIR_PATH="$T2_HOME/docs-metadata"
+
+# install jq 
+# https://stedolan.github.io/jq/
+# https://stedolan.github.io/jq/
+
+# iterate over filesToFetch and import them
+jq -c .$FRAMEWORK'.filesToFetch[]' $T2_DOCS_DIR_PATH/$DOCS_EXAMPLE.json | while read i; do
+    # do stuff with $i
+    docs_url=$( echo "$i" | jq -r '.url' )
+    destination=$( echo "$i" | jq -r '.destination' )
+    echo "$docs_url > $destination"
+
+    # fetch and import
+    # curl -o $destination $docs_url 
 done
 
-# fetch files and inject into project
-DOCS_URL=''
+# iterate over filesToRemoveFromTemplate and delete them
+jq -c .$FRAMEWORK'.filesToRemoveFromTemplate[]' $T2_DOCS_DIR_PATH/$DOCS_EXAMPLE.json | while read i; do
+    # do stuff with $i
+    fileToRemove=$i
+    echo "$PWD/$i"
+    # rm -rf $( echo $i s)
+done
 
-case "$DOCS_EXAMPLE" in  
-    'range-selection')
-        DOCS_URL="https://www.ag-grid.com/examples/range-selection/range-selection/packages/reactFunctional/index.jsx"
-        ;;
-    'row-grouping')
-        DOCS_URL="https://www.ag-grid.com/examples/grouping/auto-column-group/packages/reactFunctional/index.jsx"
-        ;;
-    *) 
-    echo "$DOCS_EXAMPLE not recognised"
-    ;;
-esac
 
-curl -o src/index.js $DOCS_URL 
 
-# remove unwanted files
-echo 'removing unwanted files...'
 
-rm -rf src/App.js src/App.css src/App.test.js src/logo.svg
+
+# # fetch files and inject into project
+# DOCS_URL=''
+
+# case "$DOCS_EXAMPLE" in  
+#     'range-selection')
+#         DOCS_URL="https://www.ag-grid.com/examples/range-selection/range-selection/packages/reactFunctional/index.jsx"
+#         ;;
+#     'row-grouping')
+#         DOCS_URL="https://www.ag-grid.com/examples/grouping/auto-column-group/packages/reactFunctional/index.jsx"
+#         ;;
+#     *) 
+#     echo "$DOCS_EXAMPLE not recognised"
+#     ;;
+# esac
+
+# curl -o src/index.js $DOCS_URL 
+
+# # remove unwanted files
+# echo 'removing unwanted files...'
+
+# rm -rf src/App.js src/App.css src/App.test.js src/logo.svg
 
 
 # inject CSS

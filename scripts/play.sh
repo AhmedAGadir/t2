@@ -16,32 +16,77 @@ else
     exit 1
 fi
 
-source "./ag-grid.config.sh"
-echo "This is a [$FRAMEWORK] project"
-
-
-
-# PS3="Select an AG Grid template: "
-
-# select DOCS_EXAMPLE in range-selection row-grouping
-# do
-#     echo "Selected AG Grid templalate: $DOCS_EXAMPLE"
-#     break;
-# done
+# ====================
+# ====================
+# ====================
 
 FRAMEWORK="react"
 DOCS_EXAMPLE="range-selection"
+
+echo "importing [$DOCS_EXAMPLE][$FRAMEWORK] example from the AG Grid docs..."
+
+# fetch DOCS_EXAMPLE metadata from t2/docs-metadata directory
+
+T2_DOCS_DIR_PATH="$T2_HOME/docs-metadata"
 
 # install jq 
 # https://stedolan.github.io/jq/
 # https://stedolan.github.io/jq/
 
-T2_DOCS_DIR_PATH="$T2_HOME/docs-metadata"
+# iterate over filesToFetch and import them
+jq -c .$FRAMEWORK'.filesToFetch[]' $T2_DOCS_DIR_PATH/$DOCS_EXAMPLE.json | while read i; do
+    # do stuff with $i
+    docs_url=$( echo "$i" | jq -r '.url' )
+    destination=$( echo "$i" | jq -r '.destination' )
+    echo "$docs_url > $destination"
+
+    # fetch and import
+    # curl -o $destination $docs_url 
+done
+
+# iterate over filesToRemoveFromTemplate and delete them
+jq -c .$FRAMEWORK'.filesToRemoveFromTemplate[]' $T2_DOCS_DIR_PATH/$DOCS_EXAMPLE.json | while read i; do
+    # do stuff with $i
+    fileToRemove=$i
+    # echo "$PWD/$i"
+    cd $i
+    echo $PWD
+done
+
+
+
+
+
+#  jq -c .react.filesToFetch[]|[url,destination] $T2_DOCS_DIR_PATH/$DOCS_EXAMPLE.json
+# FILES_TO_FETCH=$(jq -c .$FRAMEWORK'.filesToFetch[]|[.url,.destination]' $T2_DOCS_DIR_PATH/$DOCS_EXAMPLE.json)
+
+# FILES_TO_FETCH=$(jq .$FRAMEWORK.filesToFetch $T2_DOCS_DIR_PATH/$DOCS_EXAMPLE.json)
+# echo $FILES_TO_FETCH
+# FILES_TO_REMOVE_FROM_TEMPLATE=$(jq .$FRAMEWORK.filesToRemoveFromTemplate $T2_DOCS_DIR_PATH/$DOCS_EXAMPLE.json)
+# echo $FILES_TO_REMOVE_FROM_TEMPLATE
+
+# for i in "${FILES_TO_FETCH[@]}"
+# do
+#     # url=$i.url
+#     # destination=$i.destination
+#     # echo $url 
+#     # echo $dest
+# 	echo "file to remove: $i"
+# done
+
+# jq -c .$FRAMEWORK'.filesToFetch[]|[.url,.destination]' $T2_DOCS_DIR_PATH/$DOCS_EXAMPLE.json | while read i; do
+#     # do stuff with $i
+#     echo "item $i"
+# done
+
+
+
+
 
 # test=$(curl -s "docs-metadata/range-selection.json" | jq)
-test=$(jq $T2_HOME/docs-metadata/range-selection.json)
+# test=$(jq $T2_HOME/docs-metadata/range-selection.json)
 
-echo $test
+# echo $test
 
 # jq .message.temperature raul.json 
 
