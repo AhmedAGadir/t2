@@ -45,12 +45,10 @@ jq -c .$FRAMEWORK'.filesToFetch[]' $T2_DOCS_DIR_PATH/$DOCS_EXAMPLE.json | while 
 done
 
 # iterate over filesToRemoveFromTemplate and delete them
-jq -c .$FRAMEWORK'.filesToRemoveFromTemplate[]' $T2_DOCS_DIR_PATH/$DOCS_EXAMPLE.json | while read i; do
+jq -c .$FRAMEWORK'.filesToRemoveFromTemplate[   ]' $T2_DOCS_DIR_PATH/$DOCS_EXAMPLE.json | while read i; do
     # do stuff with $i
     fileToRemove=$i
-    # echo "$PWD/$i"
-    cd $i
-    echo $PWD
+    echo "$PWD/$i"
 done
 
 
