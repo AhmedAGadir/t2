@@ -10,7 +10,6 @@ then
 fi
 
 # select a docs example to import
-
 DOCUMENATION_EXAMPLES="range-selection row-grouping server-side-row-model tree-data"
 
 PS3="Select an AG Grid Docs Example: "
@@ -36,7 +35,6 @@ source "./ag-grid.config.sh"
 echo "importing [$DOCS_EXAMPLE][$FRAMEWORK] example from the AG Grid docs..."
 
 # fetch DOCS_EXAMPLE metadata from t2/docs/metadata directory
-
 T2_DOCS_METADATA_DIR_PATH="$T2_HOME/docs/metadata"
 
 # install jq 
@@ -56,7 +54,7 @@ done
 # iterate over filesToRemoveFromTemplate and delete them
 jq -c .$FRAMEWORK'.filesToRemoveFromTemplate[] | .' $T2_DOCS_METADATA_DIR_PATH/$DOCS_EXAMPLE.json | while read i; do
     # do stuff with $i
-    fileToDelete=$(echo "$i" | jq -r)
+    fileToDelete=$( echo "$i" | jq -r )
     # delete file
     echo "Removing $fileToDelete from project"
     rm -rf $PWD/$fileToDelete
@@ -110,28 +108,3 @@ esac
 
 # finished
 echo "[$FRAMEWORK]$DOCS_EXAMPLE docs injected!"
-
-
-# ==================================
-# ==================================
-
-
-
-# # run this script to download an ag-grid project
-# # (e.g. range-selection) locally
-
-# # curl URL -X GET
-
-
-# cd $T2_HOME/projects
-
-# mkdir test 
-
-# cd test
-
-# curl -o  index.html https://www.ag-grid.com/examples/range-selection/range-selection/packages/react/index.html   
-# curl -o  index.jsx https://www.ag-grid.com/examples/range-selection/range-selection/packages/react/index.jsx 
-# curl -o systemjs.config.js https://www.ag-grid.com/example-runner/grid-react-boilerplate/systemjs.config.js
-
-# code
-

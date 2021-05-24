@@ -25,9 +25,32 @@
             }
         ],
         "filesToRemoveFromTemplate": [
-            "app/app.component.html"
+            "app/app.component.html",
+            "app/app.component.scss"
         ]
     },
-    "vue": {},
-    "vanilla": {}
+    "vue": {
+        "filesToFetch": [
+            {
+                "url": "https://www.ag-grid.com/examples/range-selection/range-selection/packages/vue/main.js",
+                "destination": "src/main.js"
+            }
+        ],
+        "filesToRemoveFromTemplate": [
+            "src/assets",
+            "src/components",
+            "src/App.vue"
+        ]
+    },
+    "vanilla": {
+        "filesToFetch": [
+            {
+                "url": "https://www.ag-grid.com/examples/range-selection/range-selection/packages/vanilla/main.js",
+                "destination": "src/index.js"
+            }
+        ],
+        "filesToRemoveFromTemplate": [
+            "src/styles.css"
+        ]
+    }
 }
