@@ -1,0 +1,23 @@
+{
+    "react": {
+        "filesToFetch": [
+            {
+                "url": "https://www.ag-grid.com/examples/tree-data/file-browser/packages/reactFunctional/index.jsx",
+                "destination": "src/index.js"
+            },
+            {
+                "url": "https://www.ag-grid.com/examples/tree-data/file-browser/packages/reactFunctional/style.css",
+                "destination": "src/style.css"
+            }
+        ],
+        "filesToRemoveFromTemplate": [
+            "src/App.js",
+            "src/App.css",
+            "src/App.test.js",
+            "src/logo.svg"
+        ]
+    },
+    "angular": {},
+    "vue": {},
+    "vanilla": {}
+}

@@ -10,11 +10,14 @@ then
 fi
 
 # select a docs example to import
-PS3="Select an AG Grid template: "
 
-select DOCS_EXAMPLE in range-selection row-grouping server-side-row-model
+DOCUMENATION_EXAMPLES="range-selection row-grouping server-side-row-model tree-data"
+
+PS3="Select an AG Grid Docs Example: "
+
+select DOCS_EXAMPLE in $DOCUMENATION_EXAMPLES
 do
-    echo "Selected AG Grid templalate: $DOCS_EXAMPLE"
+    echo "Selected AG Grid Docs Example: $DOCS_EXAMPLE"
     break;
 done
 
