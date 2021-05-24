@@ -48,42 +48,17 @@ jq -c .$FRAMEWORK'.filesToFetch[]' $T2_DOCS_DIR_PATH/$DOCS_EXAMPLE.json | while 
     echo "$docs_url > $destination"
 
     # fetch and import
-    # curl -o $destination $docs_url 
+    curl -o $destination $docs_url 
 done
 
 # iterate over filesToRemoveFromTemplate and delete them
-jq -c .$FRAMEWORK'.filesToRemoveFromTemplate[]' $T2_DOCS_DIR_PATH/$DOCS_EXAMPLE.json | while read i; do
+jq -c .$FRAMEWORK'.filesToRemoveFromTemplate[] | .' $T2_DOCS_DIR_PATH/$DOCS_EXAMPLE.json | while read i; do
     # do stuff with $i
-    fileToRemove=$i
-    echo "$PWD/$i"
-    # rm -rf $( echo $i s)
+    fileToDelete=$(echo "$i" | jq -r)
+    # delete file
+    echo "Removing $fileToDelete from project"
+    rm -rf $PWD/$fileToDelete
 done
-
-
-
-
-
-# # fetch files and inject into project
-# DOCS_URL=''
-
-# case "$DOCS_EXAMPLE" in  
-#     'range-selection')
-#         DOCS_URL="https://www.ag-grid.com/examples/range-selection/range-selection/packages/reactFunctional/index.jsx"
-#         ;;
-#     'row-grouping')
-#         DOCS_URL="https://www.ag-grid.com/examples/grouping/auto-column-group/packages/reactFunctional/index.jsx"
-#         ;;
-#     *) 
-#     echo "$DOCS_EXAMPLE not recognised"
-#     ;;
-# esac
-
-# curl -o src/index.js $DOCS_URL 
-
-# # remove unwanted files
-# echo 'removing unwanted files...'
-
-# rm -rf src/App.js src/App.css src/App.test.js src/logo.svg
 
 
 # inject CSS

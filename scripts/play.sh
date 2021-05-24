@@ -41,14 +41,15 @@ jq -c .$FRAMEWORK'.filesToFetch[]' $T2_DOCS_DIR_PATH/$DOCS_EXAMPLE.json | while 
     echo "$docs_url > $destination"
 
     # fetch and import
-    # curl -o $destination $docs_url 
+    curl -o $destination $docs_url 
 done
 
 # iterate over filesToRemoveFromTemplate and delete them
-jq -c .$FRAMEWORK'.filesToRemoveFromTemplate[   ]' $T2_DOCS_DIR_PATH/$DOCS_EXAMPLE.json | while read i; do
+jq -c .$FRAMEWORK'.filesToRemoveFromTemplate[] | .' $T2_DOCS_DIR_PATH/$DOCS_EXAMPLE.json | while read i; do
     # do stuff with $i
-    fileToRemove=$i
-    echo "$PWD/$i"
+    fileToDelete=$PWD/$(echo "$i" | jq -r)
+    # delete file
+    rm -rf $fileToDelete
 done
 
 

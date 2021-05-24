@@ -1,0 +1,19 @@
+{
+    "react": {
+        "filesToFetch": [
+            {
+                "url": "https://www.ag-grid.com/examples/grouping/auto-column-group/packages/reactFunctional/index.jsx",
+                "destination": "src/index.js"
+            }
+        ],
+        "filesToRemoveFromTemplate": [
+            "src/App.js",
+            "src/App.css",
+            "src/App.test.js",
+            "src/logo.svg"
+        ]
+    },
+    "angular": {},
+    "vue": {},
+    "vanilla": {}
+}

@@ -6,6 +6,7 @@ import { AgGridReact, AgGridColumn } from 'ag-grid-react';
 import 'ag-grid-enterprise';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
+import './index.css'
 
 const GridExample = () => {
   const [gridApi, setGridApi] = useState(null);
@@ -39,20 +40,20 @@ const GridExample = () => {
           defaultColDef={{
             flex: 1,
             minWidth: 100,
+            filter: true,
+            sortable: true,
+            resizable: true,
           }}
+          autoGroupColumnDef={{ minWidth: 200 }}
           enableRangeSelection={true}
+          animateRows={true}
           onGridReady={onGridReady}
           rowData={rowData}
         >
-          <AgGridColumn field="athlete" minWidth={150} />
-          <AgGridColumn field="age" maxWidth={90} />
-          <AgGridColumn field="country" minWidth={150} />
-          <AgGridColumn field="year" maxWidth={90} />
-          <AgGridColumn field="date" minWidth={150} />
-          <AgGridColumn field="sport" minWidth={150} />
-          <AgGridColumn field="gold" />
-          <AgGridColumn field="silver" />
-          <AgGridColumn field="bronze" />
+          <AgGridColumn field="country" rowGroup={true} />
+          <AgGridColumn field="year" rowGroup={true} />
+          <AgGridColumn field="sport" />
+          <AgGridColumn field="athlete" />
           <AgGridColumn field="total" />
         </AgGridReact>
       </div>
