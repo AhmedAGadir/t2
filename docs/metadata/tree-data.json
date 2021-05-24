@@ -14,7 +14,8 @@
             "src/App.js",
             "src/App.css",
             "src/App.test.js",
-            "src/logo.svg"
+            "src/logo.svg",
+            "src/index.css"
         ]
     },
     "angular": {},
