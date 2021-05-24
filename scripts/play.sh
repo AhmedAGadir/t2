@@ -1,7 +1,98 @@
 #!/usr/bin/env bash
 
+source "./ag-grid.config.sh"
+
+echo $FRAMEWORK
 
 
+echo 'injecting styles...'
+
+STYLES="<style>\
+    html, body, #root {\
+        height: 100%;\
+        width: 100%;\
+        margin: 0;\
+        box-sizing: border-box;\
+        -webkit-overflow-scrolling: touch;\
+    }\
+    \
+    html {\
+        position: absolute;\
+        top: 0;\
+        left: 0;\
+        padding: 0;\
+        overflow: auto;\
+    }\
+    \
+    body {\
+        padding: 1rem;\
+        overflow: auto;\
+    }\
+</style>
+"
+
+case "$FRAMEWORK" in  
+    'angular')
+    gsed -i "/<\/head>/i $STYLES" "$PWD/src/index.html"
+        ;;
+    'react')
+    gsed -i "/<\/head>/i $STYLES" "$PWD/public/index.html"
+        ;;
+    'vue')
+    gsed -i "/<\/head>/i $STYLES" "$PWD/public/index.html"
+        ;;
+    'vanilla')
+    gsed -i "/<\/head>/i $STYLES" "$PWD/index.html"
+        ;;
+    *) 
+    echo "Could not inject stylesheets"
+    ;;
+esac
+
+# # angular
+# gsed -i "/<\/head>/i $STYLES" "$PWD/src/index.html"
+# # react
+# gsed -i "/<\/head>/i $STYLES" "$PWD/public/index.html"
+# # vue
+# gsed -i "/<\/head>/i $STYLES" "$PWD/public/index.html"
+# # vanilla
+# gsed -i "/<\/head>/i $STYLES" "$PWD/index.html"
+
+
+# DOCS_STYLE_SHEET="styles.css"
+
+# case "$FRAMEWORK" in  
+#     'angular')
+#         DOCS_STYLE_SHEET="styles.css"
+#         # copy stylesheets into project
+#         cp -r "$T2_HOME/docs/styles/$DOCS_STYLE_SHEET" "$PWD/src"
+#         # inject CSS import into project route
+#         IMPORT_STYLES="import './$DOCS_STYLE_SHEET'"
+#         # if using mac install gsed ---> brew install gsed
+#         # if using windows use sed 
+#         gsed -i "8a $IMPORT_STYLES" "$PWD/src/index.js"
+#         ;;
+#     'react')
+#         cat > src/styles.css
+#         gsed -i "1a 'hello'" "$PWD/src/styles.css"
+
+#         gsed -i "1a $STYLES" "$PWD/text.txt"
+
+#         # DOCS_STYLE_SHEET="styles.css"
+#         # # copy stylesheets into project
+#         # cp -r "$T2_HOME/docs/styles/$DOCS_STYLE_SHEET" "$PWD/src"
+#         # # inject CSS import into project route
+#         # IMPORT_STYLES="import './$DOCS_STYLE_SHEET'"
+#         # # if using mac install gsed ---> brew install gsed
+#         # # if using windows use sed 
+#         # gsed -i "8a $IMPORT_STYLES" "$PWD/src/index.js"
+#         ;;
+#     *) 
+#     echo "Could not inject stylesheets"
+#     ;;
+# esac
+
+# gsed -i "1a $STYLES" "$PWD/text.txt"
 
 
 

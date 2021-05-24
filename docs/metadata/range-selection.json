@@ -25,8 +25,7 @@
             }
         ],
         "filesToRemoveFromTemplate": [
-            "app/app.component.html",
-            "app/app.component.scss"
+            "app/app.component.html"
         ]
     },
     "vue": {},
