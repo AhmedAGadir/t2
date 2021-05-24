@@ -13,7 +13,22 @@
             "src/logo.svg"
         ]
     },
-    "angular": {},
+    "angular": {
+        "filesToFetch": [
+            {
+                "url": "https://www.ag-grid.com/examples/range-selection/range-selection/packages/angular/app/app.component.ts",
+                "destination": "app/app.component.ts"
+            },
+            {
+                "url": "https://www.ag-grid.com/examples/range-selection/range-selection/packages/angular/app/app.module.ts",
+                "destination": "app/app.module.ts"
+            }
+        ],
+        "filesToRemoveFromTemplate": [
+            "app/app.component.html",
+            "app/app.component.scss"
+        ]
+    },
     "vue": {},
     "vanilla": {}
 }
