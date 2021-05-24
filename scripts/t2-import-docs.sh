@@ -35,16 +35,15 @@ fi
 source "./ag-grid.config.sh"
 echo "importing [$DOCS_EXAMPLE][$FRAMEWORK] example from the AG Grid docs..."
 
-# fetch DOCS_EXAMPLE metadata from t2/docs-metadata directory
+# fetch DOCS_EXAMPLE metadata from t2/docs/metadata directory
 
-T2_DOCS_DIR_PATH="$T2_HOME/docs-metadata"
+T2_DOCS_METADATA_DIR_PATH="$T2_HOME/docs/metadata"
 
 # install jq 
 # https://stedolan.github.io/jq/
-# https://stedolan.github.io/jq/
 
 # iterate over filesToFetch and import them
-jq -c .$FRAMEWORK'.filesToFetch[]' $T2_DOCS_DIR_PATH/$DOCS_EXAMPLE.json | while read i; do
+jq -c .$FRAMEWORK'.filesToFetch[]' $T2_DOCS_METADATA_DIR_PATH/$DOCS_EXAMPLE.json | while read i; do
     # do stuff with $i
     docs_url=$( echo "$i" | jq -r '.url' )
     destination=$( echo "$i" | jq -r '.destination' )
@@ -55,7 +54,7 @@ jq -c .$FRAMEWORK'.filesToFetch[]' $T2_DOCS_DIR_PATH/$DOCS_EXAMPLE.json | while 
 done
 
 # iterate over filesToRemoveFromTemplate and delete them
-jq -c .$FRAMEWORK'.filesToRemoveFromTemplate[] | .' $T2_DOCS_DIR_PATH/$DOCS_EXAMPLE.json | while read i; do
+jq -c .$FRAMEWORK'.filesToRemoveFromTemplate[] | .' $T2_DOCS_METADATA_DIR_PATH/$DOCS_EXAMPLE.json | while read i; do
     # do stuff with $i
     fileToDelete=$(echo "$i" | jq -r)
     # delete file
@@ -65,15 +64,41 @@ done
 
 
 # inject CSS
-echo 'injecting stylesheets...'
+echo 'injecting styles...'
 
-cp -r "$T2_HOME/templates/react/src/index.css" "$PWD/src"
 
-# inject CSS import into project route
-INJECT_CSS="import './index.css'"
-# if using mac install gsed ---> brew install gsed
-# if using windows use sed 
-gsed -i "8a $INJECT_CSS" "$PWD/src/index.js"
+
+
+
+
+case "$FRAMEWORK" in  
+    'angular')
+        DOCS_STYLE_SHEET="styles.css"
+        # copy stylesheets into project
+        cp -r "$T2_HOME/docs/styles/$DOCS_STYLE_SHEET" "$PWD/src"
+        # inject CSS import into project route
+        IMPORT_STYLES="import './$DOCS_STYLE_SHEET'"
+        # if using mac install gsed ---> brew install gsed
+        # if using windows use sed 
+        gsed -i "8a $IMPORT_STYLES" "$PWD/src/index.js"
+        ;;
+    'react')
+        DOCS_STYLE_SHEET="styles.css"
+        # copy stylesheets into project
+        cp -r "$T2_HOME/docs/styles/$DOCS_STYLE_SHEET" "$PWD/src"
+        # inject CSS import into project route
+        IMPORT_STYLES="import './$DOCS_STYLE_SHEET'"
+        # if using mac install gsed ---> brew install gsed
+        # if using windows use sed 
+        gsed -i "8a $IMPORT_STYLES" "$PWD/src/index.js"
+        ;;
+    *) 
+    echo "Could not inject stylesheets"
+    ;;
+esac
+
+
+
 
 # finished
 echo "[$FRAMEWORK]$DOCS_EXAMPLE docs injected!"
