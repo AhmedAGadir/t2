@@ -6,7 +6,14 @@ echo $FRAMEWORK
 
 if [[ $FRAMEWORK == "vue" ]]
 then
+    # the AG Grid docs use vue templates so we need to run this
+    # allow compiling vue templates 
     echo "module.exports = { runtimeCompiler: true }" >> vue.config.js
+    # we also need to replace the root vue element
+    ROOT_BEFORE="<div id=\"app\"><\/div>"
+    ROOT_AFTER="<div id=\"app\"><my-component>Loading Vue example<\/my-component><\/div>"
+
+    gsed -i "s/$ROOT_BEFORE/$ROOT_AFTER/g" "$PWD/public/index.html"
 fi
 
 
