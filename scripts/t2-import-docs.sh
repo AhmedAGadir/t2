@@ -121,6 +121,12 @@ then
     gsed -i "s/$ROOT_BEFORE/$ROOT_AFTER/g" "$PWD/public/index.html"
 fi
 
+if [[ $FRAMEWORK == "vanilla" ]]
+then
+    VANILLA_IMPORTS="import \"ag-grid-community/dist/styles/ag-grid.css\";\nimport \"ag-grid-community/dist/styles/ag-theme-alpine.css\";\nimport \"ag-grid-enterprise\";\nimport * as agGrid from \"ag-grid-community\";\n"
+    gsed -i "1i $VANILLA_IMPORTS" "$PWD/src/index.js"
+fi
+
 
 # finished
 echo "[$FRAMEWORK]$DOCS_EXAMPLE docs injected!"

@@ -4,17 +4,27 @@ source "./ag-grid.config.sh"
 
 echo $FRAMEWORK
 
-if [[ $FRAMEWORK == "vue" ]]
+if [[ $FRAMEWORK == "vanilla" ]]
 then
-    # the AG Grid docs use vue templates so we need to run this
-    # allow compiling vue templates 
-    echo "module.exports = { runtimeCompiler: true }" >> vue.config.js
-    # we also need to replace the root vue element
-    ROOT_BEFORE="<div id=\"app\"><\/div>"
-    ROOT_AFTER="<div id=\"app\"><my-component>Loading Vue example<\/my-component><\/div>"
+    VANILLA_IMPORTS="import \"ag-grid-community/dist/styles/ag-grid.css\";\nimport \"ag-grid-community/dist/styles/ag-theme-alpine.css\";\nimport \"ag-grid-enterprise\";\nimport * as agGrid from \"ag-grid-community\";\n"
 
-    gsed -i "s/$ROOT_BEFORE/$ROOT_AFTER/g" "$PWD/public/index.html"
+    gsed -i "1i $VANILLA_IMPORTS" "$PWD/src/index.js"
 fi
+
+
+
+
+# if [[ $FRAMEWORK == "vue" ]]
+# then
+#     # the AG Grid docs use vue templates so we need to run this
+#     # allow compiling vue templates 
+#     echo "module.exports = { runtimeCompiler: true }" >> vue.config.js
+#     # we also need to replace the root vue element
+#     ROOT_BEFORE="<div id=\"app\"><\/div>"
+#     ROOT_AFTER="<div id=\"app\"><my-component>Loading Vue example<\/my-component><\/div>"
+
+#     gsed -i "s/$ROOT_BEFORE/$ROOT_AFTER/g" "$PWD/public/index.html"
+# fi
 
 
 
