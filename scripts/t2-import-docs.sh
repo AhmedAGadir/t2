@@ -12,7 +12,7 @@ fi
 # select a docs example to import
 PS3="Select an AG Grid template: "
 
-select DOCS_EXAMPLE in range-selection row-grouping
+select DOCS_EXAMPLE in range-selection row-grouping server-side-row-model
 do
     echo "Selected AG Grid templalate: $DOCS_EXAMPLE"
     break;
