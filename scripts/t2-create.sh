@@ -75,4 +75,7 @@ echo 'creating ag-grid.config.sh...'
 echo "export FRAMEWORK=\"$FRAMEWORK\"" >> ag-grid.config.sh
 echo "export TICKET=\"$TICKET\"" >> ag-grid.config.sh
 
+echo "new [$FRAMEWORK] AG Grid template project [t2-$TICKET] created."
+echo "done"
+
 code $PROJECT_DIR_PATH

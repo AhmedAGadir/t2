@@ -62,7 +62,7 @@ done
 
 
 # inject CSS
-echo 'injecting styles...'
+echo 'injecting page styles...'
 
 # inject style tags from the docs example's index.html into the project
 jq -c .$FRAMEWORK'.indexHTML' $T2_DOCS_METADATA_DIR_PATH/$DOCS_EXAMPLE.json | while read i; do
