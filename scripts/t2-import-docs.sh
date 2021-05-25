@@ -19,6 +19,7 @@ fi
 # import FRAMEWORK, TICKET and DOCS_IMPORTED variables
 source "./ag-grid.config.sh"
 
+# # this script can only be run once per project
 # if [[ $DOCS_IMPORTED == true ]]
 # then
 #     echo 'You can only run this script once per project.'
@@ -39,10 +40,8 @@ do
     break;
 done
 
-
-
-
 echo "importing [$DOCS_EXAMPLE][$FRAMEWORK] example from the AG Grid docs..."
+
 
 # fetch DOCS_EXAMPLE metadata from t2/docs/metadata directory
 T2_DOCS_METADATA_DIR_PATH="$T2_HOME/docs/metadata"
@@ -111,14 +110,13 @@ done
 
 if [[ $FRAMEWORK == "vue" ]]
 then
-    # the AG Grid docs use vue templates so we need to run this
-    # allow compiling vue templates 
+    # allow compiling vue templates  
     echo "module.exports = { runtimeCompiler: true }" >> vue.config.js
     # we also need to replace the root vue element
-    ROOT_BEFORE="<div id=\"app\"><\/div>"
-    ROOT_AFTER="<div id=\"app\"><my-component>Loading Vue example<\/my-component><\/div>"
+    BEFORE_ROOT_ELEMENT_REPLACE="<div id=\"app\"><\/div>"
+    AFTER_ROOT_ELEMENT_REPLACE="<div id=\"app\"><my-component>Loading Vue example<\/my-component><\/div>"
 
-    gsed -i "s/$ROOT_BEFORE/$ROOT_AFTER/g" "$PWD/public/index.html"
+    gsed -i "s/$BEFORE_ROOT_ELEMENT_REPLACE/$AFTER_ROOT_ELEMENT_REPLACE/g" "$PWD/public/index.html"
 fi
 
 if [[ $FRAMEWORK == "vanilla" ]]

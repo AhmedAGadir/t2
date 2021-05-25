@@ -64,8 +64,8 @@ const VueExample = {
   methods: {
     onGridReady(params) {
       const updateData = (data) => {
-        var fakeServer = window.createFakeServer(data);
-        var datasource = window.createServerSideDatasource(fakeServer);
+        var fakeServer = createFakeServer(data);
+        var datasource = createServerSideDatasource(fakeServer);
         params.api.setServerSideDatasource(datasource);
       };
 
@@ -96,7 +96,7 @@ window.createServerSideDatasource = function createServerSideDatasource(
 
 window.createFakeServer = function createFakeServer(allData) {
   return {
-    getData: function () {
+    getData: function (request) {
       var requestedRows = allData.slice();
       return {
         success: true,

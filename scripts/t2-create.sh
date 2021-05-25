@@ -12,9 +12,11 @@ else
   exit 1
 fi
 
-PROJECT_DIR_PATH="$T2_HOME/projects/t2-$TICKET"
 
 # if project already exists -> exit process
+
+PROJECT_DIR_PATH="$T2_HOME/projects/t2-$TICKET"
+
 if test -d "$PROJECT_DIR_PATH"; then
   echo "Project with ticket name already exists"
   exit 1
@@ -71,12 +73,11 @@ echo "applying $FRAMEWORK template"
 'cp' -rf $TEMPLATE_DIR_PATH/* $PROJECT_DIR_PATH
 
 # create ag-grid.config file (contains framework)
-echo 'creating ag-grid.config.sh...'
 echo "TICKET=\"$TICKET\"" >> ag-grid.config.sh
 echo "FRAMEWORK=\"$FRAMEWORK\"" >> ag-grid.config.sh
 echo "DOCS_IMPORTED=false" >> ag-grid.config.sh
+echo 'created ag-grid.config.sh file'
 
-echo "complete"
 echo "======================================================"
 echo "new AG Grid $FRAMEWORK project [t2-$TICKET] created."
 echo "$T2_HOME/projects/t2-$TICKET"
