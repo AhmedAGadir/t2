@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import 'ag-grid-enterprise';
-import 'ag-grid-community/dist/styles/ag-grid.css';
-import 'ag-grid-community/dist/styles/ag-theme-alpine-dark.css';
+// import 'ag-grid-community/dist/styles/ag-grid.css';
+// import 'ag-grid-community/dist/styles/ag-theme-alpine-dark.css';
 
 @Component({
   selector: 'my-app',
@@ -19,13 +19,13 @@ import 'ag-grid-community/dist/styles/ag-theme-alpine-dark.css';
   ></ag-grid-angular>`,
 })
 export class AppComponent {
-  private gridApi;
-  private gridColumnApi;
+  public gridApi;
+  public gridColumnApi;
 
-  private columnDefs;
-  private defaultColDef;
-  private rowModelType;
-  private rowData: [];
+  public columnDefs;
+  public defaultColDef;
+  public rowModelType;
+  public rowData: [];
 
   constructor(private http: HttpClient) {
     this.columnDefs = [
