@@ -73,10 +73,10 @@ echo "applying $FRAMEWORK template"
 'cp' -rf $TEMPLATE_DIR_PATH/* $PROJECT_DIR_PATH
 
 # create ag-grid.config file (contains framework)
+echo 'creating ag-grid.config.sh file...'
 echo "TICKET=\"$TICKET\"" >> ag-grid.config.sh
 echo "FRAMEWORK=\"$FRAMEWORK\"" >> ag-grid.config.sh
 echo "DOCS_IMPORTED=false" >> ag-grid.config.sh
-echo 'created ag-grid.config.sh file'
 
 echo "======================================================"
 echo "new AG Grid $FRAMEWORK project [t2-$TICKET] created."

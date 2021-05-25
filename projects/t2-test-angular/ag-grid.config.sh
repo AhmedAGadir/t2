@@ -1,2 +1,3 @@
-export FRAMEWORK="angular"
-export TICKET="test-angular"
+TICKET="test-angular"
+FRAMEWORK="angular"
+DOCS_IMPORTED=false
