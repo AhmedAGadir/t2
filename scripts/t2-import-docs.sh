@@ -9,6 +9,25 @@ then
     exit 1
 fi
 
+# if ag-grid.config.sh file missing -> exit
+if [[ ! -f ag-grid.config.sh ]]
+then
+    echo "ag-grid.config.sh file is missing"
+    exit 1
+fi
+
+# import FRAMEWORK, TICKET and DOCS_IMPORTED variables
+source "./ag-grid.config.sh"
+
+if [[ $DOCS_IMPORTED == true ]]
+then
+    echo 'You can only run this script once per project.'
+    exit 1
+else 
+    gsed -i 's/DOCS_IMPORTED.*/DOCS_IMPORTED=true/' $PWD/ag-grid.config.sh
+fi
+
+
 # select a docs example to import
 DOCUMENATION_EXAMPLES="range-selection row-grouping server-side-row-model tree-data"
 
@@ -21,17 +40,8 @@ do
 done
 
 
-# if ag-grid.config.sh file missing -> exit
-if [[ -f ag-grid.config.sh ]]
-then
-    echo 'reading ag-grid.config.sh file...'
-else 
-    echo "ag-grid.config.sh file is missing"
-    exit 1
-fi
 
-# import FRAMEWORK variable
-source "./ag-grid.config.sh"
+
 echo "importing [$DOCS_EXAMPLE][$FRAMEWORK] example from the AG Grid docs..."
 
 # fetch DOCS_EXAMPLE metadata from t2/docs/metadata directory

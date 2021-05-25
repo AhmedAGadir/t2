@@ -72,8 +72,9 @@ echo "applying $FRAMEWORK template"
 
 # create ag-grid.config file (contains framework)
 echo 'creating ag-grid.config.sh...'
-echo "export FRAMEWORK=\"$FRAMEWORK\"" >> ag-grid.config.sh
-echo "export TICKET=\"$TICKET\"" >> ag-grid.config.sh
+echo "TICKET=\"$TICKET\"" >> ag-grid.config.sh
+echo "FRAMEWORK=\"$FRAMEWORK\"" >> ag-grid.config.sh
+echo "DOCS_IMPORTED=false" >> ag-grid.config.sh
 
 echo "complete"
 echo "======================================================"
