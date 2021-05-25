@@ -16,22 +16,12 @@ const gridOptions = {
   columnDefs: columnDefs
 };
 
-if (document.readyState !== 'loading') {
-  myInitCode();
-} else {
-  document.addEventListener('DOMContentLoaded', function () {
-    myInitCode();
-  });
-}
+// lookup the container we want the Grid to use
+const eGridDiv = document.querySelector('#myGrid');
 
-function myInitCode() {
-  // lookup the container we want the Grid to use
-  const eGridDiv = document.querySelector('#myGrid');
+// create the grid passing in the div to use together with the columns &amp; data we want to use
+new agGrid.Grid(eGridDiv, gridOptions);
 
-  // create the grid passing in the div to use together with the columns &amp; data we want to use
-  new agGrid.Grid(eGridDiv, gridOptions);
-
-  agGrid.simpleHttpRequest({ url: 'https://www.ag-grid.com/example-assets/row-data.json' }).then(data => {
-    gridOptions.api.setRowData(data);
-  });
-}
+agGrid.simpleHttpRequest({ url: 'https://www.ag-grid.com/example-assets/row-data.json' }).then(data => {
+  gridOptions.api.setRowData(data);
+});
