@@ -119,4 +119,7 @@ fi
 
 
 # finished
+echo "complete"
+echo "======================================================"
 echo "[$FRAMEWORK]$DOCS_EXAMPLE docs injected!"
+echo "======================================================"
