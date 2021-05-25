@@ -19,13 +19,13 @@ fi
 # import FRAMEWORK, TICKET and DOCS_IMPORTED variables
 source "./ag-grid.config.sh"
 
-if [[ $DOCS_IMPORTED == true ]]
-then
-    echo 'You can only run this script once per project.'
-    exit 1
-else 
-    gsed -i 's/DOCS_IMPORTED.*/DOCS_IMPORTED=true/' $PWD/ag-grid.config.sh
-fi
+# if [[ $DOCS_IMPORTED == true ]]
+# then
+#     echo 'You can only run this script once per project.'
+#     exit 1
+# else 
+#     gsed -i 's/DOCS_IMPORTED.*/DOCS_IMPORTED=true/' $PWD/ag-grid.config.sh
+# fi
 
 
 # select a docs example to import
