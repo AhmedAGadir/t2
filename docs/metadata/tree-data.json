@@ -1,5 +1,6 @@
 {
     "react": {
+        "indexHTML": "https://www.ag-grid.com/examples/tree-data/org-hierarchy/packages/reactFunctional/index.html",
         "filesToFetch": [
             {
                 "url": "https://www.ag-grid.com/examples/tree-data/file-browser/packages/reactFunctional/index.jsx",
@@ -18,7 +19,13 @@
             "src/index.css"
         ]
     },
-    "angular": {},
-    "vue": {},
-    "vanilla": {}
+    "angular": {
+        "indexHTML": "https://www.ag-grid.com/examples/tree-data/org-hierarchy/packages/angular/index.html"
+    },
+    "vue": {
+        "indexHTML": "https://www.ag-grid.com/examples/tree-data/org-hierarchy/packages/vue/index.html"
+    },
+    "vanilla": {
+        "indexHTML": "https://www.ag-grid.com/examples/tree-data/org-hierarchy/packages/vanilla/index.html"
+    }
 }

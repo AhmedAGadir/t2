@@ -1,5 +1,6 @@
 {
     "react": {
+        "indexHTML": "https://www.ag-grid.com/examples/range-selection/range-selection/packages/reactFunctional/index.html",
         "filesToFetch": [
             {
                 "url": "https://www.ag-grid.com/examples/range-selection/range-selection/packages/reactFunctional/index.jsx",
@@ -15,6 +16,7 @@
         ]
     },
     "angular": {
+        "indexHTML": "https://www.ag-grid.com/examples/range-selection/range-selection/packages/angular/index.html",
         "filesToFetch": [
             {
                 "url": "https://www.ag-grid.com/examples/range-selection/range-selection/packages/angular/app/app.component.ts",
@@ -31,6 +33,7 @@
         ]
     },
     "vue": {
+        "indexHTML": "https://www.ag-grid.com/examples/range-selection/range-selection/packages/vue/index.html",
         "filesToFetch": [
             {
                 "url": "https://www.ag-grid.com/examples/range-selection/range-selection/packages/vue/main.js",
@@ -44,6 +47,7 @@
         ]
     },
     "vanilla": {
+        "indexHTML": "https://www.ag-grid.com/examples/range-selection/range-selection/packages/vanilla/index.html",
         "filesToFetch": [
             {
                 "url": "https://www.ag-grid.com/examples/range-selection/range-selection/packages/vanilla/main.js",

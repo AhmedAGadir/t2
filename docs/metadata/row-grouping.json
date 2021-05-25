@@ -1,5 +1,6 @@
 {
     "react": {
+        "indexHTML": "https://www.ag-grid.com/examples/grouping/auto-column-group/packages/reactFunctional/index.html",
         "filesToFetch": [
             {
                 "url": "https://www.ag-grid.com/examples/grouping/auto-column-group/packages/reactFunctional/index.jsx",
@@ -14,8 +15,11 @@
             "src/index.css"
         ]
     },
-    "angular": {},
+    "angular": {
+        "indexHTML": "https://www.ag-grid.com/examples/grouping/auto-column-group/packages/angular/index.html"
+    },
     "vue": {
+        "indexHTML": "https://www.ag-grid.com/examples/grouping/auto-column-group/packages/vue/index.html",
         "filesToFetch": [
             {
                 "url": "https://www.ag-grid.com/examples/grouping/auto-column-group/packages/vue/main.js",
@@ -28,5 +32,16 @@
             "src/App.vue"
         ]
     },
-    "vanilla": {}
+    "vanilla": {
+        "indexHTML": "https://www.ag-grid.com/examples/grouping/auto-column-group/packages/vanilla/index.html",
+        "filesToFetch": [
+            {
+                "url": "https://www.ag-grid.com/examples/grouping/auto-column-group/packages/vanilla/main.js",
+                "destination": "src/index.js"
+            }
+        ],
+        "filesToRemoveFromTemplate": [
+            "src/styles.css"
+        ]
+    }
 }

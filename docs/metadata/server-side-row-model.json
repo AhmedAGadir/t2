@@ -1,5 +1,6 @@
 {
     "react": {
+        "indexHTML": "https://www.ag-grid.com/examples/server-side-model-datasource/simple/packages/reactFunctional/index.html",
         "filesToFetch": [
             {
                 "url": "https://www.ag-grid.com/examples/server-side-model-datasource/simple/packages/reactFunctional/index.jsx",
@@ -14,8 +15,11 @@
             "src/index.css"
         ]
     },
-    "angular": {},
+    "angular": {
+        "indexHTML": "https://www.ag-grid.com/examples/server-side-model-datasource/simple/packages/angular/index.html"
+    },
     "vue": {
+        "indexHTML": "https://www.ag-grid.com/examples/server-side-model-datasource/simple/packages/vue/index.html",
         "filesToFetch": [
             {
                 "url": "https://www.ag-grid.com/examples/server-side-model-datasource/simple/packages/vue/main.js",
@@ -29,6 +33,7 @@
         ]
     },
     "vanilla": {
+        "indexHTML": "https://www.ag-grid.com/examples/server-side-model-datasource/simple/packages/vanilla/index.html",
         "filesToFetch": [
             {
                 "url": "https://www.ag-grid.com/examples/server-side-model-datasource/simple/packages/vanilla/main.js",

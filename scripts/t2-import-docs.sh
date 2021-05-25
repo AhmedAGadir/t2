@@ -64,47 +64,80 @@ done
 # inject CSS
 echo 'injecting styles...'
 
-STYLES="<style>\
-    html, body, #root {\
-        height: 100%;\
-        width: 100%;\
-        margin: 0;\
-        box-sizing: border-box;\
-        -webkit-overflow-scrolling: touch;\
-    }\
-    \
-    html {\
-        position: absolute;\
-        top: 0;\
-        left: 0;\
-        padding: 0;\
-        overflow: auto;\
-    }\
-    \
-    body {\
-        padding: 1rem;\
-        overflow: auto;\
-    }\
-</style>
-"
+# inject style tags from the docs example's index.html into the project
+jq -c .$FRAMEWORK'.indexHTML' $T2_DOCS_METADATA_DIR_PATH/$DOCS_EXAMPLE.json | while read i; do
+    # first create an temporary HTML file where we will output the fetched index.html file
+    URL=$( echo "$i" | jq -r )
+    curl -o tmp.html $URL
+    # match the <style></style> tags and store them in a variable
+    PAGE_STYLES=$( gsed -n "/<style.*/,/<\/style>/p" tmp.html )
+    # escape for use in sed 
+    ESCAPED_PAGE_STYLES=$(printf '%s\n' "$PAGE_STYLES" | sed -e 's/[\/&"]/\\&/g')
+    
+    # inject into project index.html file
+    case "$FRAMEWORK" in  
+        'angular')
+        gsed -i "/<\/head>/i $(echo $ESCAPED_PAGE_STYLES)" "$PWD/src/index.html"
+            ;;
+        'react')
+        gsed -i "/<\/head>/i $(echo $ESCAPED_PAGE_STYLES)" "$PWD/public/index.html"
+            ;;
+        'vue')
+        gsed -i "/<\/head>/i $(echo $ESCAPED_PAGE_STYLES)" "$PWD/public/index.html"
+            ;;
+        'vanilla')
+        gsed -i "/<\/head>/i $(echo $ESCAPED_PAGE_STYLES)" "$PWD/index.html"
+            ;;
+        *) 
+        echo "Could not inject stylesheets"
+        ;;
+    esac
+    
+    # delete temporary HTML file
+    rm -rf $PWD/tmp.html
+done
 
-case "$FRAMEWORK" in  
-    'angular')
-    gsed -i "/<\/head>/i $STYLES" "$PWD/src/index.html"
-        ;;
-    'react')
-    gsed -i "/<\/head>/i $STYLES" "$PWD/public/index.html"
-        ;;
-    'vue')
-    gsed -i "/<\/head>/i $STYLES" "$PWD/public/index.html"
-        ;;
-    'vanilla')
-    gsed -i "/<\/head>/i $STYLES" "$PWD/index.html"
-        ;;
-    *) 
-    echo "Could not inject stylesheets"
-    ;;
-esac
+# STYLES="<style>\
+#     html, body, #root {\
+#         height: 100%;\
+#         width: 100%;\
+#         margin: 0;\
+#         box-sizing: border-box;\
+#         -webkit-overflow-scrolling: touch;\
+#     }\
+#     \
+#     html {\
+#         position: absolute;\
+#         top: 0;\
+#         left: 0;\
+#         padding: 0;\
+#         overflow: auto;\
+#     }\
+#     \
+#     body {\
+#         padding: 1rem;\
+#         overflow: auto;\
+#     }\
+# </style>
+# "
+
+# case "$FRAMEWORK" in  
+#     'angular')
+#     gsed -i "/<\/head>/i $STYLES" "$PWD/src/index.html"
+#         ;;
+#     'react')
+#     gsed -i "/<\/head>/i $STYLES" "$PWD/public/index.html"
+#         ;;
+#     'vue')
+#     gsed -i "/<\/head>/i $STYLES" "$PWD/public/index.html"
+#         ;;
+#     'vanilla')
+#     gsed -i "/<\/head>/i $STYLES" "$PWD/index.html"
+#         ;;
+#     *) 
+#     echo "Could not inject stylesheets"
+#     ;;
+# esac
 
 
 # vue specific code

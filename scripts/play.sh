@@ -1,15 +1,36 @@
 #!/usr/bin/env bash
 
+# import FRAMEWORK variable
 source "./ag-grid.config.sh"
 
-echo $FRAMEWORK
+# fetch DOCS_EXAMPLE metadata from t2/docs/metadata directory
+T2_DOCS_METADATA_DIR_PATH="$T2_HOME/docs/metadata"
 
-if [[ $FRAMEWORK == "vanilla" ]]
-then
-    VANILLA_IMPORTS="import \"ag-grid-community/dist/styles/ag-grid.css\";\nimport \"ag-grid-community/dist/styles/ag-theme-alpine.css\";\nimport \"ag-grid-enterprise\";\nimport * as agGrid from \"ag-grid-community\";\n"
+DOCS_EXAMPLE="range-selection"
 
-    gsed -i "1i $VANILLA_IMPORTS" "$PWD/src/index.js"
-fi
+
+# inject style tags from the docs example's index.html into the project
+jq -c .$FRAMEWORK'.indexHTML' $T2_DOCS_METADATA_DIR_PATH/$DOCS_EXAMPLE.json | while read i; do
+    # first create an temporary HTML file where we will output the fetched index.html file
+    URL=$( echo "$i" | jq -r )
+    curl -o tmp.html $URL
+    # match the <style></style> tags and store them in a variable
+    PAGE_STYLES=$( gsed -n "/<style.*/,/<\/style>/p" tmp.html )
+    # escape for use in sed 
+    ESCAPED_PAGE_STYLES=$(printf '%s\n' "$PAGE_STYLES" | sed -e 's/[\/&"]/\\&/g')
+    # inject into project index.html file
+    gsed -i "/<\/head>/i $(echo $ESCAPED_PAGE_STYLES)" "$PWD/index.html"
+    # delete temporary HTML file
+    rm -rf $PWD/tmp.html
+done
+
+# echo $FRAMEWORK
+
+# if [[ $FRAMEWORK == "vanilla" ]]
+# then
+#     VANILLA_IMPORTS="import \"ag-grid-community/dist/styles/ag-grid.css\";\nimport \"ag-grid-community/dist/styles/ag-theme-alpine.css\";\nimport \"ag-grid-enterprise\";\nimport * as agGrid from \"ag-grid-community\";\n"
+#     gsed -i "1i $VANILLA_IMPORTS" "$PWD/src/index.js"
+# fi
 
 
 
