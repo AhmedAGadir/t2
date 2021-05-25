@@ -5,20 +5,19 @@ import { render } from 'react-dom';
 import { AgGridReact, AgGridColumn } from 'ag-grid-react';
 import 'ag-grid-enterprise';
 import 'ag-grid-community/dist/styles/ag-grid.css';
-import 'ag-grid-community/dist/styles/ag-theme-alpine-dark.css';
+import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 
 const GridExample = () => {
   const [gridApi, setGridApi] = useState(null);
   const [gridColumnApi, setGridColumnApi] = useState(null);
+  const [rowData, setRowData] = useState(null);
 
   const onGridReady = (params) => {
     setGridApi(params.api);
     setGridColumnApi(params.columnApi);
 
     const updateData = (data) => {
-      var fakeServer = createFakeServer(data);
-      var datasource = createServerSideDatasource(fakeServer);
-      params.api.setServerSideDatasource(datasource);
+      setRowData(data);
     };
 
     fetch('https://www.ag-grid.com/example-assets/olympic-winners.json')
@@ -34,54 +33,31 @@ const GridExample = () => {
           height: '100%',
           width: '100%',
         }}
-        className="ag-theme-alpine-dark"
+        className="ag-theme-alpine"
       >
         <AgGridReact
           defaultColDef={{
             flex: 1,
             minWidth: 100,
+            filter: true,
+            sortable: true,
+            resizable: true,
           }}
-          rowModelType={'serverSide'}
+          autoGroupColumnDef={{ minWidth: 200 }}
+          enableRangeSelection={true}
+          animateRows={true}
           onGridReady={onGridReady}
+          rowData={rowData}
         >
-          <AgGridColumn field="athlete" minWidth={220} />
-          <AgGridColumn field="country" minWidth={200} />
-          <AgGridColumn field="year" />
-          <AgGridColumn field="sport" minWidth={200} />
-          <AgGridColumn field="gold" />
-          <AgGridColumn field="silver" />
-          <AgGridColumn field="bronze" />
+          <AgGridColumn field="country" rowGroup={true} />
+          <AgGridColumn field="year" rowGroup={true} />
+          <AgGridColumn field="sport" />
+          <AgGridColumn field="athlete" />
+          <AgGridColumn field="total" />
         </AgGridReact>
       </div>
     </div>
   );
 };
-
-function createServerSideDatasource(server) {
-  return {
-    getRows: function (params) {
-      console.log('[Datasource] - rows requested by grid: ', params.request);
-      var response = server.getData(params.request);
-      setTimeout(function () {
-        if (response.success) {
-          params.success({ rowData: response.rows });
-        } else {
-          params.fail();
-        }
-      }, 500);
-    },
-  };
-}
-function createFakeServer(allData) {
-  return {
-    getData: function (request) {
-      var requestedRows = allData.slice();
-      return {
-        success: true,
-        rows: requestedRows,
-      };
-    },
-  };
-}
 
 render(<GridExample></GridExample>, document.querySelector('#root'));
