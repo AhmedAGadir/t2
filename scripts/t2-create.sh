@@ -39,7 +39,8 @@ TEMPLATE_DIR_PATH="$T2_HOME/templates/$FRAMEWORK"
 # create project
 case "$FRAMEWORK" in  
     'angular')
-        ng new my-ag-grid --directory "./projects/t2-$TICKET" --style scss --routing false --strict true --skip-git true && /
+        # ng new my-ag-grid --directory "./projects/t2-$TICKET" --style scss --routing false --strict true --skip-git true && /
+        ng new my-ag-grid --directory "./projects/t2-$TICKET" --style scss --routing false --strict false --skip-git true && /
         npm i --save ag-grid-angular ag-grid-community ag-grid-enterprise --prefix $PROJECT_DIR_PATH && /
         ;;
     'react')
