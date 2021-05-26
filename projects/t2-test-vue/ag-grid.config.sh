@@ -1,2 +1,3 @@
-export FRAMEWORK="vue"
-export TICKET="test-vue"
+TICKET="test-vue"
+FRAMEWORK="vue"
+DOCS_IMPORTED=false
