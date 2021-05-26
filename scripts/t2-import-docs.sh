@@ -111,6 +111,7 @@ done
 if [[ $FRAMEWORK == "vue" ]]
 then
     # allow compiling vue templates  
+    # https://cli.vuejs.org/config/#runtimecompiler
     echo "module.exports = { runtimeCompiler: true }" >> vue.config.js
     # we also need to replace the root vue element
     BEFORE_ROOT_ELEMENT_REPLACE="<div id=\"app\"><\/div>"
