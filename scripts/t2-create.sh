@@ -80,7 +80,7 @@ echo "DOCS_IMPORTED=false" >> ag-grid.config.sh
 
 echo "======================================================"
 echo "new AG Grid $FRAMEWORK project [t2-$TICKET] created."
-echo "$T2_HOME/projects/t2-$TICKET"
+echo "$PROJECT_DIR_PATH"
 echo "======================================================"
 
 code $PROJECT_DIR_PATH
