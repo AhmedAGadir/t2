@@ -6,16 +6,28 @@
 # echo "export DOCS_IMPORTED=$BOOL" >> ag-grid.config.sh
 
 
-source "./ag-grid.config.sh"
 
-if [[ $DOCS_IMPORTED == true ]]
-then
-    echo 'you can only run this script once per project.'
-    exit 1
-else 
-    BOOL=false
-    gsed -i "s/.*DOCS_IMPORTED.*/export DOCS_IMPORTED=$BOOL/" $PWD/ag-grid.config.sh
-fi
+# "rules": {}
+# to: 
+# "rules": { 
+# 	"no-unused-vars": "off",
+# 	"no-undef": "off"
+# }
+
+
+gsed -i "s/\"rules\": {}/\"rules\": {\"no-unused-vars\": \"off\",\"no-undef\": \"off\"}/" $PWD/package.json
+
+
+# source "./ag-grid.config.sh"
+
+# if [[ $DOCS_IMPORTED == true ]]
+# then
+#     echo 'you can only run this script once per project.'
+#     exit 1
+# else 
+#     BOOL=false
+#     gsed -i "s/.*DOCS_IMPORTED.*/export DOCS_IMPORTED=$BOOL/" $PWD/ag-grid.config.sh
+# fi
 
 
 

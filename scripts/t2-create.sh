@@ -48,7 +48,7 @@ case "$FRAMEWORK" in
         ;;
     'vue')
         cd $T2_HOME/projects && /
-        vue create -d t2-$TICKET && /
+        vue create -i '{ "useConfigFiles": true, "plugins": { "@vue/cli-plugin-babel": {} }, "vueVersion": "2", "cssPreprocessor": "node-sass" }' t2-$TICKET && /
         npm i --save ag-grid-vue ag-grid-community ag-grid-enterprise vue-property-decorator@^8.0.0 --prefix $PROJECT_DIR_PATH && /
         cd $T2_HOME &&/
         ;;
