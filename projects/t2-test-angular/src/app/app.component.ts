@@ -1,7 +1,8 @@
 import { Component } from "@angular/core";
 import "ag-grid-enterprise";
 import { HttpClient } from "@angular/common/http";
-
+import "ag-grid-community/dist/styles/ag-grid.css";
+import "ag-grid-community/dist/styles/ag-theme-alpine.css";
 @Component({
   selector: "my-app",
   template: `<ag-grid-angular
