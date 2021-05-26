@@ -33,4 +33,4 @@ echo "LINK TO CODESANDBOX: https://codesandbox.io/s/github/ahmedagadir/t2/tree/m
 # echo "LINK TO STACKBLITZ: https://stackblitz.com/github/ahmedagadir/t2/tree/main/projects/t2-${TICKET}"
 echo "======================================================"
 
-open https://codesandbox.io/s/github/ahmedagadir/t2/tree/main/projects/t2-${TICKET}
+open -a https://codesandbox.io/s/github/ahmedagadir/t2/tree/main/projects/t2-${TICKET}
