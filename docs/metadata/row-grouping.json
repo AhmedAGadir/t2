@@ -16,7 +16,21 @@
         ]
     },
     "angular": {
-        "indexHTML": "https://www.ag-grid.com/examples/grouping/auto-column-group/packages/angular/index.html"
+        "indexHTML": "https://www.ag-grid.com/examples/grouping/auto-column-group/packages/angular/index.html",
+        "filesToFetch": [
+            {
+                "url": "https://www.ag-grid.com/examples/grouping/auto-column-group/packages/angular/app/app.component.ts",
+                "destination": "src/app/app.component.ts"
+            },
+            {
+                "url": "https://www.ag-grid.com/examples/grouping/auto-column-group/packages/angular/app/app.module.ts",
+                "destination": "src/app/app.module.ts"
+            }
+        ],
+        "filesToRemoveFromTemplate": [
+            "src/app/app.component.html",
+            "src/app/app.component.scss"
+        ]
     },
     "vue": {
         "indexHTML": "https://www.ag-grid.com/examples/grouping/auto-column-group/packages/vue/index.html",
