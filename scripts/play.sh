@@ -1,11 +1,47 @@
 #!/usr/bin/env bash
 
 
+
+# URL=$( echo "$i" | jq -r )
+curl -o tmp.html "https://www.ag-grid.com/examples/range-selection/range-selection/packages/reactFunctional/index.html"
+# match the <style></style> tags and store them in a variable
+PAGE_STYLES=$( gsed -n "/<style.*/,/<\/style>/p" tmp.html )
+# echo $PAGE_STYLES 
+# escape for use in sed 
+ESCAPED_PAGE_STYLES=$(printf '%s\n' "$PAGE_STYLES" | gsed -e 's/[\/&"]/\\&/g')
+# echo $ESCAPED_PAGE_STYLES
+gsed -i "1i $( echo $PAGE_STYLES )" "$PWD/tmp.css"
+gsed -i "1i $( echo $ESCAPED_PAGE_STYLES )" "$PWD/tmp.css"
+
+
+
+
+# STYLE_IMPORTS=$( gsed -n "/@import/p" src/styles.scss )
+# echo $STYLE_IMPORTS
+# # STYLE_IMPORTS_2=${STYLE_IMPORTS//@/\\\n}
+# # echo $STYLE_IMPORTS_2
+# style   
+
+# gsed -i "/@Component/i $( echo $STYLE_IMPORTS_2 )" "$PWD/src/app/app.component.ts" 
+
+
+
+
+
+# STYLES_WITHOUT_AT=${STYLE_IMPORTS//@/}
+# STYLES_W_LINEBREAKS_WITHOUT_AT=${STYLES_WITHOUT_AT//;/;\\n}
+
+# gsed -i "/@Component/i $( echo $STYLES_WITHOUT_AT )" "$PWD/src/app/app.component.ts" 
+# gsed -i "/@Component/i $( echo $STYLES_W_LINEBREAKS_WITHOUT_AT )" "$PWD/src/app/app.component.ts" 
+
+
 # echo 'creating ag-grid.config.sh...'
 # BOOL=true
 # echo "export DOCS_IMPORTED=$BOOL" >> ag-grid.config.sh
 
+# \"noImplicitAny\": false,
 
+# gsed -i "/compilerOptions/a \"noImplicitAny\": false,\n\"strictPropertyInitialization\": false," "$PWD/tsconfig.json"
 
 # "rules": {}
 # to: 
@@ -15,7 +51,7 @@
 # }
 
 
-gsed -i "s/\"rules\": {}/\"rules\": {\"no-unused-vars\": \"off\",\"no-undef\": \"off\"}/" $PWD/package.json
+# gsed -i "s/\"rules\": {}/\"rules\": {\"no-unused-vars\": \"off\",\"no-undef\": \"off\"}/" $PWD/package.json
 
 
 # source "./ag-grid.config.sh"

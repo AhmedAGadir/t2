@@ -80,22 +80,20 @@ jq -c .$FRAMEWORK'.indexHTML' $T2_DOCS_METADATA_DIR_PATH/$DOCS_EXAMPLE.json | wh
     curl -o tmp.html $URL
     # match the <style></style> tags and store them in a variable
     PAGE_STYLES=$( gsed -n "/<style.*/,/<\/style>/p" tmp.html )
-    # escape for use in sed 
-    ESCAPED_PAGE_STYLES=$(printf '%s\n' "$PAGE_STYLES" | sed -e 's/[\/&"]/\\&/g')
     
     # inject into project index.html file
     case "$FRAMEWORK" in  
         'angular')
-        gsed -i "/<\/head>/i $(echo $ESCAPED_PAGE_STYLES)" "$PWD/src/index.html"
+        gsed -i "/<\/head>/i $(echo $PAGE_STYLES)" "$PWD/src/index.html"
             ;;
         'react')
-        gsed -i "/<\/head>/i $(echo $ESCAPED_PAGE_STYLES)" "$PWD/public/index.html"
+        gsed -i "/<\/head>/i $(echo $PAGE_STYLES)" "$PWD/public/index.html"
             ;;
         'vue')
-        gsed -i "/<\/head>/i $(echo $ESCAPED_PAGE_STYLES)" "$PWD/public/index.html"
+        gsed -i "/<\/head>/i $(echo $PAGE_STYLES)" "$PWD/public/index.html"
             ;;
         'vanilla')
-        gsed -i "/<\/head>/i $(echo $ESCAPED_PAGE_STYLES)" "$PWD/index.html"
+        gsed -i "/<\/head>/i $(echo $PAGE_STYLES)" "$PWD/index.html"
             ;;
         *) 
         echo "Could not inject stylesheets"
@@ -106,8 +104,15 @@ jq -c .$FRAMEWORK'.indexHTML' $T2_DOCS_METADATA_DIR_PATH/$DOCS_EXAMPLE.json | wh
     rm -rf $PWD/tmp.html
 done
 
-# vue specific code
 
+
+# angular specific
+if [[ $FRAMEWORK == "angular" ]]
+then
+    # need to add some compiler options 
+    gsed -i "/compilerOptions/a \"noImplicitAny\": false,\n\"strictPropertyInitialization\": false," "$PWD/tsconfig.json"
+fi
+# vue specific code
 if [[ $FRAMEWORK == "vue" ]]
 then
     # allow compiling vue templates  
@@ -119,7 +124,7 @@ then
 
     gsed -i "s/$BEFORE_ROOT_ELEMENT_REPLACE/$AFTER_ROOT_ELEMENT_REPLACE/g" "$PWD/public/index.html"
 fi
-
+# vanilla specific
 if [[ $FRAMEWORK == "vanilla" ]]
 then
     VANILLA_IMPORTS="import \"ag-grid-community/dist/styles/ag-grid.css\";\nimport \"ag-grid-community/dist/styles/ag-theme-alpine.css\";\nimport \"ag-grid-enterprise\";\nimport * as agGrid from \"ag-grid-community\";\n"
@@ -127,8 +132,11 @@ then
 fi
 
 
+
 # finished
 echo "complete"
 echo "======================================================"
 echo "[$FRAMEWORK]$DOCS_EXAMPLE docs example imported."
 echo "======================================================"
+
+
