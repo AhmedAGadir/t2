@@ -1,97 +1,73 @@
-import { Component } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import 'ag-grid-enterprise';
-import 'ag-grid-community/dist/styles/ag-grid.css';
-import 'ag-grid-community/dist/styles/ag-theme-alpine-dark.css';
+import { Component } from "@angular/core";
+import "ag-grid-enterprise";
+import { HttpClient } from "@angular/common/http";
 
-nimport 'ag-grid-community/dist/styles/ag-grid.css'; 
-import 'ag-grid-community/dist/styles/ag-theme-alpine-dark.css';
+import "ag-grid-community/dist/styles/ag-grid.css";
+import "ag-grid-community/dist/styles/ag-theme-alpine.css";
 @Component({
-  selector: 'my-app',
+  selector: "my-app",
   template: `<ag-grid-angular
     #agGrid
-    style="width: 100%; height: 100%;"
+    style="width: 90%; height: 500px;"
     id="myGrid"
-    class="ag-theme-alpine-dark"
+    class="ag-theme-alpine"
     [columnDefs]="columnDefs"
     [defaultColDef]="defaultColDef"
-    [rowModelType]="rowModelType"
+    [enableRangeSelection]="true"
     [rowData]="rowData"
     (gridReady)="onGridReady($event)"
-  ></ag-grid-angular>`,
+  ></ag-grid-angular>`
 })
 export class AppComponent {
-  private gridApi;
-  private gridColumnApi;
-
-  public columnDefs;
-  public defaultColDef;
-  public rowModelType;
-  public rowData: [];
+  public gridApi: any;
+  public gridColumnApi: any;
+  public columnDefs: any;
+  public defaultColDef: any;
+  public rowData: any;
 
   constructor(private http: HttpClient) {
     this.columnDefs = [
       {
-        field: 'athlete',
-        minWidth: 220,
+        field: "athlete",
+        minWidth: 150
       },
       {
-        field: 'country',
-        minWidth: 200,
+        field: "age",
+        maxWidth: 90
       },
-      { field: 'year' },
       {
-        field: 'sport',
-        minWidth: 200,
+        field: "country",
+        minWidth: 150
       },
-      { field: 'gold' },
-      { field: 'silver' },
-      { field: 'bronze' },
+      {
+        field: "year",
+        maxWidth: 90
+      },
+      {
+        field: "date",
+        minWidth: 150
+      },
+      {
+        field: "sport",
+        minWidth: 150
+      },
+      { field: "gold" },
+      { field: "silver" },
+      { field: "bronze" },
+      { field: "total" }
     ];
     this.defaultColDef = {
       flex: 1,
-      minWidth: 100,
+      minWidth: 100
     };
-    this.rowModelType = 'serverSide';
   }
 
-  onGridReady(params) {
+  onGridReady(params: { api: any; columnApi: any }) {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
 
-    this.http
-      .get('https://www.ag-grid.com/example-assets/olympic-winners.json')
-      .subscribe((data) => {
-        var fakeServer = createFakeServer(data);
-        var datasource = createServerSideDatasource(fakeServer);
-        params.api.setServerSideDatasource(datasource);
-      });
+    this.http.get("https://www.ag-grid.com/example-assets/olympic-winners.json").subscribe((data) => {
+      this.rowData = data;
+    });
   }
-}
-
-function createServerSideDatasource(server) {
-  return {
-    getRows: function (params) {
-      console.log('[Datasource] - rows requested by grid: ', params.request);
-      var response = server.getData(params.request);
-      setTimeout(function () {
-        if (response.success) {
-          params.success({ rowData: response.rows });
-        } else {
-          params.fail();
-        }
-      }, 500);
-    },
-  };
-}
-function createFakeServer(allData) {
-  return {
-    getData: function (request) {
-      var requestedRows = allData.slice();
-      return {
-        success: true,
-        rows: requestedRows,
-      };
-    },
-  };
 }

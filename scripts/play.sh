@@ -2,27 +2,59 @@
 
 
 
-# URL=$( echo "$i" | jq -r )
-curl -o tmp.html "https://www.ag-grid.com/examples/range-selection/range-selection/packages/reactFunctional/index.html"
-# match the <style></style> tags and store them in a variable
-PAGE_STYLES=$( gsed -n "/<style.*/,/<\/style>/p" tmp.html )
-# echo $PAGE_STYLES 
-# escape for use in sed 
-ESCAPED_PAGE_STYLES=$(printf '%s\n' "$PAGE_STYLES" | gsed -e 's/[\/&"]/\\&/g')
-# echo $ESCAPED_PAGE_STYLES
-gsed -i "1i $( echo $PAGE_STYLES )" "$PWD/tmp.css"
-gsed -i "1i $( echo $ESCAPED_PAGE_STYLES )" "$PWD/tmp.css"
+
+
+
+
+STYLE_IMPORTS=$( gsed -n "/@import/p" src/styles.scss )
+FORMATTED_STLYE_IMPORTS=$( echo $STYLE_IMPORTS | gsed -e 's/( @)\|@//g' | gsed -e 's/; /;\\n/g' )
+
+gsed -i "/@Component/i $( echo $FORMATTED_STLYE_IMPORTS )" "$PWD/src/app/app.component.ts" 
+
+# FORMATTED_STLYE_IMPORTS=$( gsed -n "/@import/p" src/styles.scss | gsed -e 's/( @)\|@//g' | gsed -e 's/; /;\\n/g' )
+
+
+# STYLE_IMPORTS=$( gsed -n "/@import/p" src/styles.scss )
+# MODIFIED_STYLE_IMPORTS=$( echo $STYLE_IMPORTS | gsed -e 's/( @)\|@//g' | gsed -e 's/; /;\\n/g' )
+
+
+# ====
+
+
+
+
+
+
+
+# # URL=$( echo "$i" | jq -r )
+# curl -o tmp.html "https://www.ag-grid.com/examples/range-selection/range-selection/packages/reactFunctional/index.html"
+# # match the <style></style> tags and store them in a variable
+# PAGE_STYLES=$( gsed -n "/<style.*/,/<\/style>/p" tmp.html )
+# # echo $PAGE_STYLES 
+# # escape for use in sed 
+# ESCAPED_PAGE_STYLES=$(printf '%s\n' "$PAGE_STYLES" | gsed -e 's/[\/&"]/\\&/g')
+# # echo $ESCAPED_PAGE_STYLES
+# gsed -i "1i $( echo $PAGE_STYLES )" "$PWD/tmp.css"
+# gsed -i "1i $( echo $ESCAPED_PAGE_STYLES )" "$PWD/tmp.css"
 
 
 
 
 # STYLE_IMPORTS=$( gsed -n "/@import/p" src/styles.scss )
-# echo $STYLE_IMPORTS
-# # STYLE_IMPORTS_2=${STYLE_IMPORTS//@/\\\n}
-# # echo $STYLE_IMPORTS_2
-# style   
+# MODIFIED_STYLE_IMPORTS=$( echo $STYLE_IMPORTS | gsed -e 's/( @)\|@//g' | gsed -e 's/; /;\\n/g' )
 
-# gsed -i "/@Component/i $( echo $STYLE_IMPORTS_2 )" "$PWD/src/app/app.component.ts" 
+
+
+
+
+# MODIFIED_STYLE_IMPORTS=$( echo "$STYLE_IMPORTS" | gsed -e 's/((y)|(xy))/5/g')
+# MODIFIED_STYLE_IMPORTS=$( echo "$STYLE_IMPORTS" | gsed -e 's/ ?@//g' | gsed -e 's/;/;\\n/g')
+# STYLE_IMPORTS_2=${STYLE_IMPORTS//@/\\\n}
+# echo $STYLE_IMPORTS_2
+# echo $MODIFIED_STYLE_IMPORTS
+
+# gsed -i "/@Component/i $( echo $STYLE_IMPORTS )" "$PWD/src/app/app.component.ts" 
+# gsed -i "/@Component/i $( echo $MODIFIED_STYLE_IMPORTS )" "$PWD/src/app/app.component.ts" 
 
 
 
