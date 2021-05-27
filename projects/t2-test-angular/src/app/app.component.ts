@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import 'ag-grid-enterprise';
 import 'ag-grid-community/dist/styles/ag-grid.css';
-import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
+import 'ag-grid-community/dist/styles/ag-theme-alpine-dark.css';
 
 @Component({
   selector: 'my-app',
@@ -10,12 +10,10 @@ import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
     #agGrid
     style="width: 100%; height: 100%;"
     id="myGrid"
-    class="ag-theme-alpine"
+    class="ag-theme-alpine-dark"
     [columnDefs]="columnDefs"
     [defaultColDef]="defaultColDef"
-    [autoGroupColumnDef]="autoGroupColumnDef"
-    [enableRangeSelection]="true"
-    [animateRows]="true"
+    [rowModelType]="rowModelType"
     [rowData]="rowData"
     (gridReady)="onGridReady($event)"
   ></ag-grid-angular>`,
@@ -26,31 +24,33 @@ export class AppComponent {
 
   public columnDefs;
   public defaultColDef;
-  public autoGroupColumnDef;
-  public rowData: any;
+  public rowModelType;
+  public rowData: [];
 
   constructor(private http: HttpClient) {
     this.columnDefs = [
       {
-        field: 'country',
-        rowGroup: true,
+        field: 'athlete',
+        minWidth: 220,
       },
       {
-        field: 'year',
-        rowGroup: true,
+        field: 'country',
+        minWidth: 200,
       },
-      { field: 'sport' },
-      { field: 'athlete' },
-      { field: 'total' },
+      { field: 'year' },
+      {
+        field: 'sport',
+        minWidth: 200,
+      },
+      { field: 'gold' },
+      { field: 'silver' },
+      { field: 'bronze' },
     ];
     this.defaultColDef = {
       flex: 1,
       minWidth: 100,
-      filter: true,
-      sortable: true,
-      resizable: true,
     };
-    this.autoGroupColumnDef = { minWidth: 200 };
+    this.rowModelType = 'serverSide';
   }
 
   onGridReady(params) {
@@ -60,7 +60,36 @@ export class AppComponent {
     this.http
       .get('https://www.ag-grid.com/example-assets/olympic-winners.json')
       .subscribe((data) => {
-        this.rowData = data;
+        var fakeServer = createFakeServer(data);
+        var datasource = createServerSideDatasource(fakeServer);
+        params.api.setServerSideDatasource(datasource);
       });
   }
+}
+
+function createServerSideDatasource(server) {
+  return {
+    getRows: function (params) {
+      console.log('[Datasource] - rows requested by grid: ', params.request);
+      var response = server.getData(params.request);
+      setTimeout(function () {
+        if (response.success) {
+          params.success({ rowData: response.rows });
+        } else {
+          params.fail();
+        }
+      }, 500);
+    },
+  };
+}
+function createFakeServer(allData) {
+  return {
+    getData: function (request) {
+      var requestedRows = allData.slice();
+      return {
+        success: true,
+        rows: requestedRows,
+      };
+    },
+  };
 }
