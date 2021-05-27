@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import 'ag-grid-enterprise';
 import 'ag-grid-community/dist/styles/ag-grid.css';
-import 'ag-grid-community/dist/styles/ag-theme-alpine-dark.css';
+import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 
 @Component({
   selector: 'my-app',
@@ -10,47 +10,47 @@ import 'ag-grid-community/dist/styles/ag-theme-alpine-dark.css';
     #agGrid
     style="width: 100%; height: 100%;"
     id="myGrid"
-    class="ag-theme-alpine-dark"
+    class="ag-theme-alpine"
     [columnDefs]="columnDefs"
     [defaultColDef]="defaultColDef"
-    [rowModelType]="rowModelType"
+    [autoGroupColumnDef]="autoGroupColumnDef"
+    [enableRangeSelection]="true"
+    [animateRows]="true"
     [rowData]="rowData"
     (gridReady)="onGridReady($event)"
   ></ag-grid-angular>`,
 })
 export class AppComponent {
-  public gridApi;
-  public gridColumnApi;
+  private gridApi;
+  private gridColumnApi;
 
   public columnDefs;
   public defaultColDef;
-  public rowModelType;
+  public autoGroupColumnDef;
   public rowData: any;
 
   constructor(private http: HttpClient) {
     this.columnDefs = [
       {
-        field: 'athlete',
-        minWidth: 220,
-      },
-      {
         field: 'country',
-        minWidth: 200,
+        rowGroup: true,
       },
-      { field: 'year' },
       {
-        field: 'sport',
-        minWidth: 200,
+        field: 'year',
+        rowGroup: true,
       },
-      { field: 'gold' },
-      { field: 'silver' },
-      { field: 'bronze' },
+      { field: 'sport' },
+      { field: 'athlete' },
+      { field: 'total' },
     ];
     this.defaultColDef = {
       flex: 1,
       minWidth: 100,
+      filter: true,
+      sortable: true,
+      resizable: true,
     };
-    this.rowModelType = 'serverSide';
+    this.autoGroupColumnDef = { minWidth: 200 };
   }
 
   onGridReady(params) {
@@ -60,36 +60,7 @@ export class AppComponent {
     this.http
       .get('https://www.ag-grid.com/example-assets/olympic-winners.json')
       .subscribe((data) => {
-        var fakeServer = createFakeServer(data);
-        var datasource = createServerSideDatasource(fakeServer);
-        params.api.setServerSideDatasource(datasource);
+        this.rowData = data;
       });
   }
-}
-
-function createServerSideDatasource(server) {
-  return {
-    getRows: function (params) {
-      console.log('[Datasource] - rows requested by grid: ', params.request);
-      var response = server.getData(params.request);
-      setTimeout(function () {
-        if (response.success) {
-          params.success({ rowData: response.rows });
-        } else {
-          params.fail();
-        }
-      }, 500);
-    },
-  };
-}
-function createFakeServer(allData) {
-  return {
-    getData: function (request) {
-      var requestedRows = allData.slice();
-      return {
-        success: true,
-        rows: requestedRows,
-      };
-    },
-  };
 }

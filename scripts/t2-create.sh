@@ -86,10 +86,8 @@ if [[ $FRAMEWORK == "angular" ]]
 then
   # need to move AG Grid style imports from src/styles.scss -> src/app/app.component.ts for codesandbox
   echo "[Angular only] injecting AG Grid stylesheet imports from src/styles.scss -> src/app/app.component.ts for codesandbox"
-
   STYLE_IMPORTS=$( gsed -n "/@import/p" src/styles.scss )
   FORMATTED_STLYE_IMPORTS=$( echo $STYLE_IMPORTS | gsed -e 's/( @)\|@//g' | gsed -e 's/; /;\\n/g' )
-
   gsed -i "/@Component/i $( echo $FORMATTED_STLYE_IMPORTS )" "$PWD/src/app/app.component.ts" 
 fi
 
