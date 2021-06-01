@@ -19,12 +19,13 @@ fi
 # import FRAMEWORK, TICKET and DOCS_IMPORTED variables
 source "./ag-grid.config.sh"
 
-# # this script can only be run once per project
+# this script can only be run once per project
 # if [[ $DOCS_IMPORTED == true ]]
 # then
 #     echo 'You can only run this script once per project.'
 #     exit 1
 # else 
+#     # change DOCS_IMPORTED variable to true, so that t2-import-scripts can not be run on this template again
 #     gsed -i 's/DOCS_IMPORTED.*/DOCS_IMPORTED=true/' $PWD/ag-grid.config.sh
 # fi
 
@@ -42,14 +43,13 @@ done
 
 echo "importing [$DOCS_EXAMPLE][$FRAMEWORK] example from the AG Grid docs..."
 
-
 # fetch DOCS_EXAMPLE metadata from t2/docs/metadata directory
 T2_DOCS_METADATA_DIR_PATH="$T2_HOME/docs/metadata"
 
 # install jq 
 # https://stedolan.github.io/jq/
 
-# iterate over filesToFetch and import them
+# iterate over filesToFetch and import them into project
 jq -c .$FRAMEWORK'.filesToFetch[]' $T2_DOCS_METADATA_DIR_PATH/$DOCS_EXAMPLE.json | while read i; do
     # do stuff with $i
     docs_url=$( echo "$i" | jq -r '.url' )
@@ -74,14 +74,15 @@ done
 echo 'injecting page styles...'
 
 # inject style tags from the docs example's index.html into the project
+# first fetch the projects index.html file
 jq -c .$FRAMEWORK'.indexHTML' $T2_DOCS_METADATA_DIR_PATH/$DOCS_EXAMPLE.json | while read i; do
-    # first create an temporary HTML file where we will output the fetched index.html file
+    # create an temporary HTML file where we will output the fetched index.html file
     URL=$( echo "$i" | jq -r )
     curl -o tmp.html $URL
     # match the <style></style> tags and store them in a variable
     PAGE_STYLES=$( gsed -n "/<style.*/,/<\/style>/p" tmp.html )
     
-    # inject into project index.html file
+    # inject into projects index.html file
     case "$FRAMEWORK" in  
         'angular')
         gsed -i "/<\/head>/i $(echo $PAGE_STYLES)" "$PWD/src/index.html"
@@ -105,8 +106,13 @@ jq -c .$FRAMEWORK'.indexHTML' $T2_DOCS_METADATA_DIR_PATH/$DOCS_EXAMPLE.json | wh
 done
 
 
-
-# angular specific
+# REACT specific code
+# no modifications needed when using react :)
+# if [[ $FRAMEWORK == "REACT" ]]
+# then
+# #  FOO
+# fi
+# ANGULAR specific code
 if [[ $FRAMEWORK == "angular" ]]
 then
     # need to add some compiler options 
@@ -118,25 +124,31 @@ then
     FORMATTED_STLYE_IMPORTS=$( echo $STYLE_IMPORTS | gsed -e 's/import/@import/g' | gsed -e 's/; /;\\n/g' )
     # delete any current AG Grid stylesheet imports
     gsed -i "/@import 'ag-grid-community\/dist\/styles/d" "src/styles.scss"
-    # inject new imports
+    # inject new stylesheet imports
     gsed -i "2a $( echo $FORMATTED_STLYE_IMPORTS )" "$PWD/src/styles.scss" 
 
+    # change private properties -> public properties in component
+    # this is because component templates only have access to public properties
+    gsed -i 's/private/public/g' "$PWD/src/app/app.component.ts" 
+    # change this rowData: [] -> rowData: any
+    gsed -i 's/rowData: \[\]/rowData: any/g' "$PWD/src/app/app.component.ts" 
+
 fi
-# vue specific code
+# VUE specific code
 if [[ $FRAMEWORK == "vue" ]]
 then
     # allow compiling vue templates  
     # https://cli.vuejs.org/config/#runtimecompiler
     echo "module.exports = { runtimeCompiler: true }" >> vue.config.js
-    # we also need to replace the root vue element
+    # we also need to replace the root vue element to nest the ag-grid-vue container element (<my-component></my-component>)
     BEFORE_ROOT_ELEMENT_REPLACE="<div id=\"app\"><\/div>"
     AFTER_ROOT_ELEMENT_REPLACE="<div id=\"app\"><my-component>Loading Vue example<\/my-component><\/div>"
-
     gsed -i "s/$BEFORE_ROOT_ELEMENT_REPLACE/$AFTER_ROOT_ELEMENT_REPLACE/g" "$PWD/public/index.html"
 fi
-# vanilla specific
+# VANILLA specific
 if [[ $FRAMEWORK == "vanilla" ]]
 then
+    # import AG Grid packages into src/index.js
     VANILLA_IMPORTS="import \"ag-grid-community/dist/styles/ag-grid.css\";\nimport \"ag-grid-community/dist/styles/ag-theme-alpine.css\";\nimport \"ag-grid-enterprise\";\nimport * as agGrid from \"ag-grid-community\";\n"
     gsed -i "1i $VANILLA_IMPORTS" "$PWD/src/index.js"
 fi

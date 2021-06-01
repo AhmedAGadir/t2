@@ -3,18 +3,21 @@
 
 
     # need to move AG Grid style imports from src/styles.scss -> src/app/app.component.ts for codesandbox
-    echo "[Angular only] injecting AG Grid stylesheet imports from src/app/app.component.ts -> src/styles.scss for codesandbox"
+    # echo "[Angular only] injecting AG Grid stylesheet imports from src/app/app.component.ts -> src/styles.scss for codesandbox"
 
-    STYLE_IMPORTS=$( gsed -n "/import 'ag-grid-community\/dist\/styles\//p" src/app/app.component.ts )
-    FORMATTED_STLYE_IMPORTS=$( echo $STYLE_IMPORTS | gsed -e 's/import/@import/g' | gsed -e 's/; /;\\n/g' )
-    echo $FORMATTED_STLYE_IMPORTS
+    # STYLE_IMPORTS=$( gsed -n "/import 'ag-grid-community\/dist\/styles\//p" src/app/app.component.ts )
+    # FORMATTED_STLYE_IMPORTS=$( echo $STYLE_IMPORTS | gsed -e 's/import/@import/g' | gsed -e 's/; /;\\n/g' )
+    # echo $FORMATTED_STLYE_IMPORTS
 
-    # delete any current AG Grid stylesheet imports
-    gsed -i '/@import \"ag-grid-community\/dist\/styles/d' "src/styles.scss"
+    # # delete any current AG Grid stylesheet imports
+    # gsed -i '/@import \"ag-grid-community\/dist\/styles/d' "src/styles.scss"
 
-    # inject new imports
-    gsed -i "2a $( echo $FORMATTED_STLYE_IMPORTS )" "$PWD/src/styles.scss" 
+    # # inject new imports
+    # gsed -i "2a $( echo $FORMATTED_STLYE_IMPORTS )" "$PWD/src/styles.scss" 
 
+
+    gsed -i 's/rowData: \[\]/rowData: any/g' "$PWD/src/app/app.component.ts" 
+    
 
 
 # STYLE_IMPORTS=$( gsed -n "/@import/p" src/styles.scss )

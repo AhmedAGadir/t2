@@ -19,15 +19,15 @@ import 'ag-grid-community/dist/styles/ag-theme-alpine-dark.css';
   ></ag-grid-angular>`,
 })
 export class AppComponent {
-  private gridApi;
-  private gridColumnApi;
+  public gridApi;
+  public gridColumnApi;
 
   public columnDefs;
   public defaultColDef;
   public rowModelType;
-  public rowData: [];
+  public rowData: any;
 
-  constructor(private http: HttpClient) {
+  constructor(public http: HttpClient) {
     this.columnDefs = [
       {
         field: 'athlete',

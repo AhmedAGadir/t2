@@ -1,5 +1,12 @@
 #!/usr/bin/env bash 
 
+if [ $# -eq 0 ]
+  then
+    COMMIT_MESSAGE='update'
+  else 
+    COMMIT_MESSAGE=$1
+fi
+
 T2_PROJECTS_DIR_PATH="$T2_HOME/projects"
 
 # if running script from outside of our projects folder -> exit
@@ -23,7 +30,7 @@ source "./ag-grid.config.sh"
 cd $T2_HOME
 
 git add . && /
-git commit -m "update" && /
+git commit -m "$COMMIT_MESSAGE" && /
 git push && /
 
 echo "complete"
