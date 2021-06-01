@@ -1,5 +1,5 @@
 {
-  "name": "t2-test-vue",
+  "name": "t2-test-vue-ahmed",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -7,9 +7,9 @@
     "build": "vue-cli-service build"
   },
   "dependencies": {
-    "ag-grid-community": "^25.2.1",
-    "ag-grid-enterprise": "^25.2.1",
-    "ag-grid-vue": "^25.2.0",
+    "ag-grid-community": "^25.3.0",
+    "ag-grid-enterprise": "^25.3.0",
+    "ag-grid-vue": "^25.3.0",
     "core-js": "^3.6.5",
     "vue": "^2.6.11",
     "vue-property-decorator": "^8.5.1"
