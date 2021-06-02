@@ -160,8 +160,8 @@ then
     echo '[tree data] importing additional stylesheet imports'
     case "$FRAMEWORK" in  
         'angular')
-            TREE_DATA_STYLE_IMPORTS='<link rel="stylesheet" href="styles.css"/>'
-            gsed -i "/<\/head>/i $TREE_DATA_STYLE_IMPORTS" "$PWD/src/index.html"
+            TREE_DATA_STYLE_IMPORTS="styleUrls: ['./app.component.css'],"
+            gsed -i "/selector: 'my-app'/a $TREE_DATA_STYLE_IMPORTS" "$PWD/src/index.html"
             ;;
         'react')
             TREE_DATA_STYLE_IMPORTS="import './style.css'"
