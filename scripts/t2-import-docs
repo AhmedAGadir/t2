@@ -157,7 +157,7 @@ fi
 
 if [[ $DOCS_EXAMPLE == "tree-data" ]]
 then
-    echo 'importing tree data stylesheet imports'
+    echo '[tree data] importing additional stylesheet imports'
     case "$FRAMEWORK" in  
         'angular')
             TREE_DATA_STYLE_IMPORTS='<link rel="stylesheet" href="styles.css"/>'
