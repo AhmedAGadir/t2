@@ -20,11 +20,11 @@ fi
 source "./ag-grid.config.sh"
 
 # this script can only be run once per project
-if [[ ! $DOCS_EXAMPLE == '' ]]
-then
-    echo 'You can only run this script once per project.'
-    exit 1
-fi
+# if [[ ! $DOCS_EXAMPLE == "" ]]
+# then
+#     echo 'You can only run this script once per project.'
+#     exit 1
+# fi
 
 # select a docs example to import
 DOCUMENATION_EXAMPLES="range-selection row-grouping server-side-row-model tree-data"
@@ -38,7 +38,7 @@ do
 done
 
 # update ag-grid.config file to include DOCS_EXAMPLE
-# gsed -i "s/DOCS_EXAMPLE.*/DOCS_EXAMPLE=\"$DOCS_EXAMPLE\"/" $PWD/ag-grid.config.sh
+gsed -i "s/DOCS_EXAMPLE.*/DOCS_EXAMPLE=\"$DOCS_EXAMPLE\"/" $PWD/ag-grid.config.sh
 
 echo "importing [$DOCS_EXAMPLE][$FRAMEWORK] example from the AG Grid docs..."
 
@@ -157,19 +157,23 @@ fi
 
 if [[ $DOCS_EXAMPLE == "tree-data" ]]
 then
-    # inject into projects index.html file
+    echo 'importing tree data stylesheet imports'
     case "$FRAMEWORK" in  
         'angular')
-            echo 'angular project'
+            TREE_DATA_STYLE_IMPORTS='<link rel="stylesheet" href="styles.css"/>'
+            gsed -i "/<\/head>/i $TREE_DATA_STYLE_IMPORTS" "$PWD/src/index.html"
             ;;
         'react')
-            echo 'react project'
+            TREE_DATA_STYLE_IMPORTS="import './style.css'"
+            gsed -i "8a $TREE_DATA_STYLE_IMPORTS" "$PWD/src/index.js"
             ;;
         'vue')
-            echo 'vue project'
+            TREE_DATA_STYLE_IMPORTS='<link rel="stylesheet" href="styles.css"/>'
+            gsed -i "/<\/head>/i $TREE_DATA_STYLE_IMPORTS" "$PWD/public/index.html"
             ;;
         'vanilla')
-            echo 'vanilla project'
+            TREE_DATA_STYLE_IMPORTS='<link rel="stylesheet" href="styles.css"/>'
+            gsed -i "/<\/head>/i $TREE_DATA_STYLE_IMPORTS" "$PWD/index.html"
             ;;
         *) 
         echo "Could not inject stylesheets"

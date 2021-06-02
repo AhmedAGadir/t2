@@ -44,8 +44,12 @@
         "indexHTML": "https://www.ag-grid.com/examples/tree-data/org-hierarchy/packages/vue/index.html",
         "filesToFetch": [
             {
-                "url": "https://www.ag-grid.com/examples/range-selection/range-selection/packages/vue/main.js",
+                "url": "https://www.ag-grid.com/examples/tree-data/org-hierarchy/packages/vue/main.js",
                 "destination": "src/main.js"
+            },
+            {
+                "url": "https://www.ag-grid.com/examples/tree-data/org-hierarchy/packages/vue/styles.css",
+                "destination": "public/styles.css"
             }
         ],
         "filesToRemoveFromTemplate": [
@@ -58,8 +62,12 @@
         "indexHTML": "https://www.ag-grid.com/examples/tree-data/org-hierarchy/packages/vanilla/index.html",
         "filesToFetch": [
             {
-                "url": "https://www.ag-grid.com/examples/range-selection/range-selection/packages/vanilla/main.js",
+                "url": "https://www.ag-grid.com/examples/tree-data/org-hierarchy/packages/vanilla/main.js",
                 "destination": "src/index.js"
+            },
+            {
+                "url": "https://www.ag-grid.com/examples/tree-data/org-hierarchy/packages/vanilla/styles.css",
+                "destination": "styles.css"
             }
         ],
         "filesToRemoveFromTemplate": [

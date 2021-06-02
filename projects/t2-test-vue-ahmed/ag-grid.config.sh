@@ -1,3 +1,3 @@
 TICKET="test-vue-ahmed"
 FRAMEWORK="vue"
-DOCS_IMPORTED=false
+DOCS_EXAMPLE="tree-data"

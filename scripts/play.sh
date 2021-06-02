@@ -8,22 +8,23 @@ source "./ag-grid.config.sh"
 
 if [[ $DOCS_EXAMPLE == "tree-data" ]]
 then
+    echo 'importing tree data stylesheet imports'
     case "$FRAMEWORK" in  
         'angular')
-            echo 'angular project'
-            TREE_DATA_IMPORT='<link rel="stylesheet" href="styles.css"/>'
-            gsed -i "/<\/head>/i $TREE_DATA_IMPORT" "$PWD/src/index.html"
+            TREE_DATA_STYLE_IMPORTS='<link rel="stylesheet" href="styles.css"/>'
+            gsed -i "/<\/head>/i $TREE_DATA_STYLE_IMPORTS" "$PWD/src/index.html"
             ;;
         'react')
-            echo 'react project'
             TREE_DATA_STYLE_IMPORTS="import './style.css'"
             gsed -i "8a $TREE_DATA_STYLE_IMPORTS" "$PWD/src/index.js"
             ;;
         'vue')
-            echo 'vue project'
+            TREE_DATA_STYLE_IMPORTS='<link rel="stylesheet" href="styles.css"/>'
+            gsed -i "/<\/head>/i $TREE_DATA_STYLE_IMPORTS" "$PWD/public/index.html"
             ;;
         'vanilla')
-            echo 'vanilla project'
+            TREE_DATA_STYLE_IMPORTS='<link rel="stylesheet" href="styles.css"/>'
+            gsed -i "/<\/head>/i $TREE_DATA_STYLE_IMPORTS" "$PWD/index.html"
             ;;
         *) 
         echo "Could not inject stylesheets"

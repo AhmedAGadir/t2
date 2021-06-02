@@ -1,3 +1,3 @@
 TICKET="test-vanilla-ahmed"
 FRAMEWORK="vanilla"
-DOCS_IMPORTED=false
+DOCS_EXAMPLE="tree-data"

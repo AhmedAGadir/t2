@@ -2,20 +2,30 @@ import Vue from 'vue';
 import { AgGridVue } from 'ag-grid-vue';
 import 'ag-grid-enterprise';
 import 'ag-grid-community/dist/styles/ag-grid.css';
-import 'ag-grid-community/dist/styles/ag-theme-alpine-dark.css';
+import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 
 const VueExample = {
   template: `
         <div style="height: 100%">
-            <ag-grid-vue
+            <div class="example-wrapper">
+                <div style="margin-bottom: 5px;">
+                    <input type="text" id="filter-text-box" placeholder="Filter..." v-on:input="onFilterTextBoxChanged()">
+                </div>
+                <ag-grid-vue
                 style="width: 100%; height: 100%;"
-                class="ag-theme-alpine-dark"
+                class="ag-theme-alpine"
                 id="myGrid"
                 :gridOptions="gridOptions"
                 @grid-ready="onGridReady"
+                :rowData="rowData"
                 :columnDefs="columnDefs"
                 :defaultColDef="defaultColDef"
-                :rowModelType="rowModelType"></ag-grid-vue>
+                :autoGroupColumnDef="autoGroupColumnDef"
+                :treeData="true"
+                :animateRows="true"
+                :groupDefaultExpanded="groupDefaultExpanded"
+                :getDataPath="getDataPath"></ag-grid-vue>
+            </div>
         </div>
     `,
   components: {
@@ -26,84 +36,144 @@ const VueExample = {
       gridOptions: null,
       gridApi: null,
       columnApi: null,
+      rowData: null,
       columnDefs: null,
       defaultColDef: null,
-      rowModelType: null,
+      autoGroupColumnDef: null,
+      groupDefaultExpanded: null,
+      getDataPath: null,
     };
   },
   beforeMount() {
     this.gridOptions = {};
-    this.columnDefs = [
+    this.rowData = [
       {
-        field: 'athlete',
-        minWidth: 220,
+        orgHierarchy: ['Erica Rogers'],
+        jobTitle: 'CEO',
+        employmentType: 'Permanent',
       },
       {
-        field: 'country',
-        minWidth: 200,
+        orgHierarchy: ['Erica Rogers', 'Malcolm Barrett'],
+        jobTitle: 'Exec. Vice President',
+        employmentType: 'Permanent',
       },
-      { field: 'year' },
       {
-        field: 'sport',
-        minWidth: 200,
+        orgHierarchy: ['Erica Rogers', 'Malcolm Barrett', 'Esther Baker'],
+        jobTitle: 'Director of Operations',
+        employmentType: 'Permanent',
       },
-      { field: 'gold' },
-      { field: 'silver' },
-      { field: 'bronze' },
+      {
+        orgHierarchy: [
+          'Erica Rogers',
+          'Malcolm Barrett',
+          'Esther Baker',
+          'Brittany Hanson',
+        ],
+        jobTitle: 'Fleet Coordinator',
+        employmentType: 'Permanent',
+      },
+      {
+        orgHierarchy: [
+          'Erica Rogers',
+          'Malcolm Barrett',
+          'Esther Baker',
+          'Brittany Hanson',
+          'Leah Flowers',
+        ],
+        jobTitle: 'Parts Technician',
+        employmentType: 'Contract',
+      },
+      {
+        orgHierarchy: [
+          'Erica Rogers',
+          'Malcolm Barrett',
+          'Esther Baker',
+          'Brittany Hanson',
+          'Tammy Sutton',
+        ],
+        jobTitle: 'Service Technician',
+        employmentType: 'Contract',
+      },
+      {
+        orgHierarchy: [
+          'Erica Rogers',
+          'Malcolm Barrett',
+          'Esther Baker',
+          'Derek Paul',
+        ],
+        jobTitle: 'Inventory Control',
+        employmentType: 'Permanent',
+      },
+      {
+        orgHierarchy: ['Erica Rogers', 'Malcolm Barrett', 'Francis Strickland'],
+        jobTitle: 'VP Sales',
+        employmentType: 'Permanent',
+      },
+      {
+        orgHierarchy: [
+          'Erica Rogers',
+          'Malcolm Barrett',
+          'Francis Strickland',
+          'Morris Hanson',
+        ],
+        jobTitle: 'Sales Manager',
+        employmentType: 'Permanent',
+      },
+      {
+        orgHierarchy: [
+          'Erica Rogers',
+          'Malcolm Barrett',
+          'Francis Strickland',
+          'Todd Tyler',
+        ],
+        jobTitle: 'Sales Executive',
+        employmentType: 'Contract',
+      },
+      {
+        orgHierarchy: [
+          'Erica Rogers',
+          'Malcolm Barrett',
+          'Francis Strickland',
+          'Bennie Wise',
+        ],
+        jobTitle: 'Sales Executive',
+        employmentType: 'Contract',
+      },
+      {
+        orgHierarchy: [
+          'Erica Rogers',
+          'Malcolm Barrett',
+          'Francis Strickland',
+          'Joel Cooper',
+        ],
+        jobTitle: 'Sales Executive',
+        employmentType: 'Permanent',
+      },
     ];
-    this.defaultColDef = {
-      flex: 1,
-      minWidth: 100,
+    this.columnDefs = [{ field: 'jobTitle' }, { field: 'employmentType' }];
+    this.defaultColDef = { flex: 1 };
+    this.autoGroupColumnDef = {
+      headerName: 'Organisation Hierarchy',
+      minWidth: 300,
+      cellRendererParams: { suppressCount: true },
     };
-    this.rowModelType = 'serverSide';
+    this.groupDefaultExpanded = -1;
+    this.getDataPath = (data) => {
+      return data.orgHierarchy;
+    };
   },
   mounted() {
     this.gridApi = this.gridOptions.api;
     this.gridColumnApi = this.gridOptions.columnApi;
   },
   methods: {
-    onGridReady(params) {
-      const updateData = (data) => {
-        var fakeServer = createFakeServer(data);
-        var datasource = createServerSideDatasource(fakeServer);
-        params.api.setServerSideDatasource(datasource);
-      };
-
-      fetch('https://www.ag-grid.com/example-assets/olympic-winners.json')
-        .then((resp) => resp.json())
-        .then((data) => updateData(data));
+    onFilterTextBoxChanged() {
+      this.gridApi.setQuickFilter(
+        document.getElementById('filter-text-box').value
+      );
     },
+    onGridReady(params) {},
   },
-};
-
-window.createServerSideDatasource = function createServerSideDatasource(
-  server
-) {
-  return {
-    getRows: function (params) {
-      console.log('[Datasource] - rows requested by grid: ', params.request);
-      var response = server.getData(params.request);
-      setTimeout(function () {
-        if (response.success) {
-          params.success({ rowData: response.rows });
-        } else {
-          params.fail();
-        }
-      }, 500);
-    },
-  };
-};
-
-window.createFakeServer = function createFakeServer(allData) {
-  return {
-    getData: function (request) {
-      var requestedRows = allData.slice();
-      return {
-        success: true,
-        rows: requestedRows,
-      };
-    },
-  };
 };
 
 new Vue({
