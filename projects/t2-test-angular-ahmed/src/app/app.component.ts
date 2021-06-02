@@ -1,95 +1,174 @@
 import { Component } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import 'ag-grid-enterprise';
 import 'ag-grid-community/dist/styles/ag-grid.css';
-import 'ag-grid-community/dist/styles/ag-theme-alpine-dark.css';
+import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
 
 @Component({
   selector: 'my-app',
-  template: `<ag-grid-angular
-    #agGrid
-    style="width: 100%; height: 100%;"
-    id="myGrid"
-    class="ag-theme-alpine-dark"
-    [columnDefs]="columnDefs"
-    [defaultColDef]="defaultColDef"
-    [rowModelType]="rowModelType"
-    [rowData]="rowData"
-    (gridReady)="onGridReady($event)"
-  ></ag-grid-angular>`,
+  styleUrls: ['./app.component.css'],
+  template: `<div class="example-wrapper">
+    <div style="margin-bottom: 5px;">
+      <input
+        type="text"
+        id="filter-text-box"
+        placeholder="Filter..."
+        (input)="onFilterTextBoxChanged()"
+      />
+    </div>
+    <ag-grid-angular
+      #agGrid
+      style="width: 100%; height: 100%;"
+      id="myGrid"
+      class="ag-theme-alpine"
+      [rowData]="rowData"
+      [columnDefs]="columnDefs"
+      [defaultColDef]="defaultColDef"
+      [autoGroupColumnDef]="autoGroupColumnDef"
+      [treeData]="true"
+      [animateRows]="true"
+      [groupDefaultExpanded]="groupDefaultExpanded"
+      [getDataPath]="getDataPath"
+      (gridReady)="onGridReady($event)"
+    ></ag-grid-angular>
+  </div> `,
 })
 export class AppComponent {
   public gridApi;
   public gridColumnApi;
 
+  public rowData;
   public columnDefs;
   public defaultColDef;
-  public rowModelType;
-  public rowData: any;
+  public autoGroupColumnDef;
+  public groupDefaultExpanded;
+  public getDataPath;
 
-  constructor(public http: HttpClient) {
-    this.columnDefs = [
+  constructor() {
+    this.rowData = [
       {
-        field: 'athlete',
-        minWidth: 220,
+        orgHierarchy: ['Erica Rogers'],
+        jobTitle: 'CEO',
+        employmentType: 'Permanent',
       },
       {
-        field: 'country',
-        minWidth: 200,
+        orgHierarchy: ['Erica Rogers', 'Malcolm Barrett'],
+        jobTitle: 'Exec. Vice President',
+        employmentType: 'Permanent',
       },
-      { field: 'year' },
       {
-        field: 'sport',
-        minWidth: 200,
+        orgHierarchy: ['Erica Rogers', 'Malcolm Barrett', 'Esther Baker'],
+        jobTitle: 'Director of Operations',
+        employmentType: 'Permanent',
       },
-      { field: 'gold' },
-      { field: 'silver' },
-      { field: 'bronze' },
+      {
+        orgHierarchy: [
+          'Erica Rogers',
+          'Malcolm Barrett',
+          'Esther Baker',
+          'Brittany Hanson',
+        ],
+        jobTitle: 'Fleet Coordinator',
+        employmentType: 'Permanent',
+      },
+      {
+        orgHierarchy: [
+          'Erica Rogers',
+          'Malcolm Barrett',
+          'Esther Baker',
+          'Brittany Hanson',
+          'Leah Flowers',
+        ],
+        jobTitle: 'Parts Technician',
+        employmentType: 'Contract',
+      },
+      {
+        orgHierarchy: [
+          'Erica Rogers',
+          'Malcolm Barrett',
+          'Esther Baker',
+          'Brittany Hanson',
+          'Tammy Sutton',
+        ],
+        jobTitle: 'Service Technician',
+        employmentType: 'Contract',
+      },
+      {
+        orgHierarchy: [
+          'Erica Rogers',
+          'Malcolm Barrett',
+          'Esther Baker',
+          'Derek Paul',
+        ],
+        jobTitle: 'Inventory Control',
+        employmentType: 'Permanent',
+      },
+      {
+        orgHierarchy: ['Erica Rogers', 'Malcolm Barrett', 'Francis Strickland'],
+        jobTitle: 'VP Sales',
+        employmentType: 'Permanent',
+      },
+      {
+        orgHierarchy: [
+          'Erica Rogers',
+          'Malcolm Barrett',
+          'Francis Strickland',
+          'Morris Hanson',
+        ],
+        jobTitle: 'Sales Manager',
+        employmentType: 'Permanent',
+      },
+      {
+        orgHierarchy: [
+          'Erica Rogers',
+          'Malcolm Barrett',
+          'Francis Strickland',
+          'Todd Tyler',
+        ],
+        jobTitle: 'Sales Executive',
+        employmentType: 'Contract',
+      },
+      {
+        orgHierarchy: [
+          'Erica Rogers',
+          'Malcolm Barrett',
+          'Francis Strickland',
+          'Bennie Wise',
+        ],
+        jobTitle: 'Sales Executive',
+        employmentType: 'Contract',
+      },
+      {
+        orgHierarchy: [
+          'Erica Rogers',
+          'Malcolm Barrett',
+          'Francis Strickland',
+          'Joel Cooper',
+        ],
+        jobTitle: 'Sales Executive',
+        employmentType: 'Permanent',
+      },
     ];
-    this.defaultColDef = {
-      flex: 1,
-      minWidth: 100,
+    this.columnDefs = [{ field: 'jobTitle' }, { field: 'employmentType' }];
+    this.defaultColDef = { flex: 1 };
+    this.autoGroupColumnDef = {
+      headerName: 'Organisation Hierarchy',
+      minWidth: 300,
+      cellRendererParams: { suppressCount: true },
     };
-    this.rowModelType = 'serverSide';
+    this.groupDefaultExpanded = -1;
+    this.getDataPath = function (data) {
+      return data.orgHierarchy;
+    };
+  }
+
+  onFilterTextBoxChanged() {
+    this.gridApi.setQuickFilter(
+      (document.getElementById('filter-text-box') as any).value
+    );
   }
 
   onGridReady(params) {
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
-
-    this.http
-      .get('https://www.ag-grid.com/example-assets/olympic-winners.json')
-      .subscribe((data) => {
-        var fakeServer = createFakeServer(data);
-        var datasource = createServerSideDatasource(fakeServer);
-        params.api.setServerSideDatasource(datasource);
-      });
   }
-}
-
-function createServerSideDatasource(server) {
-  return {
-    getRows: function (params) {
-      console.log('[Datasource] - rows requested by grid: ', params.request);
-      var response = server.getData(params.request);
-      setTimeout(function () {
-        if (response.success) {
-          params.success({ rowData: response.rows });
-        } else {
-          params.fail();
-        }
-      }, 500);
-    },
-  };
-}
-function createFakeServer(allData) {
-  return {
-    getData: function (request) {
-      var requestedRows = allData.slice();
-      return {
-        success: true,
-        rows: requestedRows,
-      };
-    },
-  };
 }

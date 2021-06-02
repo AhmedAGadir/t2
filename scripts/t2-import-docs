@@ -161,7 +161,7 @@ then
     case "$FRAMEWORK" in  
         'angular')
             TREE_DATA_STYLE_IMPORTS="styleUrls: ['./app.component.css'],"
-            gsed -i "/selector: 'my-app'/a $TREE_DATA_STYLE_IMPORTS" "$PWD/src/index.html"
+            gsed -i "/selector: 'my-app'/a $TREE_DATA_STYLE_IMPORTS" "$PWD/src/app/app.component.ts"
             ;;
         'react')
             TREE_DATA_STYLE_IMPORTS="import './style.css'"
