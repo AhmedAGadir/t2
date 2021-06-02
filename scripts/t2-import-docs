@@ -20,15 +20,11 @@ fi
 source "./ag-grid.config.sh"
 
 # this script can only be run once per project
-# if [[ $DOCS_IMPORTED == true ]]
-# then
-#     echo 'You can only run this script once per project.'
-#     exit 1
-# else 
-#     # change DOCS_IMPORTED variable to true, so that t2-import-scripts can not be run on this template again
-#     gsed -i 's/DOCS_IMPORTED.*/DOCS_IMPORTED=true/' $PWD/ag-grid.config.sh
-# fi
-
+if [[ ! $DOCS_EXAMPLE == '' ]]
+then
+    echo 'You can only run this script once per project.'
+    exit 1
+fi
 
 # select a docs example to import
 DOCUMENATION_EXAMPLES="range-selection row-grouping server-side-row-model tree-data"
@@ -40,6 +36,9 @@ do
     echo "Selected AG Grid Docs Example: $DOCS_EXAMPLE"
     break;
 done
+
+# update ag-grid.config file to include DOCS_EXAMPLE
+# gsed -i "s/DOCS_EXAMPLE.*/DOCS_EXAMPLE=\"$DOCS_EXAMPLE\"/" $PWD/ag-grid.config.sh
 
 echo "importing [$DOCS_EXAMPLE][$FRAMEWORK] example from the AG Grid docs..."
 
@@ -106,13 +105,11 @@ jq -c .$FRAMEWORK'.indexHTML' $T2_DOCS_METADATA_DIR_PATH/$DOCS_EXAMPLE.json | wh
 done
 
 
-# REACT specific code
-# no modifications needed when using react :)
-# if [[ $FRAMEWORK == "REACT" ]]
-# then
-# #  FOO
-# fi
-# ANGULAR specific code
+# ***************************************************
+# ******** FRAMEWORK SPECIFIC MODIFICATIONS *********
+# ***************************************************
+
+# ANGULAR specific 
 if [[ $FRAMEWORK == "angular" ]]
 then
     # need to add some compiler options 
@@ -134,7 +131,7 @@ then
     gsed -i 's/rowData: \[\]/rowData: any/g' "$PWD/src/app/app.component.ts" 
 
 fi
-# VUE specific code
+# VUE specific 
 if [[ $FRAMEWORK == "vue" ]]
 then
     # allow compiling vue templates  
@@ -153,6 +150,32 @@ then
     gsed -i "1i $VANILLA_IMPORTS" "$PWD/src/index.js"
 fi
 
+
+# ***************************************************
+# ****** DOCS_EXAMPLES SPECIFIC MODIFICATIONS *******
+# ***************************************************
+
+if [[ $DOCS_EXAMPLE == "tree-data" ]]
+then
+    # inject into projects index.html file
+    case "$FRAMEWORK" in  
+        'angular')
+            echo 'angular project'
+            ;;
+        'react')
+            echo 'react project'
+            ;;
+        'vue')
+            echo 'vue project'
+            ;;
+        'vanilla')
+            echo 'vanilla project'
+            ;;
+        *) 
+        echo "Could not inject stylesheets"
+        ;;
+    esac
+fi
 
 
 # finished

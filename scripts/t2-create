@@ -77,7 +77,7 @@ echo "applying $FRAMEWORK template"
 echo 'creating ag-grid.config.sh file...'
 echo "TICKET=\"$TICKET\"" >> ag-grid.config.sh
 echo "FRAMEWORK=\"$FRAMEWORK\"" >> ag-grid.config.sh
-echo "DOCS_IMPORTED=false" >> ag-grid.config.sh
+echo "DOCS_EXAMPLE='" >> ag-grid.config.sh
 
 
 

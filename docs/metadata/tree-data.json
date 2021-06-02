@@ -20,12 +20,50 @@
         ]
     },
     "angular": {
-        "indexHTML": "https://www.ag-grid.com/examples/tree-data/org-hierarchy/packages/angular/index.html"
+        "indexHTML": "https://www.ag-grid.com/examples/tree-data/org-hierarchy/packages/angular/index.html",
+        "filesToFetch": [
+            {
+                "url": "https://www.ag-grid.com/examples/tree-data/org-hierarchy/packages/angular/app/app.component.ts",
+                "destination": "src/app/app.component.ts"
+            },
+            {
+                "url": "https://www.ag-grid.com/examples/tree-data/org-hierarchy/packages/angular/app/app.module.ts",
+                "destination": "src/app/app.module.ts"
+            },
+            {
+                "url": "https://www.ag-grid.com/examples/tree-data/org-hierarchy/packages/angular/styles.css",
+                "destination": "src/style.css"
+            }
+        ],
+        "filesToRemoveFromTemplate": [
+            "src/app/app.component.html",
+            "src/app/app.component.scss"
+        ]
     },
     "vue": {
-        "indexHTML": "https://www.ag-grid.com/examples/tree-data/org-hierarchy/packages/vue/index.html"
+        "indexHTML": "https://www.ag-grid.com/examples/tree-data/org-hierarchy/packages/vue/index.html",
+        "filesToFetch": [
+            {
+                "url": "https://www.ag-grid.com/examples/range-selection/range-selection/packages/vue/main.js",
+                "destination": "src/main.js"
+            }
+        ],
+        "filesToRemoveFromTemplate": [
+            "src/assets",
+            "src/components",
+            "src/App.vue"
+        ]
     },
     "vanilla": {
-        "indexHTML": "https://www.ag-grid.com/examples/tree-data/org-hierarchy/packages/vanilla/index.html"
+        "indexHTML": "https://www.ag-grid.com/examples/tree-data/org-hierarchy/packages/vanilla/index.html",
+        "filesToFetch": [
+            {
+                "url": "https://www.ag-grid.com/examples/range-selection/range-selection/packages/vanilla/main.js",
+                "destination": "src/index.js"
+            }
+        ],
+        "filesToRemoveFromTemplate": [
+            "src/styles.css"
+        ]
     }
 }

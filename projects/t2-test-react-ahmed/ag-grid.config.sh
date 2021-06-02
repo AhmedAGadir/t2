@@ -1,3 +1,3 @@
 TICKET="test-react-ahmed"
 FRAMEWORK="react"
-DOCS_IMPORTED=false
+DOCS_EXAMPLE="tree-data"
