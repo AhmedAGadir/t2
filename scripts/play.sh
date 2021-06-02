@@ -1,36 +1,59 @@
 #!/usr/bin/env bash
 
+    # need to add some compiler options 
+    # gsed -i "/compilerOptions/a \"noImplicitAny\": false,\n\"strictPropertyInitialization\": false," "$PWD/tsconfig.json"
 
-source "./ag-grid.config.sh"
+    # need to move AG Grid style imports from src/styles.scss -> src/app/app.component.ts for codesandbox
+    # echo "[Angular only] injecting AG Grid stylesheet imports from src/app/app.component.ts -> src/styles.scss for codesandbox"
+    STYLE_IMPORTS=$( gsed -n "/import 'ag-grid-community\/dist\/styles\//p" src/app/app.component.ts )
+    FORMATTED_STLYE_IMPORTS=$( echo $STYLE_IMPORTS | gsed -e 's/import/@import/g' | gsed -e 's/; /;\\n/g' )
+    
+    # delete any current AG Grid stylesheet imports
+    # gsed -i "/@import 'ag-grid-community\/dist\/styles/d" "src/styles.scss"
+    # inject new stylesheet imports
+    # gsed -i "2a $( echo $FORMATTED_STLYE_IMPORTS )" "$PWD/src/styles.scss" 
 
-# DOCS_EXAMPLE='tree-data'
-# FRAMEWORK='angular'
+    gsed -i "s/@import 'ag-grid-community\/dist\/styles/$FORMATTED_STLYE_IMPORTS/g" "$PWD/src/styles.scss" 
 
-if [[ $DOCS_EXAMPLE == "tree-data" ]]
-then
-    echo 'importing tree data stylesheet imports'
-    case "$FRAMEWORK" in  
-        'angular')
-            TREE_DATA_STYLE_IMPORTS='<link rel="stylesheet" href="styles.css"/>'
-            gsed -i "/<\/head>/i $TREE_DATA_STYLE_IMPORTS" "$PWD/src/index.html"
-            ;;
-        'react')
-            TREE_DATA_STYLE_IMPORTS="import './style.css'"
-            gsed -i "8a $TREE_DATA_STYLE_IMPORTS" "$PWD/src/index.js"
-            ;;
-        'vue')
-            TREE_DATA_STYLE_IMPORTS='<link rel="stylesheet" href="styles.css"/>'
-            gsed -i "/<\/head>/i $TREE_DATA_STYLE_IMPORTS" "$PWD/public/index.html"
-            ;;
-        'vanilla')
-            TREE_DATA_STYLE_IMPORTS='<link rel="stylesheet" href="styles.css"/>'
-            gsed -i "/<\/head>/i $TREE_DATA_STYLE_IMPORTS" "$PWD/index.html"
-            ;;
-        *) 
-        echo "Could not inject stylesheets"
-        ;;
-    esac
-fi
+    # change private properties -> public properties in component
+    # this is because component templates only have access to public properties
+    # gsed -i 's/private/public/g' "$PWD/src/app/app.component.ts" 
+    # change this rowData: [] -> rowData: any
+    # gsed -i 's/rowData: \[\]/rowData: any/g' "$PWD/src/app/app.component.ts" 
+
+
+
+
+# source "./ag-grid.config.sh"
+
+# # DOCS_EXAMPLE='tree-data'
+# # FRAMEWORK='angular'
+
+# if [[ $DOCS_EXAMPLE == "tree-data" ]]
+# then
+#     echo 'importing tree data stylesheet imports'
+#     case "$FRAMEWORK" in  
+#         'angular')
+#             TREE_DATA_STYLE_IMPORTS='<link rel="stylesheet" href="styles.css"/>'
+#             gsed -i "/<\/head>/i $TREE_DATA_STYLE_IMPORTS" "$PWD/src/index.html"
+#             ;;
+#         'react')
+#             TREE_DATA_STYLE_IMPORTS="import './style.css'"
+#             gsed -i "8a $TREE_DATA_STYLE_IMPORTS" "$PWD/src/index.js"
+#             ;;
+#         'vue')
+#             TREE_DATA_STYLE_IMPORTS='<link rel="stylesheet" href="styles.css"/>'
+#             gsed -i "/<\/head>/i $TREE_DATA_STYLE_IMPORTS" "$PWD/public/index.html"
+#             ;;
+#         'vanilla')
+#             TREE_DATA_STYLE_IMPORTS='<link rel="stylesheet" href="styles.css"/>'
+#             gsed -i "/<\/head>/i $TREE_DATA_STYLE_IMPORTS" "$PWD/index.html"
+#             ;;
+#         *) 
+#         echo "Could not inject stylesheets"
+#         ;;
+#     esac
+# fi
 
 
 
