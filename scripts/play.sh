@@ -5,16 +5,17 @@
 
     # need to move AG Grid style imports from src/styles.scss -> src/app/app.component.ts for codesandbox
     # echo "[Angular only] injecting AG Grid stylesheet imports from src/app/app.component.ts -> src/styles.scss for codesandbox"
-    STYLE_IMPORTS=$( gsed -n "/import 'ag-grid-community\/dist\/styles\//p" src/app/app.component.ts )
+    STYLE_IMPORTS=$( gsed -n "/import [\"']ag-grid-community\/dist\/styles\//p" src/app/app.component.ts )
     FORMATTED_STLYE_IMPORTS=$( echo $STYLE_IMPORTS | gsed -e 's/import/@import/g' | gsed -e 's/; /;\\n/g' )
     
+    echo $FORMATTED_STLYE_IMPORTS
     # delete any current AG Grid stylesheet imports
-    # gsed -i "/@import 'ag-grid-community\/dist\/styles/d" "src/styles.scss"
+    # gsed -i "/@import [\"']ag-grid-community\/dist\/styles.*/d" "src/styles.scss"
     # inject new stylesheet imports
-    # gsed -i "2a $( echo $FORMATTED_STLYE_IMPORTS )" "$PWD/src/styles.scss" 
+    # gsed -i "4a $( echo $FORMATTED_STLYE_IMPORTS )" "$PWD/src/styles.scss" 
 
-    gsed -i "s/@import 'ag-grid-community\/dist\/styles/$FORMATTED_STLYE_IMPORTS/g" "$PWD/src/styles.scss" 
-
+    gsed -i "s/@import [\"']ag-grid-community\/dist\/styles.*/$FORMATTED_STLYE_IMPORTS/g" "$PWD/src/styles.scss" 
+# 
     # change private properties -> public properties in component
     # this is because component templates only have access to public properties
     # gsed -i 's/private/public/g' "$PWD/src/app/app.component.ts" 
