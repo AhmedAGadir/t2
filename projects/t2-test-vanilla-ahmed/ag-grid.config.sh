@@ -1,3 +1,3 @@
 TICKET="test-vanilla-ahmed"
 FRAMEWORK="vanilla"
-DOCS_EXAMPLE=""
+DOCS_EXAMPLE="server-side-row-model"
