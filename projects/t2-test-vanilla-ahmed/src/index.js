@@ -23,26 +23,23 @@ var gridOptions = {
   rowModelType: 'serverSide',
 };
 
-// setup the grid after the page has finished loading
-document.addEventListener('DOMContentLoaded', function () {
-  var gridDiv = document.querySelector('#myGrid');
-  new agGrid.Grid(gridDiv, gridOptions);
+var gridDiv = document.querySelector('#myGrid');
+new agGrid.Grid(gridDiv, gridOptions);
 
-  agGrid
-    .simpleHttpRequest({
-      url: 'https://www.ag-grid.com/example-assets/olympic-winners.json',
-    })
-    .then(function (data) {
-      // setup the fake server with entire dataset
-      var fakeServer = createFakeServer(data);
+agGrid
+  .simpleHttpRequest({
+    url: 'https://www.ag-grid.com/example-assets/olympic-winners.json',
+  })
+  .then(function (data) {
+    // setup the fake server with entire dataset
+    var fakeServer = createFakeServer(data);
 
-      // create datasource with a reference to the fake server
-      var datasource = createServerSideDatasource(fakeServer);
+    // create datasource with a reference to the fake server
+    var datasource = createServerSideDatasource(fakeServer);
 
-      // register the datasource with the grid
-      gridOptions.api.setServerSideDatasource(datasource);
-    });
-});
+    // register the datasource with the grid
+    gridOptions.api.setServerSideDatasource(datasource);
+  });
 
 function createServerSideDatasource(server) {
   return {
