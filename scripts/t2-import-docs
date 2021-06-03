@@ -162,6 +162,7 @@ then
             gsed -i '40d;28d;29d;' "$PWD/src/index.js"
             ;;
         'server-side-row-model')
+            gsed -i '45d;26d;27d;' "$PWD/src/index.js"
             ;;
         'tree data')
             gsed -i '152d;144d;145d;146d;' "$PWD/src/index.js"

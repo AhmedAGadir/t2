@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-gsed -i '38d;26d;27d;' "$PWD/src/index.js"
+gsed -i '45d;26d;27d;' "$PWD/src/index.js"
+# gsed -i '38d;26d;27d;' "$PWD/src/index.js"
     # gsed -i '152d;144d;145d;146d;' "$PWD/src/index.js"
 
     # need to add some compiler options 
