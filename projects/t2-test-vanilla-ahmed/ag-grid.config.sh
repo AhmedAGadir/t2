@@ -1,3 +1,3 @@
 TICKET="test-vanilla-ahmed"
 FRAMEWORK="vanilla"
-DOCS_EXAMPLE="range-selection"
+DOCS_EXAMPLE="row-grouping"

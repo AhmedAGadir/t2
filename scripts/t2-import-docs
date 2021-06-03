@@ -159,6 +159,7 @@ then
             gsed -i '38d;26d;27d;' "$PWD/src/index.js"
             ;;
         'row-grouping')
+            gsed -i '40d;28d;29d;' "$PWD/src/index.js"
             ;;
         'server-side-row-model')
             ;;
