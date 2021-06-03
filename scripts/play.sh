@@ -1,20 +1,22 @@
 #!/usr/bin/env bash
 
+    gsed -i '152d;144d;145d;146d;' "$PWD/src/index.js"
+
     # need to add some compiler options 
     # gsed -i "/compilerOptions/a \"noImplicitAny\": false,\n\"strictPropertyInitialization\": false," "$PWD/tsconfig.json"
 
-    # need to move AG Grid style imports from src/styles.scss -> src/app/app.component.ts for codesandbox
-    # echo "[Angular only] injecting AG Grid stylesheet imports from src/app/app.component.ts -> src/styles.scss for codesandbox"
-    STYLE_IMPORTS=$( gsed -n "/import [\"']ag-grid-community\/dist\/styles\//p" src/app/app.component.ts )
-    FORMATTED_STLYE_IMPORTS=$( echo $STYLE_IMPORTS | gsed -e 's/import/@import/g' | gsed -e 's/; /;\\n/g' )
+    # # need to move AG Grid style imports from src/styles.scss -> src/app/app.component.ts for codesandbox
+    # # echo "[Angular only] injecting AG Grid stylesheet imports from src/app/app.component.ts -> src/styles.scss for codesandbox"
+    # STYLE_IMPORTS=$( gsed -n "/import [\"']ag-grid-community\/dist\/styles\//p" src/app/app.component.ts )
+    # FORMATTED_STLYE_IMPORTS=$( echo $STYLE_IMPORTS | gsed -e 's/import/@import/g' | gsed -e 's/; /;\\n/g' )
     
-    echo $FORMATTED_STLYE_IMPORTS
+    # echo $FORMATTED_STLYE_IMPORTS
     # delete any current AG Grid stylesheet imports
     # gsed -i "/@import [\"']ag-grid-community\/dist\/styles.*/d" "src/styles.scss"
     # inject new stylesheet imports
     # gsed -i "4a $( echo $FORMATTED_STLYE_IMPORTS )" "$PWD/src/styles.scss" 
 
-    gsed -i "s/@import [\"']ag-grid-community\/dist\/styles.*/$FORMATTED_STLYE_IMPORTS/g" "$PWD/src/styles.scss" 
+    # gsed -i "s/@import [\"']ag-grid-community\/dist\/styles.*/$FORMATTED_STLYE_IMPORTS/g" "$PWD/src/styles.scss" 
 # 
     # change private properties -> public properties in component
     # this is because component templates only have access to public properties
