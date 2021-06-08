@@ -24,7 +24,8 @@ export PATH=$T2_SCRIPTS:$PATH
 make the scripts in the script folder executable using 
 $ chmod +x SCRIPT_NAME
 
-
+can check file permissions using 
+ls -l FILE 
 
 ===
 change the codesandbox and stackblitz links to refer to your github

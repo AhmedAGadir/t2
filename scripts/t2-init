@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+cd $T2_HOME
+
+source "./scripts/aux/create-and-init" init

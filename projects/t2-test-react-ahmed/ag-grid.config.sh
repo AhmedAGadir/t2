@@ -1,3 +1,3 @@
 TICKET="test-react-ahmed"
 FRAMEWORK="react"
-DOCS_EXAMPLE="tree-data"
+DOCS_EXAMPLE="row-grouping"

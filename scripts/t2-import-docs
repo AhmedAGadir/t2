@@ -168,7 +168,7 @@ then
             gsed -i '152d;144d;145d;146d;' "$PWD/src/index.js"
             ;;
         *) 
-        echo "Could not inject stylesheets"
+        echo "[Vanilla] could not remove DOMContentLoaded"
         ;;
     esac
 fi
@@ -199,7 +199,7 @@ then
             gsed -i "/<\/head>/i $TREE_DATA_STYLE_IMPORTS" "$PWD/index.html"
             ;;
         *) 
-        echo "Could not inject stylesheets"
+        echo "Could not inject [tree-data] stylesheets imports"
         ;;
     esac
 fi

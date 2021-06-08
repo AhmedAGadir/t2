@@ -1,0 +1,3 @@
+TICKET=""
+FRAMEWORK="react"
+DOCS_EXAMPLE=""
