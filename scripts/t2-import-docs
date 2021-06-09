@@ -154,7 +154,7 @@ then
 
     # remove DOMContentLoaded for codesandbox
     echo '[Vanilla only] removing DOMContentLoaded for code sandbox'
-    case "$FRAMEWORK" in  
+    case "$DOCS_EXAMPLE" in  
         'range-selection')
             gsed -i '38d;26d;27d;' "$PWD/src/index.js"
             ;;
