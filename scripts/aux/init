@@ -10,7 +10,7 @@ if [ $# -eq 0 ] ; then
   else 
   mode="update"
   FRAMEWORKS="$1"
-  echo "updating cached project for $FRAMEWORKS ..."
+  echo "updating cached project for [$FRAMEWORKS] ..."
 fi
 
 for FRAMEWORK in $FRAMEWORKS 
@@ -24,7 +24,7 @@ for FRAMEWORK in $FRAMEWORKS
 
     # if project already exists -> exit process
     if test -d "$PROJECT_DIR_PATH"; then
-        echo "deleting existing project in cache..."
+        echo "deleting existing [$FRAMEWORK] project in cache..."
         rm -rf $PROJECT_DIR_PATH
     fi
 
@@ -38,13 +38,13 @@ for FRAMEWORK in $FRAMEWORKS
             npm i --save ag-grid-angular ag-grid-community ag-grid-enterprise --prefix $PROJECT_DIR_PATH && /
             ;;
         'react')
-            echo "bootstrapping an create-react-app project..."
+            echo "bootstrapping a create-react-app project..."
             npx create-react-app $PROJECT_DIR_PATH && /
             echo "installing AG Grid dependencies..."
             npm i --save ag-grid-react ag-grid-community ag-grid-enterprise --prefix $PROJECT_DIR_PATH && /
             ;;
         'vue')
-            echo "bootstrapping a Vue.js CLI project..."
+            echo "bootstrapping a vue.js CLI project..."
             cd "$T2_HOME/cache" && /
             vue create -i '{ "useConfigFiles": true, "plugins": { "@vue/cli-plugin-babel": {} }, "vueVersion": "2", "cssPreprocessor": "node-sass" }' $PROJECT_NAME && /
             echo "installing AG Grid dependencies..."
@@ -78,7 +78,9 @@ for FRAMEWORK in $FRAMEWORKS
     echo "FRAMEWORK=\"$FRAMEWORK\"" >> ag-grid.config.sh
     echo "DOCS_EXAMPLE=\"\"" >> ag-grid.config.sh
 
-
+    # delete node_modulies
+    echo "deleting node_modules folder.."
+    rm -rf node_modules
 
     # angular specific
     if [[ $FRAMEWORK == "angular" ]]

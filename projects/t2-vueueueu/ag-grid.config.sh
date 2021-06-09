@@ -1,0 +1,3 @@
+TICKET="t2-vueueueu"
+FRAMEWORK="vue"
+DOCS_EXAMPLE=""
