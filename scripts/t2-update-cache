@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+cd $T2_HOME
+
+if [ $# -eq 0 ] ; then
+  echo 'you must pass a framework as a parameter to this script'
+  exit 1
+fi
+
+# to lowercase
+framework=$(echo "$1" | tr '[:upper:]' '[:lower:]')
+
+if [ ! $framework == 'angular' ] && [ ! $framework == 'react' ] && [ ! $framework == 'vue' ] && [ ! $framework == 'vanilla' ] ; then
+  echo 'you must pass one of these parameters to this script: angular, react, vue, vanilla'
+  exit 1
+fi
+
+source "./scripts/aux/init" $framework
