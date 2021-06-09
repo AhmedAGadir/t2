@@ -13,7 +13,7 @@ Add this to the end of your profile:
 ```
 export T2_HOME=~/t2-home 
 export T2_SCRIPTS=$T2_HOME/scripts 
-export T2_PROJECTS=$T2_HOME/scripts 
+export T2_PROJECTS=$T2_HOME/projects 
 export PATH=$T2_SCRIPTS:$PATH
 ```
 To make sure your current terminal session picks up the changes
@@ -34,7 +34,7 @@ Lastly we’ll need to initialise the cache. So run:
 ```
 t2-init
 ```
-This will create a cache folder in your home folder with cached projects for angular, react, vue and vanilla js.Note that if you would ever like to update an indivual folder in the cache you can run:
+This will create a cache folder in your home folder with cached projects for angular, react, vue and vanilla js.Note that if you would ever like to update a specific framework example in the cache, and not all of them (as this can be time consuming) you can run:
 ```
 t2-update-cache $FRAMEWORK
 ````

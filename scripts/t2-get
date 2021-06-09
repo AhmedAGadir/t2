@@ -27,6 +27,7 @@ cp -r $CACHED_PROJECT_DIR_PATH/. $PROJECT_DIR_PATH
 gsed -i "s/TICKET=.*/TICKET=\"$PROJECT_NAME\"/" $PROJECT_DIR_PATH/ag-grid.config.sh
 
 # install project dependencies
+echo "installing dependencies..."
 npm i --prefix $PROJECT_DIR_PATH
 
 # open in vscode 
