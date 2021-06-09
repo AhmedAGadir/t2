@@ -69,7 +69,7 @@ for FRAMEWORK in $FRAMEWORKS
     chmod -R 755 *
 
     # apply template
-    echo "applying $FRAMEWORK template"
+    echo "applying $FRAMEWORK template..."
     'cp' -rf $TEMPLATE_DIR_PATH/* $PROJECT_DIR_PATH
 
     # create ag-grid.config file (contains framework)
