@@ -31,7 +31,7 @@ echo "installing dependencies..."
 npm i --prefix $PROJECT_DIR_PATH
 
 # open in text editor
-$MY_EDITOR $PROJECT_DIR_PATH
+# $MY_EDITOR $PROJECT_DIR_PATH
 
 # update cache in background
 source "scripts/t2-update-cache" $FRAMEWORK > /dev/null 2>&1 & 
