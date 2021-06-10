@@ -41,4 +41,4 @@ if [ -n $MY_EDITOR ]; then
 fi
 
 # update cache in foreground
-source "scripts/t2-update-cache" $FRAMEWORK
+source "scripts/t2-update-cache" -$FRAMEWORK
