@@ -20,11 +20,11 @@ fi
 source "./ag-grid.config.sh"
 
 # this script can only be run once per project
-# if [[ ! $DOCS_EXAMPLE == "" ]]
-# then
-#     echo 'You can only run this script once per project.'
-#     exit 1
-# fi
+if [[ ! $DOCS_EXAMPLE == "" ]]
+then
+    echo 'You can only run this script once per project.'
+    exit 1
+fi
 
 # select a docs example to import
 DOCUMENATION_EXAMPLES="range-selection row-grouping server-side-row-model tree-data"

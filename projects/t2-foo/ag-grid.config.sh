@@ -1,3 +1,0 @@
-TICKET="t2-foo"
-FRAMEWORK="vanilla"
-DOCS_EXAMPLE=""

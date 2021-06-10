@@ -2,4 +2,4 @@
 
 cd $T2_HOME
 
-source "./scripts/aux/init"
+source "./scripts/helpers/init"

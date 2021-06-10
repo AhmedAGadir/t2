@@ -2,6 +2,6 @@
 
 cd $T2_HOME
 
-source "scripts/aux/script_requires_framework_as_param"
+source "scripts/helpers/script_requires_framework_as_param"
 
-source "scripts/aux/init" $FRAMEWORK
+source "scripts/helpers/init" $FRAMEWORK
