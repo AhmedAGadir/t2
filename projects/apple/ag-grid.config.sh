@@ -1,3 +1,0 @@
-TICKET="apple"
-FRAMEWORK="angular"
-DOCS_EXAMPLE=""

@@ -1,3 +1,0 @@
-TICKET="orange"
-FRAMEWORK="react"
-DOCS_EXAMPLE=""

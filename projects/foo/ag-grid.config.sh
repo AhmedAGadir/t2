@@ -1,6 +1,0 @@
-TICKET="foo"
-FRAMEWORK="react"
-DOCS_EXAMPLE=""
-TICKET="foo"
-FRAMEWORK="react"
-DOCS_EXAMPLE=""
