@@ -39,7 +39,7 @@ export PATH=$T2_SCRIPTS:$PATH
 ```
 You can also choose to add an optional export `MY_EDITOR` and set it to a command that will open created projects in your preferred text editor.
 ```
-# optional
+# optional (below MY_EDITOR is set to open projects in vscode)
 export MY_EDITOR=code
 ```
 Run the following code to make sure your current terminal session picks up the changes.
@@ -64,7 +64,7 @@ This might take a while so go get a coffee and chill out.This will create a cach
 
 ** - Note that if you would ever like to update a specific framework in the cache to use the latest versions of it’s dependencies, you can run:
 ```
-t2-update-cache $FRAMEWORK
+t2-update-cache -[framework]
 ```
 Once that you have the CLI initialised, you can start using it: Using the CLI
 
@@ -125,5 +125,3 @@ t2-import-docs
 This will show you an interactive screen where you can choose which docs to import
 
 Note that this can only be run once
-
-No labels
