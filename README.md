@@ -1,44 +1,66 @@
-## Setting up
+Install Dependencies
 
-Choose a home folder for your scripts (this can be anywhere on your computer). For instance ~/t2-home (from here on this doc will assume that you are using ~/t2-home as your home folder, if you are not, then you should be aware when copy-pasting the commands) 
+Download GSED and JQ on your machine. You may first need to install/update homebrew:
+
+Homebrew:
+```
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+```
+GSED:
+```
+brew install gnu-sed
+```
+JQ: 
+```
+brew install jq
+```
+Setting Up
+
+Choose a home folder for your scripts e.g. `~/t2-home` (from here on this doc will assume that you are using `~/t2-home` as your home folder).
 ```
 cd ~
 mkdir t2-home
 ```
-Update your profile file, if you are using zsh => ~/.zshrc(if you can’t find your .zshrc file see https://superuser.com/questions/886132/where-is-the-zshrc-file-on-mac):
+Update your profile file to add some global variables to your machine. If you are using zsh terminal then open ~/.zshrc
 ```
-code ~/.zshrc
+open ~/.zshrc
 ```
-Add this to the end of your profile:
+If you can’t find your .zshrc file you may need to create it. (See https://superuser.com/questions/886132/where-is-the-zshrc-file-on-mac)
+
+Add the following exports to the end of your profile:(the `MY_EDITOR` property is set to vscode by default, however you can set it to whatever editor you use e.g. if you use webstorm you would set it to `MY_EDITOR=webstorm`)
 ```
-export T2_HOME=~/t2-home 
+export T2_HOME=~/t2-home
 export T2_SCRIPTS=$T2_HOME/scripts 
 export T2_PROJECTS=$T2_HOME/projects 
 export PATH=$T2_SCRIPTS:$PATH
+export MY_EDITOR=code
 ```
-To make sure your current terminal session picks up the changes
+Run the following code to make sure your current terminal session picks up the changes.
 ```
 source ~/.zshrc 
+echo $T2_HOME
 ```
-Clone this repo: 
+Clone the project repo from within the project folder
 ```
 cd $T2_HOME
 git clone https://github.com/AhmedAGadir/t2.git .
 ```
-make every script executable
+Make all scripts executable
 ```
 cd $T2_HOME
 chmod -R +x scripts
 ```
-Lastly we’ll need to initialise the cache. So run:
+Initialise the project cache:
 ```
 t2-init
 ```
-This will create a cache folder in your home folder with cached projects for angular, react, vue and vanilla js.Note that if you would ever like to update a specific framework example in the cache, and not all of them (as this can be time consuming) you can run:
+This might take a while so go get a coffee and chill out.This will create a cache folder in your home folder with cached projects for angular, react, vue and vanilla js.
+
+** - Note that if you would ever like to update a specific framework in the cache to use the latest versions of it’s dependencies, you can run:
 ```
 t2-update-cache $FRAMEWORK
-````
-## Creating AG Grid Template Projects
+```
+Using the CLI
 
 To create a project run:
 ```
@@ -57,7 +79,4 @@ To import an example from the ag-grid docs
 cd $T2_HOME/projects/T2-$TICKET_NUMBER
 t2-import-docs
 ```
-(Remember to push to github if you want these changes to be reflected in code sandbox)
-
-Things to note:
-
+(Remember to push to github using t2-push if you want these changes to be reflected in code sandbox)
