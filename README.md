@@ -1,4 +1,4 @@
-Install Dependencies
+## Installing Dependencies
 
 Download GSED and JQ on your machine. You may first need to install/update homebrew:
 
@@ -14,7 +14,7 @@ JQ:
 ```
 brew install jq
 ```
-Setting Up
+## Setting Up
 
 Choose a home folder for your scripts e.g. `~/t2-home` (from here on this doc will assume that you are using `~/t2-home` as your home folder).
 ```
@@ -60,7 +60,7 @@ This might take a while so go get a coffee and chill out.This will create a cach
 ```
 t2-update-cache $FRAMEWORK
 ```
-Using the CLI
+## Using the CLI
 
 To create a project run:
 ```
