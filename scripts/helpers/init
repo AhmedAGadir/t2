@@ -78,10 +78,6 @@ for FRAMEWORK in $FRAMEWORKS
     echo "FRAMEWORK=\"$FRAMEWORK\"" >> ag-grid.config.sh
     echo "DOCS_EXAMPLE=\"\"" >> ag-grid.config.sh
 
-    # delete node_modulies
-    # echo "deleting node_modules folder.."
-    # rm -rf node_modules
-
     # angular specific
     if [[ $FRAMEWORK == "angular" ]]
     then
@@ -99,3 +95,4 @@ for FRAMEWORK in $FRAMEWORKS
     echo "======================================================"
 
 done
+

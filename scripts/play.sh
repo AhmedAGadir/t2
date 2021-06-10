@@ -1,5 +1,12 @@
 #!/usr/bin/env bash
 
+
+
+
+
+
+
+
 # if [ -n $MY_EDITOR ]; then
     
 # fi
@@ -11,7 +18,7 @@
 # echo "-react" |
 #  sed -n  's/.*-[react|angular|vue|vanilla]/\1/p'
 
-echo "-react" | sed -n 's/-\(react\).*/\1/p'
+echo "-REACT" | gsed -n -e 's/-\(react\).*/\1/p' -e 's/-\(REACT\).*/\1/p' 
 
 # echo '-react' | sed -E -e 's/-\(react|angular\).*/\1/p'
 
