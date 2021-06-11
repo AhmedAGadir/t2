@@ -49,6 +49,3 @@ fi
 PROJECT_NAME=$(echo "$2" | tr '[:upper:]' '[:lower:]')
 
 echo "Creating [$FRAMEWORK] project [$PROJECT_NAME]..."
-
-
-echo 'foo'
