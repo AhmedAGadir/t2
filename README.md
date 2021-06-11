@@ -55,7 +55,7 @@ source ~/.zshrc
 ```
 # Initialise / Reset the CLI
 
-## Initialise the CLI
+## Initialising the CLI
 
 Clone the project repo from within the project folder
 ```
@@ -100,7 +100,7 @@ t2-get -angular [name]
 t2-get -vue [name]
 t2-get -vanilla [name]
 ```
-This will create a new project in the `~/t2-home/projects/[name]`
+This will create a new project in the `~/t2-home/projects/[name]` that you can immediately open and begin using. The script will then update the cached project for whichever framework the project was created in.
 
 ## Running a project
 Once that you have a project created, you can run it like this:
@@ -147,7 +147,7 @@ t2-import-docs
 ```
 This will show you an interactive screen where you can choose which docs to import
 
-Note that this can only be run once per project.
+Note that this script can only be run once per project.
 
 # Updating the CLI scripts
 
