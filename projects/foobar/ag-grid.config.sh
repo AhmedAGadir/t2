@@ -1,3 +1,0 @@
-TICKET="foobar"
-FRAMEWORK="react"
-DOCS_EXAMPLE=""
