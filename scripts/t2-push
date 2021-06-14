@@ -17,6 +17,16 @@ if [ $# -eq 0 ]
     COMMIT_MESSAGE=$1
 fi
 
+# if ag-grid.config.sh file missing -> exit
+if [[ ! -f ag-grid.config.sh ]]
+then
+    echo "ag-grid.config.sh file is missing"
+    exit 1
+fi
+
+# import FRAMEWORK, TICKET and DOCS_IMPORTED variables
+source "./ag-grid.config.sh"
+
 cd $T2_HOME
 git add . && /
 git commit -m "$COMMIT_MESSAGE" && /
