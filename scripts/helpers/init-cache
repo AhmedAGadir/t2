@@ -1,0 +1,81 @@
+#!/usr/bin/env bash
+
+cd $T2_HOME
+
+source "scripts/helpers/script_requires_framework_as_param"
+
+PROJECT_NAME="cached-$FRAMEWORK"
+PROJECT_DIR_PATH="$T2_HOME/cache/$PROJECT_NAME"
+TEMPLATE_DIR_PATH="$T2_HOME/templates/$FRAMEWORK"
+
+# if project already exists -> exit process
+if test -d "$PROJECT_DIR_PATH"; then
+    echo "deleting existing [$FRAMEWORK] project in cache..."
+    rm -rf $PROJECT_DIR_PATH
+fi
+
+# git pull && /
+
+case "$FRAMEWORK" in  
+    'angular')
+        echo "bootstrapping an Angular CLI project..."
+        ng new my-ag-grid --directory "./cache/$PROJECT_NAME" --style scss --routing false --strict false --skip-git true && /
+        echo "installing AG Grid dependencies..."
+        npm i --save ag-grid-angular ag-grid-community ag-grid-enterprise --prefix $PROJECT_DIR_PATH && /
+        ;;
+    'react')
+        echo "bootstrapping a create-react-app project..."
+        npx create-react-app $PROJECT_DIR_PATH && /
+        echo "installing AG Grid dependencies..."
+        npm i --save ag-grid-react ag-grid-community ag-grid-enterprise --prefix $PROJECT_DIR_PATH && /
+        ;;
+    'vue')
+        echo "bootstrapping a vue.js CLI project..."
+        cd "$T2_HOME/cache" && /
+        vue create -i '{ "useConfigFiles": true, "plugins": { "@vue/cli-plugin-babel": {} }, "vueVersion": "2", "cssPreprocessor": "node-sass" }' $PROJECT_NAME && /
+        echo "installing AG Grid dependencies..."
+        npm i --save ag-grid-vue ag-grid-community ag-grid-enterprise vue-property-decorator@^8.0.0 --prefix $PROJECT_DIR_PATH && /
+        cd $T2_HOME &&/
+        ;;
+    'vanilla')
+        echo 'creating a vanilla js project'
+        cp -r $TEMPLATE_DIR_PATH/. $PROJECT_DIR_PATH
+        echo "installing AG Grid dependencies..."
+        npm i --prefix $PROJECT_DIR_PATH && /
+        ;;
+    *) 
+    echo "$FRAMEWORK not recognised"
+    ;;
+esac
+
+# cd into project
+cd $PROJECT_DIR_PATH
+
+# change read-write permission
+chmod -R 755 *
+
+# apply template
+echo "applying $FRAMEWORK template..."
+'cp' -rf $TEMPLATE_DIR_PATH/* $PROJECT_DIR_PATH
+
+# create ag-grid.config file (contains framework)
+echo 'creating ag-grid.config.sh file...'
+echo "TICKET=\"$PROJECT_NAME\"" >> ag-grid.config.sh
+echo "FRAMEWORK=\"$FRAMEWORK\"" >> ag-grid.config.sh
+echo "DOCS_EXAMPLE=\"\"" >> ag-grid.config.sh
+
+# angular specific
+if [[ $FRAMEWORK == "angular" ]]
+then
+# need to move AG Grid style imports from src/styles.scss -> src/app/app.component.ts for codesandbox
+echo "[Angular only] injecting AG Grid stylesheet imports from src/styles.scss -> src/app/app.component.ts for codesandbox"
+STYLE_IMPORTS=$( gsed -n "/@import/p" src/styles.scss )
+FORMATTED_STLYE_IMPORTS=$( echo $STYLE_IMPORTS | gsed -e 's/( @)\|@//g' | gsed -e 's/; /;\\n/g' )
+gsed -i "/@Component/i $( echo $FORMATTED_STLYE_IMPORTS )" "$PWD/src/app/app.component.ts" 
+fi
+
+
+echo "======================================================"
+echo "new AG Grid $FRAMEWORK project [$PROJECT_NAME] created in cache."
+echo "$PROJECT_DIR_PATH"
+echo "======================================================"

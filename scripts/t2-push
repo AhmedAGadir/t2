@@ -1,33 +1,23 @@
 #!/usr/bin/env bash 
 
-if [ $# -eq 0 ]
-  then
-    COMMIT_MESSAGE='update'
-  else 
-    COMMIT_MESSAGE=$1
-fi
-
 T2_PROJECTS_DIR_PATH="$T2_HOME/projects"
 
-# if running script from outside of our projects folder -> exit
+# exit script if running script from outside $T2_HOME/projects/*
 if [[ $PWD != $T2_PROJECTS_DIR_PATH/** ]]
 then
     echo "You must run this script from within a subdirectory inside $T2_PROJECTS"
     exit 1
 fi
 
-# if ag-grid.config.sh file missing -> exit
-if [[ -f ag-grid.config.sh ]]
-then
-    echo 'reading ag-grid.config.sh file...'
-else 
-    echo "ag-grid.config.sh file is missing"
-    exit 1
-fi
-
-source "./ag-grid.config.sh"
-
 cd $T2_HOME
+
+# optional commit message
+if [ $# -eq 0 ]
+  then
+    COMMIT_MESSAGE='update'
+  else 
+    COMMIT_MESSAGE=$1
+fi
 
 git add . && /
 git commit -m "$COMMIT_MESSAGE" && /

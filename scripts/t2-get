@@ -6,7 +6,7 @@ source "scripts/helpers/script_requires_framework_as_param"
 
 if [ -z $2 ] ; then
   echo 'you must pass the project name as the second paramater to this script'
-  echo 'e.g. t2-get -[framework] my-project'
+  echo 'e.g. t2-get -react my-app'
   exit 1
 fi
 
@@ -40,6 +40,10 @@ echo ""
 echo "project created at: $NEW_PROJECT_DIR_PATH"
 echo ""
 echo "========================================================================"
+echo ""
+echo ""
+echo ""
+echo ""
 echo ""
 echo ""
 echo ""
