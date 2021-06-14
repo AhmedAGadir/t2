@@ -9,8 +9,6 @@ then
     exit 1
 fi
 
-cd $T2_HOME
-
 # optional commit message
 if [ $# -eq 0 ]
   then
@@ -19,11 +17,11 @@ if [ $# -eq 0 ]
     COMMIT_MESSAGE=$1
 fi
 
+cd $T2_HOME
 git add . && /
 git commit -m "$COMMIT_MESSAGE" && /
 git push && /
 
-echo "complete"
 echo "======================================================"
 echo "LINK TO CODESANDBOX: https://codesandbox.io/s/github/ahmedagadir/t2/tree/main/projects/${TICKET}"
 # stackblitz isnt really working 
