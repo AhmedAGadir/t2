@@ -1,3 +1,3 @@
 TICKET="angular-test"
 FRAMEWORK="angular"
-DOCS_EXAMPLE=""
+DOCS_EXAMPLE="server-side-row-model"
