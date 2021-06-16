@@ -1,9 +1,9 @@
 {
     "react": {
-        "indexHTML": "https://www.ag-grid.com/examples/server-side-model-datasource/simple/packages/reactFunctional/index.html",
+        "indexHTML": "https://www.ag-grid.com/examples/server-side-model-row-stores/partial-store/packages/reactFunctional/index.html",
         "filesToFetch": [
             {
-                "url": "https://www.ag-grid.com/examples/server-side-model-datasource/simple/packages/reactFunctional/index.jsx",
+                "url": "https://www.ag-grid.com/examples/server-side-model-row-stores/partial-store/packages/reactFunctional/index.jsx",
                 "destination": "src/index.js"
             }
         ],
@@ -16,14 +16,14 @@
         ]
     },
     "angular": {
-        "indexHTML": "https://www.ag-grid.com/examples/server-side-model-datasource/simple/packages/angular/index.html",
+        "indexHTML": "https://www.ag-grid.com/examples/server-side-model-row-stores/partial-store/packages/reactFunctional/index.html",
         "filesToFetch": [
             {
-                "url": "https://www.ag-grid.com/examples/server-side-model-datasource/simple/packages/angular/app/app.component.ts",
+                "url": "https://www.ag-grid.com/examples/server-side-model-row-stores/partial-store/packages/angular/app/app.component.ts",
                 "destination": "src/app/app.component.ts"
             },
             {
-                "url": "https://www.ag-grid.com/examples/server-side-model-datasource/simple/packages/angular/app/app.module.ts",
+                "url": "https://www.ag-grid.com/examples/server-side-model-row-stores/partial-store/packages/angular/app/app.module.ts",
                 "destination": "src/app/app.module.ts"
             }
         ],
@@ -33,10 +33,10 @@
         ]
     },
     "vue": {
-        "indexHTML": "https://www.ag-grid.com/examples/server-side-model-datasource/simple/packages/vue/index.html",
+        "indexHTML": "https://www.ag-grid.com/examples/server-side-model-row-stores/partial-store/packages/vue/index.html",
         "filesToFetch": [
             {
-                "url": "https://www.ag-grid.com/examples/server-side-model-datasource/simple/packages/vue/main.js",
+                "url": "https://www.ag-grid.com/examples/server-side-model-row-stores/partial-store/packages/vue/main.js",
                 "destination": "src/main.js"
             }
         ],
@@ -47,10 +47,10 @@
         ]
     },
     "vanilla": {
-        "indexHTML": "https://www.ag-grid.com/examples/server-side-model-datasource/simple/packages/vanilla/index.html",
+        "indexHTML": "https://www.ag-grid.com/examples/server-side-model-row-stores/partial-store/packages/vanilla/index.html",
         "filesToFetch": [
             {
-                "url": "https://www.ag-grid.com/examples/server-side-model-datasource/simple/packages/vanilla/main.js",
+                "url": "https://www.ag-grid.com/examples/server-side-model-row-stores/partial-store/packages/vanilla/main.js",
                 "destination": "src/index.js"
             }
         ],

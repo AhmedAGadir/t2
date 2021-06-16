@@ -1,5 +1,15 @@
 #!/usr/bin/env bash 
 
+T2_PROJECTS_DIR_PATH="$T2_HOME/projects"
+
+# exit script if running script from outside $T2_HOME/projects/*
+if [[ $PWD != $T2_PROJECTS_DIR_PATH/** ]]
+then
+    echo "You must run this script from within a subdirectory inside $T2_PROJECTS"
+    exit 1
+fi
+
+# optional commit message
 if [ $# -eq 0 ]
   then
     COMMIT_MESSAGE='update'
@@ -7,33 +17,21 @@ if [ $# -eq 0 ]
     COMMIT_MESSAGE=$1
 fi
 
-T2_PROJECTS_DIR_PATH="$T2_HOME/projects"
-
-# if running script from outside of our projects folder -> exit
-if [[ $PWD != $T2_PROJECTS_DIR_PATH/** ]]
-then
-    echo "You must run this script from within a subdirectory inside $T2_PROJECTS"
-    exit 1
-fi
-
 # if ag-grid.config.sh file missing -> exit
-if [[ -f ag-grid.config.sh ]]
+if [[ ! -f ag-grid.config.sh ]]
 then
-    echo 'reading ag-grid.config.sh file...'
-else 
     echo "ag-grid.config.sh file is missing"
     exit 1
 fi
 
+# import FRAMEWORK, TICKET and DOCS_IMPORTED variables
 source "./ag-grid.config.sh"
 
 cd $T2_HOME
-
 git add . && /
 git commit -m "$COMMIT_MESSAGE" && /
 git push && /
 
-echo "complete"
 echo "======================================================"
 echo "LINK TO CODESANDBOX: https://codesandbox.io/s/github/ahmedagadir/t2/tree/main/projects/${TICKET}"
 # stackblitz isnt really working 
