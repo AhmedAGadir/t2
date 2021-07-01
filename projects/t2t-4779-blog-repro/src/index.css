@@ -1,0 +1,89 @@
+* {
+    box-sizing: border-box !important;
+  }
+  
+  html,
+  body,
+  #root {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    box-sizing: border-box;
+    -webkit-overflow-scrolling: touch;
+  }
+  html {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding: 0;
+    overflow: auto;
+  }
+  body {
+    padding: 1rem;
+    overflow: auto;
+  }
+  
+  /*  main container  App.jsx */
+  
+  .main-container {
+    width: 80%;
+    height: 100%;
+    margin: auto;
+    /* border: 2px solid yellow; */
+  }
+  
+  /* Action buttons */
+  
+  .action-btn-container {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .action-btn {
+    margin: 10px !important;
+  }
+  
+  /* CONTAINER LEFT / RIGHT*/
+  
+  .flex-container {
+    flex-direction: row;
+  
+    display: flex;
+    height: 90%;
+  }
+  
+  /* LEFT VIEW Container*/
+  .all-views {
+    flex: 1;
+    min-width: 200px;
+  }
+  
+  /* RIGHT VIEW Container*/
+  
+  .tabs-view {
+    height: 100%;
+    flex-grow: inherit;
+    flex: 4;
+    max-width: 80%;
+  
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* TabList > AppBar */
+  
+  .app-bar {
+    /* border: 2px solid red; */
+    z-index: 10 !important;
+  }
+  
+  /* PanelList Tab PAnel */
+  .tabs-panel {
+    /* border: 2px solid green; */
+    flex: 1;
+  }
+  
+  .ag-popup-child {
+    z-index: 12 !important;
+  }
+  
