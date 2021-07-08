@@ -33,14 +33,6 @@ var gridOptions = {
       url: 'https://www.ag-grid.com/example-assets/olympic-winners.json',
     })
     .then(function (data) {
-
-      //adding values to the set filter
-      athleteArr = data.map(row=>row.athlete)
-      let currentDefs = gridOptions.api.getColumnDefs()
-      let indexOfAthlete = currentDefs.findIndex((col)=>col.colId==='athlete')
-      currentDefs[indexOfAthlete]= {...currentDefs[indexOfAthlete], filterParams:{values:athleteArr}}
-      gridOptions.api.setColumnDefs(currentDefs)
-
       // setup the fake server with entire dataset
       var fakeServer = createFakeServer(data);
 
@@ -67,6 +59,13 @@ function createServerSideDatasource(server) {
       // simulating real server call with a 500ms delay
       setTimeout(function () {
         if (response.success) {
+
+      //adding values to the set filter
+      athleteArr = response.rows.map(row=>row.athlete)
+      let currentDefs = gridOptions.api.getColumnDefs()
+      let indexOfAthlete = currentDefs.findIndex((col)=>col.colId==='athlete')
+      currentDefs[indexOfAthlete]= {...currentDefs[indexOfAthlete], filterParams:{values:athleteArr}}
+      gridOptions.api.setColumnDefs(currentDefs)
           // supply rows for requested block to grid
           params.success({
             rowData: response.rows,
