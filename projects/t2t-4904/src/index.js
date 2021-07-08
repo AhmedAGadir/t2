@@ -62,6 +62,7 @@ function createServerSideDatasource(server) {
 
       //adding values to the set filter
       athleteArr = response.rows.map(row=>row.athlete)
+      athleteArr = [...new Set(athleteArr)]
       let currentDefs = gridOptions.api.getColumnDefs()
       let indexOfAthlete = currentDefs.findIndex((col)=>col.colId==='athlete')
       currentDefs[indexOfAthlete]= {...currentDefs[indexOfAthlete], filterParams:{values:athleteArr}}
