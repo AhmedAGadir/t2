@@ -25,8 +25,8 @@ const GridExample = () => {
     gridApi.forEachNode(function (node) {
       rowData.push(node.data);
     });
-    console.log('Row Data:');
-    console.log(rowData);
+    // console.log('Row Data:');
+    // console.log(rowData);
   };
 
   const clearData = () => {
@@ -63,7 +63,7 @@ const GridExample = () => {
   };
 
   const onRangeSelectionChangedHandler = (params) => {
-    console.log(params);
+    // console.log(params);
     if (!params.finished) {
       return;
     }
@@ -198,20 +198,20 @@ function createNewRowData() {
   return newData;
 }
 function printResult(res) {
-  console.log('---------------------------------------');
+  // console.log('---------------------------------------');
   if (res.add) {
     res.add.forEach(function (rowNode) {
-      console.log('Added Row Node', rowNode);
+      // console.log('Added Row Node', rowNode);
     });
   }
   if (res.remove) {
     res.remove.forEach(function (rowNode) {
-      console.log('Removed Row Node', rowNode);
+      // console.log('Removed Row Node', rowNode);
     });
   }
   if (res.update) {
     res.update.forEach(function (rowNode) {
-      console.log('Updated Row Node', rowNode);
+      // console.log('Updated Row Node', rowNode);
     });
   }
 }
