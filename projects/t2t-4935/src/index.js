@@ -1,9 +1,7 @@
 import "ag-grid-community/dist/styles/ag-grid.css";
 import "ag-grid-community/dist/styles/ag-theme-alpine.css";
-import "ag-grid-enterprise";
 import * as agGrid from "ag-grid-community";
-
-// remove hover effect on rows 
+import "ag-grid-enterprise";
 
 var gridOptions = {
   columnDefs: [
@@ -23,7 +21,6 @@ var gridOptions = {
     minWidth: 100,
   },
   enableRangeSelection: true,
-  rowSelection: 'multiple'
 };
 
 var gridDiv = document.querySelector('#myGrid');
