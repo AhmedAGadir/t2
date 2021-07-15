@@ -32,4 +32,7 @@ agGrid
   })
   .then(function (data) {
     gridOptions.api.setRowData(data);
+    setTimeout(() => {
+      // debugger;
+    }, 3000)
   });
