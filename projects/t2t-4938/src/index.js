@@ -1,10 +1,12 @@
+'use strict';
+
 import React, { useState } from 'react';
 import { render } from 'react-dom';
 import { AgGridReact, AgGridColumn } from 'ag-grid-react';
 import 'ag-grid-enterprise';
 import 'ag-grid-community/dist/styles/ag-grid.css';
 import 'ag-grid-community/dist/styles/ag-theme-alpine.css';
-import './style.css'
+import './style.css';
 
 const GridExample = () => {
   const [gridApi, setGridApi] = useState(null);
@@ -15,28 +17,17 @@ const GridExample = () => {
     setGridColumnApi(params.columnApi);
   };
 
-
-  const hideAutoGroupCol = () =>{
-    let col = gridColumnApi.getColumn('ag-Grid-AutoColumn')
-    let newWidth = col.actualWidth === 36 ? 500 : 36 
-    gridApi.setAutoGroupColumnDef({
-      headerName: 'Files',
-      resizable: newWidth !==36,
-      cellRendererParams: {
-        checkbox: true,
-        suppressCount: true,
-        innerRenderer: 'fileCellRenderer',
-      },
-    })
-    gridColumnApi.setColumnWidth('ag-Grid-AutoColumn', newWidth)
+  const toggleTreeColVisibility = () =>{
+    let allVisibleCols = gridColumnApi.getAllDisplayedColumns();
+    let customCol = allVisibleCols.find(col=>col.colId === 'customCol');
+    gridColumnApi.setColumnVisible('customCol', !(!!customCol))
   }
-
 
   return (
     <div style={{ width: '100%', height: '100%' }}>
+        <button onClick={()=>toggleTreeColVisibility()}>toggle</button>
       <div className="example-wrapper">
         <div style={{ marginBottom: '5px' }}>
-          <button onClick={()=>hideAutoGroupCol()}>hide tree column</button>
         </div>
         <div
           id="myGrid"
@@ -49,170 +40,136 @@ const GridExample = () => {
           <AgGridReact
             rowData={[
               {
-                id: 1,
-                filePath: ['Documents'],
+                orgHierarchy: ['Erica Rogers'],
+                jobTitle: 'CEO',
+                employmentType: 'Permanent',
               },
               {
-                id: 2,
-                filePath: ['Documents', 'txt'],
+                orgHierarchy: ['Erica Rogers', 'Malcolm Barrett'],
+                jobTitle: 'Exec. Vice President',
+                employmentType: 'Permanent',
               },
               {
-                id: 3,
-                filePath: ['Documents', 'txt', 'notes.txt'],
-                dateModified: 'May 21 2017 01:50:00 PM',
-                size: 14.7,
+                orgHierarchy: [
+                  'Erica Rogers',
+                  'Malcolm Barrett',
+                  'Esther Baker',
+                ],
+                jobTitle: 'Director of Operations',
+                employmentType: 'Permanent',
               },
               {
-                id: 4,
-                filePath: ['Documents', 'pdf'],
+                orgHierarchy: [
+                  'Erica Rogers',
+                  'Malcolm Barrett',
+                  'Esther Baker',
+                  'Brittany Hanson',
+                ],
+                jobTitle: 'Fleet Coordinator',
+                employmentType: 'Permanent',
               },
               {
-                id: 5,
-                filePath: ['Documents', 'pdf', 'book.pdf'],
-                dateModified: 'May 20 2017 01:50:00 PM',
-                size: 2.1,
+                orgHierarchy: [
+                  'Erica Rogers',
+                  'Malcolm Barrett',
+                  'Esther Baker',
+                  'Brittany Hanson',
+                  'Leah Flowers',
+                ],
+                jobTitle: 'Parts Technician',
+                employmentType: 'Contract',
               },
               {
-                id: 6,
-                filePath: ['Documents', 'pdf', 'cv.pdf'],
-                dateModified: 'May 20 2016 11:50:00 PM',
-                size: 2.4,
+                orgHierarchy: [
+                  'Erica Rogers',
+                  'Malcolm Barrett',
+                  'Esther Baker',
+                  'Brittany Hanson',
+                  'Tammy Sutton',
+                ],
+                jobTitle: 'Service Technician',
+                employmentType: 'Contract',
               },
               {
-                id: 7,
-                filePath: ['Documents', 'xls'],
+                orgHierarchy: [
+                  'Erica Rogers',
+                  'Malcolm Barrett',
+                  'Esther Baker',
+                  'Derek Paul',
+                ],
+                jobTitle: 'Inventory Control',
+                employmentType: 'Permanent',
               },
               {
-                id: 8,
-                filePath: ['Documents', 'xls', 'accounts.xls'],
-                dateModified: 'Aug 12 2016 10:50:00 AM',
-                size: 4.3,
+                orgHierarchy: [
+                  'Erica Rogers',
+                  'Malcolm Barrett',
+                  'Francis Strickland',
+                ],
+                jobTitle: 'VP Sales',
+                employmentType: 'Permanent',
               },
               {
-                id: 9,
-                filePath: ['Documents', 'stuff'],
+                orgHierarchy: [
+                  'Erica Rogers',
+                  'Malcolm Barrett',
+                  'Francis Strickland',
+                  'Morris Hanson',
+                ],
+                jobTitle: 'Sales Manager',
+                employmentType: 'Permanent',
               },
               {
-                id: 10,
-                filePath: ['Documents', 'stuff', 'xyz.txt'],
-                dateModified: 'Jan 17 2016 08:03:00 PM',
-                size: 1.1,
+                orgHierarchy: [
+                  'Erica Rogers',
+                  'Malcolm Barrett',
+                  'Francis Strickland',
+                  'Todd Tyler',
+                ],
+                jobTitle: 'Sales Executive',
+                employmentType: 'Contract',
               },
               {
-                id: 11,
-                filePath: ['Music', 'mp3', 'pop'],
-                dateModified: 'Sep 11 2016 08:03:00 PM',
-                size: 14.3,
+                orgHierarchy: [
+                  'Erica Rogers',
+                  'Malcolm Barrett',
+                  'Francis Strickland',
+                  'Bennie Wise',
+                ],
+                jobTitle: 'Sales Executive',
+                employmentType: 'Contract',
               },
               {
-                id: 12,
-                filePath: ['temp.txt'],
-                dateModified: 'Aug 12 2016 10:50:00 PM',
-                size: 101,
-              },
-              {
-                id: 13,
-                filePath: ['Music', 'mp3', 'pop', 'theme.mp3'],
-                dateModified: 'Aug 12 2016 10:50:00 PM',
-                size: 101,
-              },
-              {
-                id: 14,
-                filePath: ['Music', 'mp3', 'jazz'],
-                dateModified: 'Aug 12 2016 10:50:00 PM',
-                size: 101,
+                orgHierarchy: [
+                  'Erica Rogers',
+                  'Malcolm Barrett',
+                  'Francis Strickland',
+                  'Joel Cooper',
+                ],
+                jobTitle: 'Sales Executive',
+                employmentType: 'Permanent',
               },
             ]}
-            defaultColDef={{
-              flex: 1,
-              filter: true,
-              sortable: true,
-              resizable: true,
-            }}
-            autoGroupColumnDef={{
-              headerName: 'Files',
-              headerClass: null,
-              cellRendererParams: {
-                checkbox: true,
-                suppressCount: true,
-                innerRenderer: 'fileCellRenderer',
-              },
-            }}
-            components={{ fileCellRenderer: getFileCellRenderer() }}
+            defaultColDef={{ flex: 1 }}
             treeData={true}
             animateRows={true}
             groupDefaultExpanded={-1}
             getDataPath={function (data) {
-              return data.filePath;
+              return data.orgHierarchy;
             }}
-            getRowNodeId={function (data) {
-              return data.id;
-            }}
+            groupSuppressAutoColumn={true}
             onGridReady={onGridReady}
           >
-            <AgGridColumn
-              field="dateModified"
-              minWidth={250}
-              comparator={(d1, d2) => {
-                return new Date(d1).getTime() < new Date(d2).getTime() ? -1 : 1;
-              }}
-            />
-            <AgGridColumn
-              field="size"
-              aggFunc="sum"
-              valueFormatter={(params) => {
-                return params.value
-                  ? Math.round(params.value * 10) / 10 + ' MB'
-                  : '0 MB';
-              }}
-            />
+            <AgGridColumn field="customCol" headerName='Organisation Hierarchy'
+            showRowGroup={true} valueGetter={(params)=>params.data.orgHierarchy[params.data.orgHierarchy.length - 1]}
+            cellRenderer='agGroupCellRenderer'></AgGridColumn>
+            <AgGridColumn field="jobTitle" />
+            <AgGridColumn field="employmentType" />
           </AgGridReact>
         </div>
       </div>
     </div>
   );
 };
-
-
-function getFileCellRenderer() {
-  function FileCellRenderer() {}
-  FileCellRenderer.prototype.init = function (params) {
-    var tempDiv = document.createElement('div');
-    var value = params.value;
-    var icon = getFileIcon(params.value);
-    tempDiv.innerHTML = icon
-      ? '<span><i class="' +
-        icon +
-        '"></i>' +
-        '<span class="filename"></span>' +
-        value +
-        '</span>'
-      : value;
-    this.eGui = tempDiv.firstChild;
-  };
-  FileCellRenderer.prototype.getGui = function () {
-    return this.eGui;
-  };
-  return FileCellRenderer;
-}
-function getFileIcon(name) {
-  return endsWith(name, '.mp3') || endsWith(name, '.wav')
-    ? 'far fa-file-audio'
-    : endsWith(name, '.xls')
-    ? 'far fa-file-excel'
-    : endsWith(name, '.txt')
-    ? 'far fa-file'
-    : endsWith(name, '.pdf')
-    ? 'far fa-file-pdf'
-    : 'far fa-folder';
-}
-function endsWith(str, match) {
-  var len;
-  if (str == null || !str.length || match == null || !match.length) {
-    return false;
-  }
-  len = str.length;
-  return str.substring(len - match.length, len) === match;
-}
 
 render(<GridExample></GridExample>, document.querySelector('#root'));
